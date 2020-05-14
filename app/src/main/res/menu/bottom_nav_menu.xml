@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/user"
+        android:icon="@drawable/icon_navbar_user"
+        android:title="" />
+
+    <item android:id="@+id/cellar"
+        android:icon="@drawable/icon_navbar_cellar"
+        android:title="" />
+
+    <item android:id="@+id/scan"
+        android:title="" />
+
+    <item android:id="@+id/like"
+        android:icon="@drawable/icon_navbar_like"
+        android:title="" />
+
+    <item android:id="@+id/search"
+        android:icon="@drawable/icon_navbar_search"
+        android:title="" />
+
+</menu>

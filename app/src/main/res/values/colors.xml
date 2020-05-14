@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <color name="colorPrimary">#C8E6C9</color>
+    <color name="colorPrimaryDark">#2F3B40</color>
+    <color name="colorPrimaryLight">#FBFFFC</color>
+    <color name="colorSecondary">#222A2E</color>
+    <color name="colorSecondaryDark">#519657</color>
+    <color name="colorSecondaryLight">#B2FABB</color>
+    <color name="white">#FFF</color>
+
+    <!-- CUSTOM COLORS NAVBAR DARK MODE -->
+    <color name="transparent">#00000000</color>
+
+    <!-- CUSTOM COLORS NAVBAR DARK MODE -->
+    <color name="grey_very_light">#ECECEC</color>
+    <color name="grey_light">#CDCDCD</color>
+    <color name="green_very_dark">#2F3B40</color>
+    <color name="green_middle_dark">#38474E</color>
+    <color name="green_dark">#43545c</color>
+    <color name="green_middle_light">#4F656F</color>
+    <color name="green_third_light">#576F7A</color>
+    <color name="green_light">#67828f</color>
+    <color name="green_very_light">#8DB3C5</color>
+    <color name="green_apple_dark">#B3C58D</color>
+    <color name="green_apple">#97C58D</color>
+    <color name="grey_dark">#4C4C4C</color>
+    <color name="green">#35B1C4</color>
+    <color name="blue_light">#22C2DD</color>
+    <color name="orange">#D57400</color>
+    <color name="red">#BF0000</color>
+    <color name="pink">#D0005B</color>
+
+    <!-- CUSTOM COLORS NAVBAR LIGHT MODE -->
+
+
+</resources>

@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dark_gradient_background"
+    android:orientation="vertical"
+    tools:context=".vue.AddActivity">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="10dp"
+        android:indeterminate="false"
+        android:progressTint="@color/green_apple"
+        app:layout_constraintBottom_toTopOf="@+id/layoutCountryRegion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ProgressBar>
+
+    <LinearLayout
+        android:id="@+id/layoutCountryRegion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutPays"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/fond_textinput"
+            android:backgroundTint="@color/green_dark"
+            android:orientation="horizontal"
+            android:textColorHint="@color/green_light"
+            app:helperText=""
+            app:hintTextColor="@color/green_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/progressBar">
+
+            <AutoCompleteTextView
+                android:id="@+id/textCountry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:backgroundTint="@color/transparent"
+                android:fontFamily="@font/yanone_kaffeesatz"
+                android:gravity="center"
+                android:hint="Pays"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@color/green_apple"
+                android:textCursorDrawable="@color/green_light"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutRegion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/fond_textinput"
+            android:backgroundTint="@color/green_dark"
+            android:orientation="horizontal"
+            android:textColorHint="@color/green_light"
+            app:helperText=""
+            app:hintTextColor="@color/green_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutPays">
+
+            <EditText
+                android:id="@+id/textRegion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:backgroundTint="@color/transparent"
+                android:fontFamily="@font/yanone_kaffeesatz"
+                android:gravity="center"
+                android:hint="Région"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@color/green_apple"
+                android:textCursorDrawable="@color/green_light"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutWineColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintTop_toBottomOf="@+id/layoutCountryRegion">
+
+        <ImageButton
+            android:id="@+id/redWineButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/transparent"
+            android:onClick="wineColorSelector"
+            android:scaleType="centerCrop"
+            android:src="@drawable/red_wine" />
+
+        <ImageButton
+            android:id="@+id/roseWineButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/transparent"
+            android:onClick="wineColorSelector"
+            android:scaleType="centerCrop"
+            android:src="@drawable/rose_wine" />
+
+        <ImageButton
+            android:id="@+id/whiteWineButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/transparent"
+            android:onClick="wineColorSelector"
+            android:scaleType="centerCrop"
+            android:src="@drawable/white_wine" />
+
+        <ImageButton
+            android:id="@+id/champWineButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/transparent"
+            android:onClick="wineColorSelector"
+            android:scaleType="centerCrop"
+            android:src="@drawable/champ_wine" />
+    </LinearLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutDomain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/fond_textinput"
+        android:backgroundTint="@color/green_dark"
+        android:orientation="horizontal"
+        android:textColorHint="@color/green_light"
+        app:helperText=""
+        app:hintTextColor="@color/green_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutWineColor">
+
+        <EditText
+            android:id="@+id/textDomain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:backgroundTint="@color/transparent"
+            android:fontFamily="@font/yanone_kaffeesatz"
+            android:gravity="center"
+            android:hint="Domaine"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/green_apple"
+            android:textCursorDrawable="@color/green_light"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutAppellation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:background="@drawable/fond_textinput"
+        android:backgroundTint="@color/green_dark"
+        android:orientation="horizontal"
+        android:textColorHint="@color/green_light"
+        app:helperText=""
+        app:hintTextColor="@color/green_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutDomain">
+
+        <EditText
+            android:id="@+id/textAppellation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:backgroundTint="@color/transparent"
+            android:fontFamily="@font/yanone_kaffeesatz"
+            android:gravity="center"
+            android:hint="Appellation"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/green_apple"
+            android:textCursorDrawable="@color/green_light"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <LinearLayout
+        android:id="@+id/layoutYearApogee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutAppellation">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutYear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/fond_textinput"
+            android:backgroundTint="@color/green_dark"
+            android:orientation="horizontal"
+            android:textColorHint="@color/green_light"
+            app:helperText=""
+            app:hintTextColor="@color/green_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <EditText
+                android:id="@+id/nbYear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:backgroundTint="@color/transparent"
+                android:fontFamily="@font/yanone_kaffeesatz"
+                android:gravity="center"
+                android:hint="Millésime"
+                android:inputType="number"
+                android:maxLines="1"
+                android:textColor="@color/green_apple"
+                android:textCursorDrawable="@color/green_light"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutApogee"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/fond_textinput"
+            android:backgroundTint="@color/green_dark"
+            android:orientation="horizontal"
+            android:textColorHint="@color/green_light"
+            app:helperText=""
+            app:hintTextColor="@color/green_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <EditText
+                android:id="@+id/nbApogee"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:backgroundTint="@color/transparent"
+                android:drawableTint="@color/green_light"
+                android:ems="10"
+                android:fontFamily="@font/yanone_kaffeesatz"
+                android:gravity="center"
+                android:hint="Apogée"
+                android:inputType="number"
+                android:maxLines="1"
+                android:textColor="@color/green_apple"
+                android:textCursorDrawable="@color/green_light"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutNumberEstimate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutYearApogee">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutNumber"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/fond_textinput"
+            android:backgroundTint="@color/green_dark"
+            android:orientation="horizontal"
+            android:textColorHint="@color/green_light"
+            app:helperText=""
+            app:hintTextColor="@color/green_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <EditText
+                android:id="@+id/nbNumber"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:backgroundTint="@color/transparent"
+                android:drawableTint="@color/green_light"
+                android:fontFamily="@font/yanone_kaffeesatz"
+                android:gravity="center"
+                android:hint="Quantité"
+                android:inputType="number"
+                android:maxLines="1"
+                android:textColor="@color/green_apple"
+                android:textCursorDrawable="@color/green_light"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutEstimate"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/fond_textinput"
+            android:backgroundTint="@color/green_dark"
+            android:orientation="horizontal"
+            android:textColorHint="@color/green_light"
+            app:helperText=""
+            app:hintTextColor="@color/green_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <EditText
+                android:id="@+id/nbEstimate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:backgroundTint="@color/transparent"
+                android:drawableTint="@color/green_light"
+                android:ems="10"
+                android:fontFamily="@font/yanone_kaffeesatz"
+                android:gravity="center"
+                android:hint="Estimation (€)"
+                android:inputType="number"
+                android:maxLines="1"
+                android:textColor="@color/green_apple"
+                android:textCursorDrawable="@color/green_light"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="270dp"
+        android:layout_height="270dp"
+        app:cardBackgroundColor="@color/transparent"
+        app:cardCornerRadius="135dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toTopOf="@id/menuBis"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutNumberEstimate">
+
+        <ImageView
+            android:id="@+id/scanImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:outlineProvider="none"
+            android:scaleType="centerCrop" />
+
+    </androidx.cardview.widget.CardView>
+
+    <FrameLayout
+        android:id="@+id/menuBis"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:background="@color/green_middle_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="60dp"
+            android:gravity="top|center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/btnPhoto"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_gravity="start"
+                        android:scaleType="centerCrop"
+                        android:backgroundTint="@color/transparent"
+
+                        android:onClick="takePicture"
+
+                        android:src="@drawable/icon_navbar_scan"
+                        android:tint="@color/green_middle_light"
+                        app:maxImageSize="33dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/btnGallery"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:scaleType="centerCrop"
+                        android:backgroundTint="@color/transparent"
+                        android:gravity="end"
+
+                        android:onClick="accesGallery"
+
+                        android:src="@drawable/scan_gallery"
+                        android:tint="@color/green_middle_light"
+                        app:maxImageSize="33dp" />
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="30dp"
+                app:cardBackgroundColor="@color/green_very_dark"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
+
+                <ImageButton
+                    android:id="@+id/btnBackMap1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:backgroundTint="@color/transparent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icone_menubis_back"
+                    android:tint="@color/green_third_light" />
+
+                <ImageButton
+                    android:id="@+id/btnBackMap2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end|center_vertical"
+                    android:backgroundTint="@color/transparent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icone_menubis_map"
+                    android:tint="@color/green_third_light" />
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <ToggleButton
+                    android:id="@+id/btnFavorite"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="top"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/button_like_activity_bottle"
+                    android:elevation="0dp" />
+
+                <ToggleButton
+                    android:id="@+id/btnWishlist"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="top"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/button_wish_activity_bottle"
+                    android:elevation="0dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <!-- <pl.bclogic.pulsator4droid.library.PulsatorLayout
+android:id="@+id/pulsator"
+android:layout_width="90dp"
+android:layout_height="90dp"
+android:layout_weight="1"
+app:layout_constraintBottom_toTopOf="@+id/btnAdd"
+app:layout_constraintEnd_toEndOf="parent"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintTop_toBottomOf="@+id/btnAdd"
+app:pulse_color="@color/green_light"
+app:pulse_count="1"
+app:pulse_duration="1500"
+app:pulse_interpolator="Linear"
+app:pulse_repeat="0"
+app:pulse_startFromScratch="false" /> -->
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/green_very_dark"
+        android:src="@drawable/icon_navbar_add"
+        android:tint="@color/green_light"
+        app:borderWidth="0.5dp"
+        app:elevation="10dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/curvedBottomNavigationView"
+        app:maxImageSize="31dp" />
+
+    <com.romain.cellarv1.outils.CurvedBottomNavigationView
+        android:id="@+id/curvedBottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="false"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="20dp"
+        app:itemIconSize="31dp"
+        app:itemIconTint="@color/green_dark"
+        app:labelVisibilityMode="unlabeled"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1"
+        app:menu="@menu/bottom_nav_menu"></com.romain.cellarv1.outils.CurvedBottomNavigationView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

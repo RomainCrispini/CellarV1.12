@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">CellarV1</string>
+
+    <string name="user_fragment">Hello USER fragment</string>
+    <string name="cellar_fragment">Hello CELLAR fragment</string>
+    <string name="scan_fragment">Hello SCAN fragment</string>
+    <string name="like_fragment">Hello LIKE fragment</string>
+    <string name="search_fragment">Hello SEARCH fragment</string>
+    <string name="home_fragment">Hello HOME fragment</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="filled_box_dense">Filled box dense</string>
+</resources>

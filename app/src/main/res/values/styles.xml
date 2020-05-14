@@ -1,0 +1,48 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorSecondary</item>
+
+        <item name="fontFamily">@font/yanone_kaffeesatz</item>
+
+        <!-- Active transition entre les fenêtres -->
+        <item name="android:windowActivityTransitions">true</item>
+
+    </style>
+
+    <style name="Dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/popup_fadein</item>
+        <item name="android:windowExitAnimation">@anim/popup_fadeout</item>
+    </style>
+
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/green_dark</item>
+        <item name="android:textColor">@color/green_dark</item>
+        <item name="android:textColorHint">@color/green_dark</item>
+    </style>
+
+    <style name="customAnimFab">
+        <item name="background">@color/green_dark</item>
+        <item name="android:textColor">@color/green</item>
+    </style>
+
+    <style name="darkMode">
+
+    </style>
+
+    <style name="lightMode">
+
+    </style>
+
+
+
+
+</resources>
