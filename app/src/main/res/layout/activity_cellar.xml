@@ -67,7 +67,6 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_gravity="top"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="6dp"
@@ -79,11 +78,11 @@
                 <ImageButton
                     android:id="@+id/sortMap"
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:backgroundTint="@color/transparent"
                     android:scaleType="centerCrop"
-                    android:padding="13dp"
+                    android:padding="16dp"
                     android:src="@drawable/icone_menubis_map"
                     android:tint="@color/green_middle_light" />
             </androidx.cardview.widget.CardView>
@@ -194,30 +193,6 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="top"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="6dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@color/transparent"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="0dp">
-
-                <ImageButton
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center"
-                    android:backgroundTint="@color/transparent"
-                    android:scaleType="centerCrop"
-                    android:padding="13dp"
-                    android:src="@drawable/icone_menubis_search"
-                    android:tint="@color/green_middle_light" />
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="top"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="6dp"
@@ -227,14 +202,38 @@
                 app:cardElevation="0dp">
 
                 <ImageButton
-
+                    android:id="@+id/sortStatColor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="12dp"
                     android:backgroundTint="@color/transparent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/icone_menubis_search"
+                    android:src="@drawable/icone_menubis_color"
+                    android:tint="@color/green_middle_light" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="top"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/transparent"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="0dp">
+
+                <ImageButton
+                    android:id="@+id/sortStatYear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="16dp"
+                    android:backgroundTint="@color/transparent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icone_menubis_millesime_stat"
                     android:tint="@color/green_middle_light" />
             </androidx.cardview.widget.CardView>
 
@@ -251,8 +250,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_gravity="top"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="6dp"
                 android:layout_weight="1"
@@ -261,14 +259,14 @@
                 app:cardElevation="0dp">
 
                 <ImageButton
-
+                    android:id="@+id/sortStatMap"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:padding="16dp"
                     android:backgroundTint="@color/transparent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/icone_menubis_search"
+                    android:padding="16dp"
+                    android:src="@drawable/icone_menubis_map_stat"
                     android:tint="@color/green_middle_light" />
             </androidx.cardview.widget.CardView>
 
@@ -285,14 +283,14 @@
                 app:cardElevation="0dp">
 
                 <ImageButton
-
+                    android:id="@+id/sortStatApogee"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="16dp"
                     android:backgroundTint="@color/transparent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/icone_menubis_search"
+                    android:src="@drawable/icone_menubis_apogee"
                     android:tint="@color/green_middle_light" />
             </androidx.cardview.widget.CardView>
 

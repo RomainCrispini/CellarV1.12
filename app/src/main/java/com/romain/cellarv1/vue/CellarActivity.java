@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -58,8 +59,11 @@ public class CellarActivity extends AppCompatActivity {
     private OvershootInterpolator interpolator = new OvershootInterpolator();
     private FrameLayout sortMenuList;
     private FrameLayout sortMenuStats;
-    private ImageButton sortMap, getSortColor, getSortYear, getSortApogee;
+    // Buttons MenuBis List
+    private ImageButton sortMap, sortColor, sortYear, sortApogee;
     private ImageView sortRecover;
+    // Buttons MenuBis Stat
+    private ImageButton sortColorStat, sortYearStat, sortMapStat, sortApogeeStat;
 
 
     // Initialisation du RecyclerView du Tab1
@@ -83,6 +87,7 @@ public class CellarActivity extends AppCompatActivity {
         getFabWineMenuValue();
         initTabs();
         menuBisListSelectedItems();
+        menuBisStatSelectedItems();
 
         // Animation des TabLayout
         TabLayout cellarTabLayout = (TabLayout) findViewById(R.id.cellarTabLayout);
@@ -287,6 +292,74 @@ public class CellarActivity extends AppCompatActivity {
                 sortApogee.setColorFilter(CellarActivity.this.getColor(R.color.green_light), PorterDuff.Mode.SRC_IN);
             }
         });
+    }
+
+    private void menuBisStatSelectedItems() {
+
+        final ImageButton sortColorStat = (ImageButton) findViewById(R.id.sortStatColor);
+        final ImageButton sortYearStat = (ImageButton) findViewById(R.id.sortStatYear);
+        final ImageButton sortMapStat = (ImageButton) findViewById(R.id.sortStatMap);
+        final ImageButton sortApogeeStat = (ImageButton) findViewById(R.id.sortStatApogee);
+
+        // On sélectionne par défaut l'item de gauche (winecolor)
+        sortColorStat.setColorFilter(Color.parseColor("#67828f"));
+
+        sortColorStat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //loadSortMapWineBottleInListView();
+                sortColorStat.setColorFilter(CellarActivity.this.getColor(R.color.green_light), PorterDuff.Mode.SRC_IN);
+                sortYearStat.setColorFilter(CellarActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
+                sortMapStat.setColorFilter(CellarActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
+                sortApogeeStat.setColorFilter(CellarActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
+            }
+        });
+
+        sortYearStat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //loadSortColorWineBottleInListView();
+
+                /*
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.layout.fragment_like_list, like);
+                fragmentTransaction.addToBackStack(cellarListFragment.toString());
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                fragmentTransaction.commit();
+
+                 */
+
+
+                sortColorStat.setColorFilter(CellarActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
+                sortYearStat.setColorFilter(CellarActivity.this.getColor(R.color.green_light), PorterDuff.Mode.SRC_IN);
+                sortMapStat.setColorFilter(CellarActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
+                sortApogeeStat.setColorFilter(CellarActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
+            }
+        });
+
+        sortMapStat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //loadRecoverWineBottleInListView();
+                sortColorStat.setColorFilter(CellarActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
+                sortYearStat.setColorFilter(CellarActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
+                sortMapStat.setColorFilter(CellarActivity.this.getColor(R.color.green_light), PorterDuff.Mode.SRC_IN);
+                sortApogeeStat.setColorFilter(CellarActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
+            }
+        });
+
+        sortApogeeStat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //loadSortYearWineBottleInListView();
+                sortColorStat.setColorFilter(CellarActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
+                sortYearStat.setColorFilter(CellarActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
+                sortMapStat.setColorFilter(CellarActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
+                sortApogeeStat.setColorFilter(CellarActivity.this.getColor(R.color.green_light), PorterDuff.Mode.SRC_IN);
+            }
+        });
+
     }
 
     private void loadSortMapWineBottleInListView() {
