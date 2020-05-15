@@ -59,6 +59,7 @@ public class CellarStatApogeeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View cellarStatApogeeFragment = inflater.inflate(R.layout.fragment_cellar_stat_apogee, container, false);
 
         return cellarStatApogeeFragment;

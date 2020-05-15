@@ -71,7 +71,6 @@ public class CellarActivity extends AppCompatActivity {
         init();
         //cellarRecyclerView = (RecyclerView) findViewById(R.id.cellarRecyclerView);
 
-
     }
 
     private void init() {
@@ -491,9 +490,8 @@ public class CellarActivity extends AppCompatActivity {
                     FrameLayout sortMenuBisStats = (FrameLayout) findViewById(R.id.sortMenuStats);
                     sortMenuBisStats.setTranslationY(200f);
                     sortMenuBisStats.animate().translationY(0f).setInterpolator(interpolator).setDuration(1500).start();
+
                 }
-
-
             }
 
             @Override

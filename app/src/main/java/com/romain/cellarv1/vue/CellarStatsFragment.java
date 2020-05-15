@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -105,145 +107,28 @@ public class CellarStatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View cellarStatsFragment = inflater.inflate(R.layout.fragment_cellar_stats, container, false);
-        //pieChart = (PieChart) cellarStatsFragment.findViewById(R.id.pieChart);
 
-        //txtTotalNumber = (TextView) cellarStatsFragment.findViewById(R.id.txtTotalNumber);
-
-
-
-        //loadTotalNumber();
-        //loadWineColorPieChart();
-
-
-
+        loadCellarWineColorFragment();
 
         return cellarStatsFragment;
 
     }
 
-    private void loadTotalNumber() {
-        accesLocal = new AccesLocal(getContext());
-        Integer nbTotalBottle = accesLocal.nbTotal();
 
-        txtTotalNumber.setText(nbTotalBottle.toString());
+    // TODO IL MANQUE L'ANIMATION AU CHARGEMENT ?????????????????????
+    public void loadCellarWineColorFragment() {
+
+        CellarStatWineColorFragment cellarStatWineColorFragment = new CellarStatWineColorFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.layoutStatFragment,cellarStatWineColorFragment);
+
+        fragmentTransaction.addToBackStack(cellarStatWineColorFragment.toString());
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransaction.commit();
     }
 
-    private void loadWineColorPieChart() {
-
-        pieChart.setUsePercentValues(false);
-
-        // Caractéristiques du message s'il n'y a pas de données
-        pieChart.setNoDataText("Il manque quelques bouteilles pour éditer des statistiques !");
-        //pieChart.invalidate();
-        Paint p = pieChart.getPaint(PieChart.PAINT_INFO);
-        p.setTextSize(15f);
-        p.setColor(Color.parseColor("#8DB3C5"));
-
-        pieChart.getDescription().setEnabled(false);
-        pieChart.setExtraOffsets(5, 10, 5, 5);
-
-        pieChart.setDragDecelerationFrictionCoef(0.95f);
-
-        pieChart.setDrawHoleEnabled(true);
-        pieChart.setHoleColor(Color.TRANSPARENT);
-        pieChart.setHoleRadius(70f);
-        pieChart.setTransparentCircleRadius(0f);
-        //pieChart.getLegend().setEnabled(false);
-
-        accesLocal = new AccesLocal(getContext());
-        //ArrayList<WineBottle> wineBottleArrayList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleList();
-
-        Integer nbRed = accesLocal.nbRed();
-        Integer nbRose = accesLocal.nbRose();
-        Integer nbWhite = accesLocal.nbWhite();
-        Integer nbChamp = accesLocal.nbChamp();
-
-        // Modifie le nombre de couleurs du pie suivant les celle des bouteilles
-        ArrayList<Integer> COLORS = new ArrayList<>();
-        ArrayList<PieEntry> values = new ArrayList<>();
 
 
-
-        if(nbRed > 0) {
-            values.add(new PieEntry(nbRed, "Rouge"));
-            COLORS.add(Color.rgb(159, 6, 52)); // Rouge
-        } else {
-            values.add(new PieEntry(0, "Rouge"));
-            COLORS.add(Color.rgb(159, 6, 52)); // Rouge
-        }
-
-        if(nbRose > 0) {
-            values.add(new PieEntry(nbRose, "Rosé"));
-            COLORS.add(Color.rgb(249, 175, 164)); // Rosé
-        } else {
-            values.add(new PieEntry(0, "Rosé"));
-            COLORS.add(Color.rgb(249, 175, 164)); // Rosé
-        }
-
-        if(nbWhite > 0) {
-            values.add(new PieEntry(nbWhite, "Blanc"));
-            COLORS.add(Color.rgb(254, 207, 29)); // Blanc
-        } else {
-            values.add(new PieEntry(0, "Blanc"));
-            COLORS.add(Color.rgb(254, 207, 29)); // Blanc
-        }
-
-        if(nbChamp > 0) {
-            values.add(new PieEntry(nbChamp, "Effervescent"));
-            COLORS.add(Color.rgb(222, 203, 135)); // Effervescent
-        } else {
-            values.add(new PieEntry(0, "Effervescent"));
-            COLORS.add(Color.rgb(222, 203, 135)); // Effervescent
-        }
-
-
-
-
-
-
-
-
-
-        pieChart.setDrawEntryLabels(false);
-        //pieChart.setEntryLabelTextSize(4f);
-        //pieChart.setEntryLabelColor(Color.parseColor("#2F3B40"));
-
-        Legend legend = pieChart.getLegend();
-        legend.setTextColor(Color.parseColor("#8DB3C5"));
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
-
-        PieDataSet dataSet = new PieDataSet(values, "");
-        dataSet.setSliceSpace(3f);
-        dataSet.setSelectionShift(5f);
-        dataSet.setColors(COLORS);
-        //dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
-
-        pieChart.animateXY(0, 2000);
-
-
-        PieData data = new PieData(dataSet);
-
-        data.setValueTextSize(15f);
-        data.setValueFormatter(new MyPieChartValueFormatter());
-        data.setValueTextColor(Color.parseColor("#2F3B40"));
-
-        pieChart.setData(data);
-        pieChart.notifyDataSetChanged();
-
-    }
-
-    public class MyPieChartValueFormatter extends ValueFormatter {
-
-        private DecimalFormat mFormat;
-
-        public MyPieChartValueFormatter() {
-            mFormat = new DecimalFormat("#");
-        }
-
-        @Override
-        public String getFormattedValue(float value) {
-            return mFormat.format(value);
-        }
-    }
 
 }
