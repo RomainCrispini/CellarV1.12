@@ -1,51 +1,35 @@
 package com.romain.cellarv1.vue;
 
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.github.mikephil.charting.animation.Easing;
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.romain.cellarv1.R;
 import com.romain.cellarv1.modele.AccesLocal;
-import com.romain.cellarv1.modele.WineBottle;
-import com.romain.cellarv1.outils.MyAdapterCellarListView;
-import com.romain.cellarv1.outils.MyAdapterCellarRecyclerView;
 
-import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CellarStatsFragment#newInstance} factory method to
+ * Use the {@link CellarStatWineColorFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CellarStatsFragment extends Fragment {
+public class CellarStatWineColorFragment extends Fragment {
 
     private AccesLocal accesLocal;
 
@@ -59,8 +43,6 @@ public class CellarStatsFragment extends Fragment {
     private TextView txtTotalNumber;
 
 
-
-
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -70,7 +52,7 @@ public class CellarStatsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public CellarStatsFragment() {
+    public CellarStatWineColorFragment() {
         // Required empty public constructor
     }
 
@@ -80,11 +62,11 @@ public class CellarStatsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment CellarStatsFragment.
+     * @return A new instance of fragment CellarStatWineColorFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CellarStatsFragment newInstance(String param1, String param2) {
-        CellarStatsFragment fragment = new CellarStatsFragment();
+    public static CellarStatWineColorFragment newInstance(String param1, String param2) {
+        CellarStatWineColorFragment fragment = new CellarStatWineColorFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -102,23 +84,21 @@ public class CellarStatsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        View cellarStatsFragment = inflater.inflate(R.layout.fragment_cellar_stats, container, false);
-        //pieChart = (PieChart) cellarStatsFragment.findViewById(R.id.pieChart);
+        View cellarStatWineColorFragment = inflater.inflate(R.layout.fragment_cellar_stat_wine_color, container, false);
+        pieChart = (PieChart) cellarStatWineColorFragment.findViewById(R.id.pieChart);
 
-        //txtTotalNumber = (TextView) cellarStatsFragment.findViewById(R.id.txtTotalNumber);
-
-
-
-        //loadTotalNumber();
-        //loadWineColorPieChart();
+        txtTotalNumber = (TextView) cellarStatWineColorFragment.findViewById(R.id.txtTotalNumber);
 
 
 
+        loadTotalNumber();
+        loadWineColorPieChart();
 
-        return cellarStatsFragment;
 
+        return cellarStatWineColorFragment;
     }
 
     private void loadTotalNumber() {
@@ -218,13 +198,13 @@ public class CellarStatsFragment extends Fragment {
         dataSet.setColors(COLORS);
         //dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
 
-        pieChart.animateXY(0, 2000);
+        pieChart.animateXY(0, 1000);
 
 
         PieData data = new PieData(dataSet);
 
         data.setValueTextSize(15f);
-        data.setValueFormatter(new MyPieChartValueFormatter());
+        data.setValueFormatter(new CellarStatWineColorFragment.MyPieChartValueFormatter());
         data.setValueTextColor(Color.parseColor("#2F3B40"));
 
         pieChart.setData(data);
@@ -245,5 +225,4 @@ public class CellarStatsFragment extends Fragment {
             return mFormat.format(value);
         }
     }
-
 }

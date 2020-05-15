@@ -2,7 +2,6 @@ package com.romain.cellarv1.vue;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,7 +17,6 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -29,12 +27,8 @@ import com.romain.cellarv1.outils.CellarPageAdapter;
 import com.romain.cellarv1.outils.CellarTabsTransition;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
 import com.romain.cellarv1.outils.MyAdapterCellarRecyclerView;
-import com.romain.cellarv1.outils.MyButtonClickListener;
-import com.romain.cellarv1.outils.MySwipeHelper;
-import com.romain.cellarv1.outils.Tools;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class CellarActivity extends AppCompatActivity {
@@ -307,7 +301,16 @@ public class CellarActivity extends AppCompatActivity {
         sortColorStat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //loadSortMapWineBottleInListView();
+
+                CellarStatWineColorFragment cellarStatWineColorFragment = new CellarStatWineColorFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.layoutStatFragment,cellarStatWineColorFragment);
+
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                fragmentTransaction.commit();
+
                 sortColorStat.setColorFilter(CellarActivity.this.getColor(R.color.green_light), PorterDuff.Mode.SRC_IN);
                 sortYearStat.setColorFilter(CellarActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
                 sortMapStat.setColorFilter(CellarActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
@@ -318,17 +321,15 @@ public class CellarActivity extends AppCompatActivity {
         sortYearStat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //loadSortColorWineBottleInListView();
 
-                /*
+                CellarStatMillesimeFragment cellarStatMillesimeFragment = new CellarStatMillesimeFragment();
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.layout.fragment_like_list, like);
-                fragmentTransaction.addToBackStack(cellarListFragment.toString());
+                fragmentTransaction.replace(R.id.layoutStatFragment, cellarStatMillesimeFragment);
+
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 fragmentTransaction.commit();
-
-                 */
 
 
                 sortColorStat.setColorFilter(CellarActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
@@ -341,7 +342,16 @@ public class CellarActivity extends AppCompatActivity {
         sortMapStat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //loadRecoverWineBottleInListView();
+
+                CellarStatMapFragment cellarStatMapFragment = new CellarStatMapFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.layoutStatFragment, cellarStatMapFragment);
+
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                fragmentTransaction.commit();
+
                 sortColorStat.setColorFilter(CellarActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
                 sortYearStat.setColorFilter(CellarActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
                 sortMapStat.setColorFilter(CellarActivity.this.getColor(R.color.green_light), PorterDuff.Mode.SRC_IN);
@@ -352,7 +362,16 @@ public class CellarActivity extends AppCompatActivity {
         sortApogeeStat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //loadSortYearWineBottleInListView();
+
+                CellarStatApogeeFragment cellarStatApogeeFragment = new CellarStatApogeeFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.layoutStatFragment, cellarStatApogeeFragment);
+
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                fragmentTransaction.commit();
+
                 sortColorStat.setColorFilter(CellarActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
                 sortYearStat.setColorFilter(CellarActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
                 sortMapStat.setColorFilter(CellarActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
