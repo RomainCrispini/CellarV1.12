@@ -37,7 +37,7 @@ public class CellarStatWineColorFragment extends Fragment {
     private OvershootInterpolator interpolator = new OvershootInterpolator();
 
     // Tableaux
-    private PieChart pieChart;
+    private PieChart pieChartWineColor;
 
     // TextViews
     private TextView txtTotalNumber;
@@ -88,10 +88,9 @@ public class CellarStatWineColorFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View cellarStatWineColorFragment = inflater.inflate(R.layout.fragment_cellar_stat_wine_color, container, false);
-        pieChart = (PieChart) cellarStatWineColorFragment.findViewById(R.id.pieChart);
 
+        pieChartWineColor = (PieChart) cellarStatWineColorFragment.findViewById(R.id.pieChartWineColor);
         txtTotalNumber = (TextView) cellarStatWineColorFragment.findViewById(R.id.txtTotalNumber);
-
 
 
         loadTotalNumber();
@@ -110,24 +109,25 @@ public class CellarStatWineColorFragment extends Fragment {
 
     private void loadWineColorPieChart() {
 
-        pieChart.setUsePercentValues(false);
+        pieChartWineColor.setUsePercentValues(false);
 
         // Caractéristiques du message s'il n'y a pas de données
-        pieChart.setNoDataText("Il manque quelques bouteilles pour éditer des statistiques !");
+        pieChartWineColor.setNoDataText("Il manque quelques bouteilles pour éditer des statistiques !");
         //pieChart.invalidate();
-        Paint p = pieChart.getPaint(PieChart.PAINT_INFO);
+        Paint p = pieChartWineColor.getPaint(PieChart.PAINT_INFO);
         p.setTextSize(15f);
         p.setColor(Color.parseColor("#8DB3C5"));
+        p.setColor(getResources().getColor(R.color.green_very_light));
 
-        pieChart.getDescription().setEnabled(false);
-        pieChart.setExtraOffsets(5, 10, 5, 5);
+        pieChartWineColor.getDescription().setEnabled(false);
+        pieChartWineColor.setExtraOffsets(5, 10, 5, 5);
 
-        pieChart.setDragDecelerationFrictionCoef(0.95f);
+        pieChartWineColor.setDragDecelerationFrictionCoef(0.95f);
 
-        pieChart.setDrawHoleEnabled(true);
-        pieChart.setHoleColor(Color.TRANSPARENT);
-        pieChart.setHoleRadius(70f);
-        pieChart.setTransparentCircleRadius(0f);
+        pieChartWineColor.setDrawHoleEnabled(true);
+        pieChartWineColor.setHoleColor(Color.TRANSPARENT);
+        pieChartWineColor.setHoleRadius(70f);
+        pieChartWineColor.setTransparentCircleRadius(0f);
         //pieChart.getLegend().setEnabled(false);
 
         accesLocal = new AccesLocal(getContext());
@@ -141,8 +141,6 @@ public class CellarStatWineColorFragment extends Fragment {
         // Modifie le nombre de couleurs du pie suivant les celle des bouteilles
         ArrayList<Integer> COLORS = new ArrayList<>();
         ArrayList<PieEntry> values = new ArrayList<>();
-
-
 
         if(nbRed > 0) {
             values.add(new PieEntry(nbRed, "Rouge"));
@@ -177,19 +175,13 @@ public class CellarStatWineColorFragment extends Fragment {
         }
 
 
-
-
-
-
-
-
-
-        pieChart.setDrawEntryLabels(false);
+        pieChartWineColor.setDrawEntryLabels(false);
         //pieChart.setEntryLabelTextSize(4f);
         //pieChart.setEntryLabelColor(Color.parseColor("#2F3B40"));
 
-        Legend legend = pieChart.getLegend();
-        legend.setTextColor(Color.parseColor("#8DB3C5"));
+        Legend legend = pieChartWineColor.getLegend();
+        //legend.setTextColor(Color.parseColor("#8DB3C5"));
+        legend.setTextColor(getResources().getColor(R.color.green_very_light));
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
 
         PieDataSet dataSet = new PieDataSet(values, "");
@@ -198,17 +190,17 @@ public class CellarStatWineColorFragment extends Fragment {
         dataSet.setColors(COLORS);
         //dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
 
-        pieChart.animateXY(0, 1000);
-
+        pieChartWineColor.animateXY(0, 1000);
 
         PieData data = new PieData(dataSet);
 
         data.setValueTextSize(15f);
         data.setValueFormatter(new CellarStatWineColorFragment.MyPieChartValueFormatter());
-        data.setValueTextColor(Color.parseColor("#2F3B40"));
+        //data.setValueTextColor(Color.parseColor("#2F3B40"));
+        data.setValueTextColor(getResources().getColor(R.color.green_very_dark));
 
-        pieChart.setData(data);
-        pieChart.notifyDataSetChanged();
+        pieChartWineColor.setData(data);
+        pieChartWineColor.notifyDataSetChanged();
 
     }
 

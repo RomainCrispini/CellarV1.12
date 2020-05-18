@@ -57,6 +57,20 @@ public class AccesLocal {
         return nbTotal;
     }
 
+    /**
+     * Méthode qui permet de récupérer le montant total des bouteilles
+     */
+    public int nbTotalEstimate() {
+        int nbTotalEstimte = 0;
+        bd = accesBD.getReadableDatabase();
+        String requete = "select sum(estimate) from bottle";
+        Cursor cursor = bd.rawQuery(requete, null);
+        if(cursor.moveToFirst()) {
+            nbTotalEstimte = cursor.getInt(0);
+        }
+        while (cursor.moveToNext());
+        return nbTotalEstimte;
+    }
 
     /**
      * 4 méthodes qui permettent de récupérer le nombre de bouteilles par couleur

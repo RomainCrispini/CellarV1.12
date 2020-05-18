@@ -16,87 +16,90 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentActivity;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.romain.cellarv1.R;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
+
 import java.io.IOException;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    // Initialisation de la Custom FAB et de ses caractéristiques
+    // Déclaration de la Custom FAB et de ses caractéristiques
     private FloatingActionButton fabWineMenu, fabRed, fabRose, fabWhite, fabChamp;
     private OvershootInterpolator interpolator = new OvershootInterpolator();
     private Boolean isFABWineMenuOpen = false;
 
-    // Déclaration permission map
+    // Déclaration permission map, si on souhaite localiser le téléphone, ce qui n'est pour l'instant pas le cas
     private static final int MAP_REQUEST_PERMISSION = 100;
 
     private LocationManager locmanager;
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private MapFragment mapFragment;
-    private GoogleMap googleMap;
+    private GoogleMap map;
+
+    // Déclaration des boutons zoom in et out de la map
+    private Button zoomIn, zoomOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        zoomIn = (Button) findViewById(R.id.zoomIn);
+        zoomOut = (Button) findViewById(R.id.zoomOut);
+
         init();
-        mapRequestPermission();
-        loadMap();
-
-        /*
-        fabScan = (FloatingActionButton) findViewById(R.id.scan);
-        fabScan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), ScanActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-            }
-        });
-
-         */
+        //searchLocation();
+        //loadMap();
 
 
+    }
 
-
-
+    public void onZoom(View view) {
+        if(view.getId() == R.id.zoomIn) {
+            map.animateCamera(CameraUpdateFactory.zoomIn());
+        }
+        if(view.getId() == R.id.zoomOut) {
+            map.animateCamera(CameraUpdateFactory.zoomOut());
+        }
     }
 
     private void init() {
 
         // Map Fragment
-        FragmentManager fragmentManager = getFragmentManager();
-        mapFragment = (MapFragment) fragmentManager.findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         initCurvedNavigationView();
         initFabWineMenu();
         getFabWineMenuValue();
-
     }
-
-    //public void addBottle(View view) {
-
-    //Intent intent = new Intent(MainActivity.this, AddActivity.class);
-    //startActivity(intent);
-    //setContentView(R.layout.activity_add);
-    //
 
     private void initFabWineMenu() {
         fabWineMenu = findViewById(R.id.fabWineMenu);
@@ -258,6 +261,41 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        map = googleMap;
+
+
+        // Personnalisation des options d'affichage
+        UiSettings mapSettings = googleMap.getUiSettings();
+        mapSettings.setZoomControlsEnabled(true);
+        mapSettings.setMyLocationButtonEnabled(false);
+
+        // Personnalisation de la map liée à res/raw/mapstyle_dark.json par défaut
+        try {
+            boolean success = googleMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                            this, R.raw.mapstyle_dark));
+
+            if (!success) {
+                Log.e(TAG, "Style parsing failed.");
+            }
+        } catch (Resources.NotFoundException e) {
+            Log.e(TAG, "Can't find style. Error: ", e);
+        }
+
+        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.champ_wine);
+        LatLng nancy = new LatLng(48.687646, 6.181732);
+        MarkerOptions markerOptions = new MarkerOptions().position(nancy).title("Nancy").icon(icon);
+        map.addMarker(markerOptions);
+
+        map.moveCamera(CameraUpdateFactory.newLatLng(nancy));
+        googleMap.moveCamera(CameraUpdateFactory.zoomBy(2));
+
+    }
+
+        /*
     private void mapRequestPermission() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -284,6 +322,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.CAMERA}, MAP_REQUEST_PERMISSION);
         }
     }
+
+
 
     private void validationPermissions() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -347,83 +387,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    private void loadMap() {
+     */
 
-        mapFragment.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                MainActivity.this.googleMap = googleMap;
-                googleMap.moveCamera(CameraUpdateFactory.zoomBy(9));
-                googleMap.setMyLocationEnabled(true);
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(48.6833, 6.2))
-                        .title("C'est bien ici !!!"));
-            }
-        });
-
-    }
-
-
-
-
-    // Ces quatre méthodes issues de l'implémentation LocationListener sont à redéfinir :
-    @Override
-    public void onProviderEnabled(String provider) {
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        //double lattitude = location.getLatitude();
-        //double longitude = location.getLongitude();
-
-        //Toast.makeText(this, "Location" + lattitude + "/" + longitude, Toast.LENGTH_LONG).show();
-        //if(googleMap != null) {
-        //LatLng googleLocation = new LatLng(48.6833, 6.2);
-        //    googleMap.moveCamera(CameraUpdateFactory.newLatLng(googleLocation));
-        //}
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-
-        // Personnalisation des options d'affichage
-        UiSettings mapSettings = googleMap.getUiSettings();
-        mapSettings.setZoomControlsEnabled(true);
-        mapSettings.setMyLocationButtonEnabled(false);
-
-        // Personnalisation de la map liée à res/raw/mapstyle_dark.json par défaut
-        try {
-            boolean success = googleMap.setMapStyle(
-                    MapStyleOptions.loadRawResourceStyle(
-                            this, R.raw.mapstyle_dark));
-
-            if (!success) {
-                Log.e(TAG, "Style parsing failed.");
-            }
-        } catch (Resources.NotFoundException e) {
-            Log.e(TAG, "Can't find style. Error: ", e);
-        }
-
-        MainActivity.this.googleMap = googleMap;
-        googleMap.moveCamera(CameraUpdateFactory.zoomBy(10));
-//        googleMap.setMyLocationEnabled(true);
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(48.6833, 6.2))
-                .title("C'est bien ici !!!"));
-    }
-
+    /*
     public void searchLocation(View view) {
         EditText locationSearch = (EditText) findViewById(R.id.editText);
         String location = locationSearch.getText().toString();
         List<Address> addressList = null;
 
-        location = "nancy";
+        //location = "nancy";
 
         if(location == null || location.equals("")) {
             Toast.makeText(MainActivity.this, "Merci d'entrer une localité", Toast.LENGTH_SHORT).show();
@@ -438,11 +410,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
             Address address = addressList.get(0);
             LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-            googleMap.addMarker(new MarkerOptions().position(latLng).title(location));
-            googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+            map.addMarker(new MarkerOptions().position(latLng).title(location));
+            map.animateCamera(CameraUpdateFactory.newLatLng(latLng));
             Toast.makeText(MainActivity.this,address.getLatitude() + " " + address.getLongitude(),Toast.LENGTH_LONG).show();
         }
     }
+     */
 
 
 }

@@ -40,7 +40,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0'
 
     // Librairie Cartographie
-    implementation 'com.google.android.gms:play-services-maps:11.0.2'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
     // Librairie PulseButton
     implementation 'pl.bclogic:pulsator4droid:1.0.3'

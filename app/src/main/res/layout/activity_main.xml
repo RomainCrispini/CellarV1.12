@@ -11,36 +11,36 @@
 
     <fragment
         android:id="@+id/map"
-        android:name="com.google.android.gms.maps.MapFragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="55dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/editText"
-                android:layout_width="248dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:layout_weight="0.5"
-                android:hint="Recherche"
-                android:inputType="text" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="150dp"
-                android:layout_weight="0.5"
-                android:onClick="searchLocation"
-                android:text="Recherche" />
-
-        </LinearLayout>
-
     </fragment>
+
+    <Button
+        android:id="@+id/zoomIn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:onClick="onZoom"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Zoom +"/>
+
+    <Button
+        android:id="@+id/zoomOut"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:onClick="onZoom"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/zoomIn"
+        android:text="Zoom -"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

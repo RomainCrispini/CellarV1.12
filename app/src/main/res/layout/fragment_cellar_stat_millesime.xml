@@ -5,10 +5,46 @@
     android:layout_height="match_parent"
     tools:context=".vue.CellarStatMillesimeFragment">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="CELLAR STAT MILLESIME FRAGMENT" />
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/yanone_kaffeesatz"
+                android:text="Estimation totale de mes bouteilles : "
+                android:textColor="@color/green_very_light"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/txtTotalEstimate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/yanone_kaffeesatz"
+                android:text="estimation"
+                android:textAlignment="textStart"
+                android:textColor="@color/green_very_light"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChartMillesime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp" />
+
+    </LinearLayout>
 
 </FrameLayout>
