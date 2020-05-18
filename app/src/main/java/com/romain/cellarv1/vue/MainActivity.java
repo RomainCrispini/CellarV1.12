@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -43,6 +44,7 @@ import com.romain.cellarv1.R;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -62,17 +64,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private MapFragment mapFragment;
     private GoogleMap map;
 
-    // Déclaration des boutons zoom in et out de la map
-    private Button zoomIn, zoomOut;
+    // Boutons Zoom IN Out Map
+    private ImageButton zoomIn, zoomOut;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        zoomIn = (Button) findViewById(R.id.zoomIn);
-        zoomOut = (Button) findViewById(R.id.zoomOut);
-
         init();
         //searchLocation();
         //loadMap();
@@ -95,6 +94,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        // Alpha Boutons Zoom In Out Map
+        zoomIn = (ImageButton) findViewById(R.id.zoomIn);
+        zoomOut = (ImageButton) findViewById(R.id.zoomOut);
+        zoomIn.setAlpha(0.3f);
+        zoomOut.setAlpha(0.3f);
 
         initCurvedNavigationView();
         initFabWineMenu();
@@ -269,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // Personnalisation des options d'affichage
         UiSettings mapSettings = googleMap.getUiSettings();
-        mapSettings.setZoomControlsEnabled(true);
+        mapSettings.setZoomControlsEnabled(false);
         mapSettings.setMyLocationButtonEnabled(false);
 
         // Personnalisation de la map liée à res/raw/mapstyle_dark.json par défaut
@@ -284,6 +289,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         } catch (Resources.NotFoundException e) {
             Log.e(TAG, "Can't find style. Error: ", e);
         }
+
+        ArrayList<Bitmap> bitmapList = new ArrayList<>();
+
+        /*
+        for(int i=0; i<markers_location.length; i++){
+            coords_markers.add(new LatLng(
+                    lat_markers.get(i).getLatitude,
+                    lon_markers.get(i).getLongitude));}
+
+         */
 
         BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.champ_wine);
         LatLng nancy = new LatLng(48.687646, 6.181732);

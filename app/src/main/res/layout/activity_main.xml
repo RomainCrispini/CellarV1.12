@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/dark_gradient_background"
+    android:orientation="vertical"
     tools:context=".vue.MainActivity">
 
 
@@ -18,79 +18,91 @@
 
     </fragment>
 
-    <Button
-        android:id="@+id/zoomIn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-
-        android:onClick="onZoom"
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Zoom +"/>
+        app:layout_constraintBottom_toTopOf="@id/curvedBottomNavigationView"
+        android:gravity="bottom"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/zoomOut"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        <ImageButton
+            android:id="@+id/zoomIn"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/transparent"
+            android:onClick="onZoom"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_add_circle_black_24dp"
+            android:tint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        android:onClick="onZoom"
+        <ImageButton
+            android:id="@+id/zoomOut"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/transparent"
+            android:onClick="onZoom"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_less_circle_black_24dp"
+            android:tint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/zoomIn"
-        android:text="Zoom -"/>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:gravity="bottom|center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabRed"
-            android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/red_wine"
+            android:layout_margin="10dp"
             android:backgroundTint="@color/green_very_dark"
             android:elevation="0dp"
+            android:src="@drawable/red_wine"
             app:fabCustomSize="40dp"
             app:maxImageSize="35dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabRose"
-            android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/rose_wine"
+            android:layout_margin="10dp"
             android:backgroundTint="@color/green_very_dark"
             android:elevation="0dp"
+            android:src="@drawable/rose_wine"
             app:fabCustomSize="40dp"
             app:maxImageSize="35dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabWhite"
-            android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/white_wine"
+            android:layout_margin="10dp"
             android:backgroundTint="@color/green_very_dark"
             android:elevation="0dp"
+            android:src="@drawable/white_wine"
             app:fabCustomSize="40dp"
             app:maxImageSize="35dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabChamp"
-            android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/champ_wine"
+            android:layout_margin="10dp"
             android:backgroundTint="@color/green_very_dark"
             android:elevation="0dp"
+            android:src="@drawable/champ_wine"
             app:fabCustomSize="40dp"
             app:maxImageSize="35dp" />
 
@@ -98,11 +110,6 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabWineMenu"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/curvedBottomNavigationView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:maxImageSize="31dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -112,7 +119,12 @@
         android:tint="@color/green_dark"
         app:borderWidth="0.5dp"
         app:elevation="10dp"
-        app:fabSize="normal" />
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/curvedBottomNavigationView"
+        app:maxImageSize="31dp" />
 
     <com.romain.cellarv1.outils.CurvedBottomNavigationView
         android:id="@+id/curvedBottomNavigationView"
@@ -121,8 +133,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="false"
         android:layout_centerHorizontal="true"
-        app:itemIconSize="31dp"
         android:paddingTop="20dp"
+        app:itemIconSize="31dp"
         app:itemIconTint="@color/green_dark"
         app:labelVisibilityMode="unlabeled"
         app:layout_constrainedWidth="true"
@@ -131,7 +143,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:menu="@menu/bottom_nav_menu">
-    </com.romain.cellarv1.outils.CurvedBottomNavigationView>
+        app:menu="@menu/bottom_nav_menu"></com.romain.cellarv1.outils.CurvedBottomNavigationView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
