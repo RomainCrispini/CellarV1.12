@@ -62,16 +62,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private MapFragment mapFragment;
     private GoogleMap map;
 
-    // Déclaration des boutons zoom in et out de la map
-    private Button zoomIn, zoomOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        zoomIn = (Button) findViewById(R.id.zoomIn);
-        zoomOut = (Button) findViewById(R.id.zoomOut);
 
         init();
         //searchLocation();
@@ -80,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-    public void onZoom(View view) {
+    public void zoomMapInOut(View view) {
         if(view.getId() == R.id.zoomIn) {
             map.animateCamera(CameraUpdateFactory.zoomIn());
         }

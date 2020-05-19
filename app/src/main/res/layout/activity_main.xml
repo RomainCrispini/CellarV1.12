@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
 
-        android:onClick="onZoom"
+        android:onClick="zoomMapInOut"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
 
-        android:onClick="onZoom"
+        android:onClick="zoomMapInOut"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
