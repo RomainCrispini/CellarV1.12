@@ -21,7 +21,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="130dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
@@ -86,6 +86,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -237,38 +238,62 @@
 
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/green_third_light" />
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:scaleX="1"
+                    android:scaleY="1"
+                    android:stepSize="0.5"
+                    android:theme="@style/RatingBar"
+                    android:transformPivotX="20dp"
+                    android:transformPivotY="5dp" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="55dp"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     app:cardBackgroundColor="@color/green_third_light"
-                    app:cardCornerRadius="20dp"
+                    app:cardCornerRadius="23dp"
                     app:cardElevation="0dp">
 
                     <ToggleButton
                         android:id="@+id/favorite"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:background="@drawable/button_like_cardview" />
 
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
+                    android:layout_width="46dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     app:cardBackgroundColor="@color/green_third_light"
-                    app:cardCornerRadius="20dp"
+                    app:cardCornerRadius="23dp"
                     app:cardElevation="0dp">
 
                     <ImageButton

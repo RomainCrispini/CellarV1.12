@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -27,14 +29,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -43,6 +48,7 @@ import com.romain.cellarv1.R;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -62,20 +68,27 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private MapFragment mapFragment;
     private GoogleMap map;
 
+    // Boutons Zoom In Out Map
+    private ImageButton zoomIn, zoomOut;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         init();
+
         //searchLocation();
         //loadMap();
 
 
     }
 
-    public void zoomMapInOut(View view) {
+    /**
+     * Commande les boutons zoom de la map
+     * @param view
+     */
+    public void onZoom(View view) {
         if(view.getId() == R.id.zoomIn) {
             map.animateCamera(CameraUpdateFactory.zoomIn());
         }
@@ -90,6 +103,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        // Alpha Boutons Zoom In Out Map
+        zoomIn = (ImageButton) findViewById(R.id.zoomIn);
+        zoomOut = (ImageButton) findViewById(R.id.zoomOut);
+        zoomIn.setAlpha(0.3f);
+        zoomOut.setAlpha(0.3f);
 
         initCurvedNavigationView();
         initFabWineMenu();
@@ -264,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // Personnalisation des options d'affichage
         UiSettings mapSettings = googleMap.getUiSettings();
-        mapSettings.setZoomControlsEnabled(true);
+        mapSettings.setZoomControlsEnabled(false);
         mapSettings.setMyLocationButtonEnabled(false);
 
         // Personnalisation de la map liée à res/raw/mapstyle_dark.json par défaut
@@ -280,13 +299,32 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Log.e(TAG, "Can't find style. Error: ", e);
         }
 
-        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.champ_wine);
+        ArrayList<Bitmap> bitmapList = new ArrayList<>();
+
+        /*
+        for(int i=0; i<markers_location.length; i++){
+            coords_markers.add(new LatLng(
+                    lat_markers.get(i).getLatitude,
+                    lon_markers.get(i).getLongitude));}
+         */
+
+
+        // Nouvelles dimensions du marker
+        int height = 80;
+        int width = 80;
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.champ_wine);
+        Bitmap smallMarker = Bitmap.createScaledBitmap(bitmap, width, height, false);
+        BitmapDescriptor smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker);
+
         LatLng nancy = new LatLng(48.687646, 6.181732);
-        MarkerOptions markerOptions = new MarkerOptions().position(nancy).title("Nancy").icon(icon);
+        MarkerOptions markerOptions = new MarkerOptions().position(nancy).title("NomDuVin").icon(smallMarkerIcon);
         map.addMarker(markerOptions);
 
-        map.moveCamera(CameraUpdateFactory.newLatLng(nancy));
-        googleMap.moveCamera(CameraUpdateFactory.zoomBy(2));
+        // Initialisation default position sur Nancy
+        LatLng defaultPosition = new LatLng(48.687646, 6.181732);
+        CameraUpdate cameraPosition = CameraUpdateFactory.newLatLngZoom(defaultPosition, 5);
+        map.moveCamera(cameraPosition);
+        map.animateCamera(cameraPosition);
 
     }
 
@@ -312,18 +350,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         }
                     })
                     .create().show();
-
         } else {
             ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.CAMERA}, MAP_REQUEST_PERMISSION);
         }
     }
-
-
-
     private void validationPermissions() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
             // Appel asynchrone
             ActivityCompat.requestPermissions(this, new String[] {
                     Manifest.permission.ACCESS_FINE_LOCATION,
@@ -338,11 +371,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-
-
-
-
-
         //locmanager = (LocationManager) getSystemService(LOCATION_SERVICE);
         //if (locmanager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
         //    locmanager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
@@ -354,16 +382,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         //    locmanager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
         //}
         //loadMap();
-
     }
-
     @Override
     protected void onResume() {
         super.onResume();
         validationPermissions();
         //mapRequestPermission();
     }
-
     // Méthode activée quand une demande d'activation des permissions est proposée
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -373,7 +398,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             validationPermissions();
         }
     }
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -381,7 +405,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             locmanager.removeUpdates(this);
         }
     }
-
      */
 
     /*
@@ -389,9 +412,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         EditText locationSearch = (EditText) findViewById(R.id.editText);
         String location = locationSearch.getText().toString();
         List<Address> addressList = null;
-
         //location = "nancy";
-
         if(location == null || location.equals("")) {
             Toast.makeText(MainActivity.this, "Merci d'entrer une localité", Toast.LENGTH_SHORT).show();
         }
@@ -399,7 +420,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Geocoder geocoder = new Geocoder(this);
             try {
                 addressList = geocoder.getFromLocationName(location, 10);
-
             } catch (IOException e) {
                 e.printStackTrace();
             }

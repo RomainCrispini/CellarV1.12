@@ -236,4 +236,36 @@
             tools:ignore="MissingConstraints" />
     </LinearLayout>
 
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/autocomplete2"/>
+
+    <fragment
+        android:id="@+id/autocomplete2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/autocomplete"
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment" />
+
+    <AutoCompleteTextView
+        android:id="@+id/autocomplete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/curvedBottomNavigationView" />
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,29 +18,41 @@
 
     </fragment>
 
-    <Button
-        android:id="@+id/zoomIn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-
-        android:onClick="zoomMapInOut"
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Zoom +"/>
+        app:layout_constraintBottom_toTopOf="@id/curvedBottomNavigationView"
+        android:gravity="bottom"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/zoomOut"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        <ImageButton
+            android:id="@+id/zoomIn"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/transparent"
+            android:onClick="onZoom"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_add_circle_black_24dp"
+            android:tint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        android:onClick="zoomMapInOut"
+        <ImageButton
+            android:id="@+id/zoomOut"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/transparent"
+            android:onClick="onZoom"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_less_circle_black_24dp"
+            android:tint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/zoomIn"
-        android:text="Zoom -"/>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

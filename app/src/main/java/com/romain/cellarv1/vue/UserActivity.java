@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
+import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import androidx.appcompat.widget.SwitchCompat;
 
@@ -16,9 +17,20 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.romain.cellarv1.R;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
+import com.romain.cellarv1.outils.PlaceAutoSuggestAdapter;
+
+import java.util.Arrays;
 
 
 public class UserActivity extends AppCompatActivity {
@@ -35,13 +47,60 @@ public class UserActivity extends AppCompatActivity {
     private ImageButton btnBackMap1, btnBackMap2;
 
 
+    private PlacesClient placesClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
         init();
 
+        String apikey = "AIzaSyBG9tWlQvjS-Dl0bbMHj7pXdsdpMObmtb0";
+        if(!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), apikey);
+        }
+
+        placesClient = Places.createClient(this);
+
+        final AutocompleteSupportFragment autocompleteSupportFragment =
+                (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete2);
+
+
+
+        //final AutoCompleteTextView autoCompleteTextView=findViewById(R.id.autocomplete);
+        //autoCompleteTextView.setAdapter(new PlaceAutoSuggestAdapter(UserActivity.this,android.R.layout.simple_list_item_1));
+
+        autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME));
+
+        autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(@NonNull Place place) {
+                final LatLng latLng = place.getLatLng();
+
+                //Toast.makeText(UserActivity.this, "lattitude : " + latLng.latitude + "longitude" + latLng.longitude, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(@NonNull Status status) {
+
+            }
+        });
+
+
+
+
+
+
+
+
     }
+
+
+
+
+
+
+
 
     private void init() {
 
