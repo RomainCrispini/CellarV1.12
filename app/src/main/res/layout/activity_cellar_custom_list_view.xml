@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <!-- <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -23,9 +22,9 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginLeft="20dp"
         app:cardBackgroundColor="@color/green_light"
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp"
@@ -34,10 +33,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_marginLeft="45dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="fill_horizontal"
+            android:layout_marginLeft="45dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -48,33 +47,33 @@
 
                 <TextView
                     android:id="@+id/regionListView"
-                    android:textSize="12sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/yanone_kaffeesatz"
                     android:gravity="center"
                     android:text="Région"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/appellationListView"
-                    android:textSize="12sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/yanone_kaffeesatz"
                     android:gravity="center"
-                    android:text="Appellation" />
+                    android:text="Appellation"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/domainListView"
-                    android:textSize="12sp"
-                    android:layout_marginBottom="3dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_marginBottom="3dp"
                     android:fontFamily="@font/yanone_kaffeesatz"
-                    android:text="Domaine" />
+                    android:gravity="center"
+                    android:text="Domaine"
+                    android:textSize="12sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -248,39 +247,39 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_margin="5dp"
                     android:layout_gravity="center"
+                    android:layout_margin="5dp"
                     app:cardBackgroundColor="@color/green_third_light"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="0dp">
 
-                <ToggleButton
-                    android:id="@+id/favorite"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/button_like_cardview" />
+                    <ToggleButton
+                        android:id="@+id/favorite"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/button_like_cardview" />
 
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_margin="5dp"
                     android:layout_gravity="center"
+                    android:layout_margin="5dp"
                     app:cardBackgroundColor="@color/green_third_light"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="0dp">
 
-                <ImageButton
-                    android:id="@+id/delete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center"
-                    android:backgroundTint="@color/transparent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/icone_out_cardview"
-                    android:tint="@color/green_light" />
+                    <ImageButton
+                        android:id="@+id/delete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:backgroundTint="@color/transparent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/icone_out_cardview"
+                        android:tint="@color/green_light" />
                 </androidx.cardview.widget.CardView>
 
             </LinearLayout>
@@ -299,9 +298,9 @@
         app:cardBackgroundColor="@color/grey_light"
         app:cardCornerRadius="30dp"
         app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/cardView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/cardView"
-        app:layout_constraintBottom_toBottomOf="@id/cardView">
+        app:layout_constraintTop_toTopOf="@id/cardView">
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
@@ -332,8 +331,8 @@
                 android:layout_width="51dp"
                 android:layout_height="51dp"
                 android:layout_gravity="center"
-                android:transitionName="imageTransition"
-                android:elevation="0dp" />
+                android:elevation="0dp"
+                android:transitionName="imageTransition" />
         </androidx.cardview.widget.CardView>
 
     </androidx.cardview.widget.CardView>
