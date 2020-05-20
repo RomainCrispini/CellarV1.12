@@ -14,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -55,6 +56,8 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
 
         public ImageView imageBottle;
 
+        public RatingBar ratingBarCardView;
+
         public final ToggleButton favorite;
         public final ImageButton delete;
 
@@ -78,6 +81,8 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
             pastilleImageBottle = itemView.findViewById(R.id.pastilleImageBottle);
 
             imageBottle = itemView.findViewById(R.id.imageBottle);
+
+            ratingBarCardView = itemView.findViewById(R.id.ratingBarCardView);
 
             favorite = itemView.findViewById(R.id.favorite);
             delete = itemView.findViewById(R.id.delete);
@@ -122,7 +127,6 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
 
                 Intent intent = new Intent(mContext, BottleActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 
-
                 intent.putExtra("wineColor", wineBottle.getWineColor());
                 intent.putExtra("imageBottle", wineBottle.getImage());
                 intent.putExtra("country", wineBottle.getCountry());
@@ -133,6 +137,7 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                 intent.putExtra("apogee", wineBottle.getApogee().toString());
                 intent.putExtra("estimate", wineBottle.getEstimate().toString());
                 intent.putExtra("number", wineBottle.getNumber().toString());
+                intent.putExtra("rate", wineBottle.getRate().toString());
                 intent.putExtra("favorite", wineBottle.getFavorite());
                 intent.putExtra("wish", wineBottle.getWish());
 
@@ -342,8 +347,8 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                 break;
         }
 
-
-
+        // On applique la note sur la cardView
+        holder.ratingBarCardView.setRating(currentItem.getRate());
 
         // On set la CardView d'un coeur coloré si la bouteille est favorite = 1, rien si favorite = 0
         switch(currentItem.getFavorite()) {

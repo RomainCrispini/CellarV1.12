@@ -5,6 +5,8 @@ import android.widget.Toast;
 import com.romain.cellarv1.modele.AccesLocal;
 import com.romain.cellarv1.modele.WineBottle;
 import com.romain.cellarv1.outils.Serializer;
+
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -59,8 +61,8 @@ public class Controle {
      * @param wish
      * @param random
      */
-    public void createWineBottle(String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String image, String favorite, String wish, String random, Context context) {
-        wineBottle = new WineBottle(new Date(), country, region, wineColor, domain, appellation, year, apogee, number, estimate, image, favorite, wish, random);
+    public void createWineBottle(String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String image, byte[] imageLarge, byte[] imageSmall, Float rate, String favorite, String wish, Float lattitude, Float longitude, String timeStamp, String random, Context context) {
+        wineBottle = new WineBottle(new Date(), country, region, wineColor, domain, appellation, year, apogee, number, estimate, image, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp, random);
         //Serializer.serialize(serializableFile, wineBottle, context);
         accesLocal.add(wineBottle);
     }

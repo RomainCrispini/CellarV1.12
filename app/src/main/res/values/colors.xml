@@ -11,8 +11,6 @@
 
     <!-- CUSTOM COLORS NAVBAR DARK MODE -->
     <color name="transparent">#00000000</color>
-
-    <!-- CUSTOM COLORS NAVBAR DARK MODE -->
     <color name="grey_very_light">#ECECEC</color>
     <color name="grey_light">#CDCDCD</color>
     <color name="green_very_dark">#2F3B40</color>

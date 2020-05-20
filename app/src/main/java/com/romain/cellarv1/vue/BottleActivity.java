@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -34,15 +35,18 @@ import com.romain.cellarv1.outils.Tools;
 
 public class BottleActivity extends AppCompatActivity {
 
-    // Initialisation de la Custom FAB et de ses caractéristiques
+    // Déclaration de la Custom FAB et de ses caractéristiques
     private FloatingActionButton fabWineMenu, fabRed, fabRose, fabWhite, fabChamp;
     private OvershootInterpolator interpolator = new OvershootInterpolator();
     private Boolean isFABWineMenuOpen = false;
 
-    // Initialisation des champs texte et des ImageView
+    // Déclaration des champs texte et des ImageView
     private EditText countryBottle, regionBottle, domainBottle, appellationBottle;
     private EditText millesimeBottle, apogeeBottle, estimateBottle, numberBottle;
     private ImageView imageBottle, imageWineColor;
+
+    // RatingBar
+    RatingBar ratingBar;
 
     // Button Update
     private Button btnUpdateBottle;
@@ -56,7 +60,7 @@ public class BottleActivity extends AppCompatActivity {
     private ImageButton btnBackMap1;
     private ImageButton btnBackMap2;
 
-    // Initialisation des PopupUpdate et PopupDelete
+    // Déclaration des PopupUpdate et PopupDelete
     private Dialog popupUpdate, popupDelete, popupSuccess;
 
 
@@ -77,6 +81,7 @@ public class BottleActivity extends AppCompatActivity {
         initFabWineMenu();
         getFabWineMenuValue();
         initWineBottle();
+
         btnUpdateBottle = (Button) findViewById(R.id.btnUpdateBottle);
         btnDeleteBottle = (Button) findViewById(R.id.btnDeleteBottle);
 
@@ -156,6 +161,10 @@ public class BottleActivity extends AppCompatActivity {
                 Tools tools = new Tools();
                 imageBottle.setImageBitmap(tools.stringToBitmap(image));
 
+                final RatingBar ratingBarPopUp = (RatingBar) popupUpdate.findViewById(R.id.ratingBarPopUp);
+                Float ratePopUp = ratingBar.getRating();
+                ratingBarPopUp.setRating(ratePopUp);
+
                 if(btnFavorite.isChecked()) {
                     imageFavorite.setVisibility(View.VISIBLE);
                 } else {
@@ -173,6 +182,7 @@ public class BottleActivity extends AppCompatActivity {
                 appellation.setText(appellationBottle.getText());
                 millesime.setText(millesimeBottle.getText());
 
+
                 popupUpdate.show();
 
                 btnAccept.setOnClickListener(new Button.OnClickListener() {
@@ -189,6 +199,8 @@ public class BottleActivity extends AppCompatActivity {
                         Integer intNumber = Integer.parseInt(numberBottle.getText().toString());
                         Integer intEstimate = Integer.parseInt(estimateBottle.getText().toString());
 
+                        Float floatRate = ratingBar.getRating();
+
                         String strFavorite;
                         if(btnFavorite.isChecked()) {
                             strFavorite = "1";
@@ -204,7 +216,7 @@ public class BottleActivity extends AppCompatActivity {
                         }
 
                         AccesLocal accesLocal = new AccesLocal(BottleActivity.this);
-                        accesLocal.updateBottle(strRandom, strCountry, strRegion, strDomain, strAppellation, intMillesime, intApogee, intNumber, intEstimate, strFavorite, strWish);
+                        accesLocal.updateBottle(strRandom, strCountry, strRegion, strDomain, strAppellation, intMillesime, intApogee, intNumber, intEstimate, floatRate, strFavorite, strWish);
                         popupUpdate.dismiss();
 
                         popupSuccess.show();
@@ -268,6 +280,10 @@ public class BottleActivity extends AppCompatActivity {
                 String image = getIntent().getStringExtra("imageBottle");
                 Tools tools = new Tools();
                 imageBottle.setImageBitmap(tools.stringToBitmap(image));
+
+                RatingBar ratingBarPopUp = (RatingBar) popupDelete.findViewById(R.id.ratingBarPopUp);
+                Float ratePopUp = ratingBar.getRating();
+                ratingBarPopUp.setRating(ratePopUp);
 
                 if(btnFavorite.isChecked()) {
                     imageFavorite.setVisibility(View.VISIBLE);
@@ -341,6 +357,8 @@ public class BottleActivity extends AppCompatActivity {
         estimateBottle = (EditText) findViewById(R.id.estimateBottle);
         numberBottle = (EditText) findViewById(R.id.numberBottle);
 
+        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+
         switch(getIntent().getStringExtra("wineColor").trim()) {
             case "Rouge" :
                 imageWineColor.setImageResource(R.drawable.red_wine_listview);
@@ -359,6 +377,10 @@ public class BottleActivity extends AppCompatActivity {
         String image = getIntent().getStringExtra("imageBottle");
         Tools tools = new Tools();
         imageBottle.setImageBitmap(tools.stringToBitmap(image));
+
+        String rate = getIntent().getStringExtra("rate");
+        Float floatRate = Float.valueOf(rate);
+        ratingBar.setRating(floatRate);
 
         btnFavorite.setText(null);
         btnFavorite.setTextOn(null);

@@ -20,8 +20,14 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
             + "number INTEGER,"
             + "estimate INTEGER,"
             + "image TEXT,"
+            + "imagelarge BLOB,"
+            + "imagesmall BLOB,"
+            + "rate REAL,"
             + "favorite TEXT,"
             + "wish TEXT,"
+            + "lattitude REAL,"
+            + "longitude REAL,"
+            + "timestamp TEXT,"
             + "random TEXT);";
 
 

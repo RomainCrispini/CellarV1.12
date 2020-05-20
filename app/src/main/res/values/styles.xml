@@ -19,26 +19,29 @@
         <item name="colorControlActivated">@color/green_apple</item>
     </style>
 
+    <!-- Dialog -->
     <style name="Dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
     </style>
-
     <style name="DialogAnimation">
         <item name="android:windowEnterAnimation">@anim/popup_fadein</item>
         <item name="android:windowExitAnimation">@anim/popup_fadeout</item>
     </style>
 
+    <!-- Edittext AddActivity -->
     <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="boxStrokeColor">@color/green_dark</item>
         <item name="android:textColor">@color/green_dark</item>
         <item name="android:textColorHint">@color/green_dark</item>
     </style>
 
+    <!-- Custom Anim FAB -->
     <style name="customAnimFab">
         <item name="background">@color/green_dark</item>
         <item name="android:textColor">@color/green</item>
     </style>
 
+    <!-- Dark Mode -->
     <style name="darkMode">
 
     </style>

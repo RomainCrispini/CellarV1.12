@@ -460,8 +460,14 @@ public class AddActivity extends AppCompatActivity {
                         int number = 0;
                         int estimate = 0;
                         String image = "";
+                        byte[] imageLarge = null;
+                        byte[] imageSmall = null;
+                        Float rate = 0f;
                         String favorite = "0";
                         String wish = "0";
+                        Float lattitude = 0f;
+                        Float longitude = 0f;
+                        String timeStamp = "";
                         String random = "";
 
                         Tools tool = new Tools();
@@ -513,7 +519,7 @@ public class AddActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        afficheResult(country, region, wineColor, domain, appellation, year, apogee, number, estimate, image, favorite, wish, random);
+                        afficheResult(country, region, wineColor, domain, appellation, year, apogee, number, estimate, image, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp, random);
 
                         popupAdd.dismiss();
 
@@ -542,8 +548,8 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
-    private void afficheResult(String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String image, String favorite, String wish, String random) {
-        this.controle.createWineBottle(country, region, wineColor, domain, appellation, year, apogee, number, estimate, image, favorite, wish, random,  AddActivity.this);
+    private void afficheResult(String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String image, byte[] imageLarge, byte[] imageSmall, Float rate, String favorite, String wish, Float lattitude, Float longitude, String timeStamp, String random) {
+        this.controle.createWineBottle(country, region, wineColor, domain, appellation, year, apogee, number, estimate, image, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp, random,  AddActivity.this);
     }
 
     /**

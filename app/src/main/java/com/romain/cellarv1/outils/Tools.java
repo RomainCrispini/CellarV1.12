@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.romain.cellarv1.R;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class Tools {
@@ -33,6 +35,24 @@ public class Tools {
             Log.i("Bug", "texte non convertible");
         }
         return bitmap;
+    }
+
+    /**
+     *
+     * @return yyyy-MM-dd HH:mm:ss formate date as string
+     */
+    public static String getCurrentTimeStamp(){
+        try {
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String currentTimeStamp = dateFormat.format(new Date()); // Find todays date
+
+            return currentTimeStamp;
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return null;
+        }
     }
 
 }
