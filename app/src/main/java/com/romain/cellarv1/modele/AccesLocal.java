@@ -261,6 +261,47 @@ public class AccesLocal {
         return wineBottleList;
     }
 
+    /**
+     * Récupération de la liste des bouteilles enregistrées dans le cellier
+     * @return Liste exhaustive des bouteilles de vin par ordre décroissant de note
+     */
+    public List<WineBottle> recoverRateWineBottleList() {
+        List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
+        bd = accesBD.getReadableDatabase();
+        WineBottle wineBottle;
+        String requete = "select * from bottle order by rate desc";
+        Cursor cursor = bd.rawQuery(requete, null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()) {
+            Date date = new Date();
+            String country = cursor.getString(1);
+            String region = cursor.getString(2);
+            String winecolor = cursor.getString(3);
+            String domain = cursor.getString(4);
+            String appellation = cursor.getString(5);
+            Integer year = cursor.getInt(6);
+            Integer apogee = cursor.getInt(7);
+            Integer number = cursor.getInt(8);
+            Integer estimate = cursor.getInt(9);
+            String image = cursor.getString(10);
+            byte[] imagelarge = cursor.getBlob(11);
+            byte[] imagesmall = cursor.getBlob(12);
+            Float rate = cursor.getFloat(13);
+            String favorite = cursor.getString(14);
+            String wish = cursor.getString(15);
+            Float lattitude = cursor.getFloat(16);
+            Float longitude = cursor.getFloat(17);
+            String timestamp = cursor.getString(18);
+            String random = cursor.getString(19);
+            wineBottle = new WineBottle(date, country, region, winecolor, domain, appellation, year, apogee, number, estimate, image, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
+            wineBottleList.add(wineBottle);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        bd.close();
+        return wineBottleList;
+    }
+
     public List<WineBottle> recoverWishWineBottleList() {
         List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
         bd = accesBD.getReadableDatabase();

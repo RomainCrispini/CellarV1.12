@@ -44,6 +44,7 @@ public class LikeActivity extends AppCompatActivity {
     private ViewPager viewPager;
 
     private LikeListFragment likeListFragment;
+    private LikeRateFragment likeRateFragment;
     private LikeWishlistFragment likeWishlistFragment;
 
     // Initialisation du menu bis
@@ -203,6 +204,7 @@ public class LikeActivity extends AppCompatActivity {
         final TabLayout cellarTabLayout = (TabLayout) findViewById(R.id.likeTabLayout);
 
         likeListFragment = new LikeListFragment();
+        likeRateFragment = new LikeRateFragment();
         likeWishlistFragment = new LikeWishlistFragment();
 
         cellarTabLayout.setupWithViewPager(viewPager);
@@ -210,16 +212,20 @@ public class LikeActivity extends AppCompatActivity {
 
         viewPager.setPageTransformer(true, new CellarTabsTransition());
 
-        cellarPageAdapter.addFragment(likeListFragment, "List");
-        cellarPageAdapter.addFragment(likeWishlistFragment, "Stats");
+        cellarPageAdapter.addFragment(likeListFragment, "Like");
+        cellarPageAdapter.addFragment(likeRateFragment, "Rate");
+        cellarPageAdapter.addFragment(likeWishlistFragment, "Wish");
 
         viewPager.setAdapter(cellarPageAdapter);
 
         cellarTabLayout.getTabAt(0).setIcon(R.drawable.icone_menu_tabs_like);
-        cellarTabLayout.getTabAt(1).setIcon(R.drawable.icone_menu_tabs_wishlist);
+        cellarTabLayout.getTabAt(1).setIcon(R.drawable.icone_menu_tabs_rate);
+        cellarTabLayout.getTabAt(2).setIcon(R.drawable.icone_menu_tabs_wishlist);
 
         cellarTabLayout.getTabAt(0).getIcon().setColorFilter(getResources().getColor(R.color.green_light), PorterDuff.Mode.SRC_IN);
         cellarTabLayout.getTabAt(1).getIcon().setColorFilter(getResources().getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
+        cellarTabLayout.getTabAt(2).getIcon().setColorFilter(getResources().getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
+
 
         cellarTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -248,7 +254,7 @@ public class LikeActivity extends AppCompatActivity {
         final ImageButton sortApogee = (ImageButton) findViewById(R.id.sortApogee);
 
         // On sélectionne par défaut l'item du centre
-        sortRecover.setColorFilter(Color.parseColor("#67828f"));
+        sortRecover.setColorFilter(getResources().getColor(R.color.green_light));
 
         sortMap.setOnClickListener(new View.OnClickListener() {
             @Override
