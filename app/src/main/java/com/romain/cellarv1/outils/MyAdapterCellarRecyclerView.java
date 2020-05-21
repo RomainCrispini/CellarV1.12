@@ -1,12 +1,16 @@
 package com.romain.cellarv1.outils;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -27,6 +32,8 @@ import com.romain.cellarv1.modele.AccesLocal;
 import com.romain.cellarv1.modele.WineBottle;
 import com.romain.cellarv1.vue.BottleActivity;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 
@@ -154,6 +161,8 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                  */
 
                 mContext.startActivity(intent);
+                // Pas sûr de cette méthode de transition
+                ((Activity) v.getContext()).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
 
@@ -241,6 +250,7 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
 
                 Tools tools = new Tools();
                 imageBottle.setImageBitmap(tools.stringToBitmap(wineBottle.getImage()));
+
                 switch(wineBottle.getWineColor().trim()) {
                     case "Rouge" :
                         imageWineColor.setImageResource(R.drawable.red_wine_listview);
@@ -321,8 +331,40 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
         // On set les infos dans le cardview layout
         WineBottle currentItem = wineBottleArrayList.get(position);
 
-        Tools tools = new Tools();
-        holder.image.setImageBitmap(tools.stringToBitmap(currentItem.getImage()));
+
+
+
+
+
+
+        /*
+
+        //Tools tools = new Tools();
+        ByteArrayInputStream stream = new ByteArrayInputStream(currentItem.getImageLarge(), 0, currentItem.getImageLarge().length);
+        Bitmap bitmap = BitmapFactory.decodeStream(stream);
+        holder.image.setImageBitmap(bitmap);
+        String test = currentItem.getImageLarge().toString();
+        Toast.makeText(mContext, test, Toast.LENGTH_SHORT).show();
+
+         */
+
+        byte[] byt = currentItem.getImageLarge();
+        Bitmap bmp = BitmapFactory.decodeByteArray(byt, 0, byt.length);
+        holder.image.setImageBitmap(bmp);
+
+
+        /*
+        // Ca fonctionne
+        byte[] decodedByte = Base64.decode(currentItem.getImage(), 0);
+        //return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
+        //byte[] image = currentItem.getImage();
+        //ByteArrayOutputStream stream = new ByteArrayOutputStream(currentItem.getImageLarge());
+        holder.image.setImageBitmap(BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length));
+
+         */
+
+
+
 
         holder.region.setText(currentItem.getRegion());
         holder.appellation.setText(currentItem.getAppellation());
@@ -347,7 +389,7 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                 break;
         }
 
-        // On applique la note sur la cardView
+        // On set la note sur la cardView
         holder.ratingBarCardView.setRating(currentItem.getRate());
 
         // On set la CardView d'un coeur coloré si la bouteille est favorite = 1, rien si favorite = 0

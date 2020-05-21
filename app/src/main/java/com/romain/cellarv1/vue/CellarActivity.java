@@ -217,11 +217,11 @@ public class CellarActivity extends AppCompatActivity {
 
     private void menuBisListSelectedItems() {
 
-        final ImageButton sortMap = (ImageButton) findViewById(R.id.sortMap);
-        final ImageButton sortColor = (ImageButton) findViewById(R.id.sortColor);
-        final ImageButton sortYear = (ImageButton) findViewById(R.id.sortYear);
-        final ImageButton sortApogee = (ImageButton) findViewById(R.id.sortApogee);
-        final ImageView sortRecover = (ImageView) findViewById(R.id.sortRecover);
+        sortMap = (ImageButton) findViewById(R.id.sortMap);
+        sortColor = (ImageButton) findViewById(R.id.sortColor);
+        sortYear = (ImageButton) findViewById(R.id.sortYear);
+        sortApogee = (ImageButton) findViewById(R.id.sortApogee);
+        sortRecover = (ImageView) findViewById(R.id.sortRecover);
 
         // On sélectionne par défaut l'item du centre
         sortRecover.setColorFilter(Color.parseColor("#67828f"));
@@ -289,10 +289,10 @@ public class CellarActivity extends AppCompatActivity {
 
     private void menuBisStatSelectedItems() {
 
-        final ImageButton sortColorStat = (ImageButton) findViewById(R.id.sortStatColor);
-        final ImageButton sortYearStat = (ImageButton) findViewById(R.id.sortStatYear);
-        final ImageButton sortMapStat = (ImageButton) findViewById(R.id.sortStatMap);
-        final ImageButton sortApogeeStat = (ImageButton) findViewById(R.id.sortStatApogee);
+        sortColorStat = (ImageButton) findViewById(R.id.sortStatColor);
+        sortYearStat = (ImageButton) findViewById(R.id.sortStatYear);
+        sortMapStat = (ImageButton) findViewById(R.id.sortStatMap);
+        sortApogeeStat = (ImageButton) findViewById(R.id.sortStatApogee);
 
         // On sélectionne par défaut l'item de gauche (winecolor)
         sortColorStat.setColorFilter(Color.parseColor("#67828f"));

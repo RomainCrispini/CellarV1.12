@@ -1,6 +1,7 @@
 package com.romain.cellarv1.vue;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -27,6 +28,7 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.romain.cellarv1.R;
+import com.romain.cellarv1.modele.AccesLocal;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
 import com.romain.cellarv1.outils.PlaceAutoSuggestAdapter;
 
@@ -46,8 +48,8 @@ public class UserActivity extends AppCompatActivity {
     // Initialisation du menu bis
     private ImageButton btnBackMap1, btnBackMap2;
 
-
     private PlacesClient placesClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,13 +87,6 @@ public class UserActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
-
-
 
     }
 

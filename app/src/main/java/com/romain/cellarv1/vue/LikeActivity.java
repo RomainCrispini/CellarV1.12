@@ -247,11 +247,11 @@ public class LikeActivity extends AppCompatActivity {
 
     private void menuBisSelectedItems() {
 
-        final ImageButton sortMap = (ImageButton) findViewById(R.id.sortMap);
-        final ImageButton sortColor = (ImageButton) findViewById(R.id.sortColor);
-        final ImageView sortRecover = (ImageView) findViewById(R.id.sortRecover);
-        final ImageButton sortYear = (ImageButton) findViewById(R.id.sortYear);
-        final ImageButton sortApogee = (ImageButton) findViewById(R.id.sortApogee);
+        sortMap = (ImageButton) findViewById(R.id.sortMap);
+        sortColor = (ImageButton) findViewById(R.id.sortColor);
+        sortRecover = (ImageView) findViewById(R.id.sortRecover);
+        sortYear = (ImageButton) findViewById(R.id.sortYear);
+        sortApogee = (ImageButton) findViewById(R.id.sortApogee);
 
         // On sélectionne par défaut l'item du centre
         sortRecover.setColorFilter(getResources().getColor(R.color.green_light));
@@ -260,7 +260,7 @@ public class LikeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadSortMapLikeBottleInListView();
-                loadSortMapWishBottleInListView();
+                //loadSortMapWishBottleInListView();
                 sortMap.setColorFilter(LikeActivity.this.getColor(R.color.green_light), PorterDuff.Mode.SRC_IN);
                 sortColor.setColorFilter(LikeActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
                 sortRecover.setColorFilter(LikeActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
@@ -273,7 +273,7 @@ public class LikeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadSortColorLikeBottleInListView();
-                loadSortColorWishBottleInListView();
+                //loadSortColorWishBottleInListView();
                 sortMap.setColorFilter(LikeActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
                 sortColor.setColorFilter(LikeActivity.this.getColor(R.color.green_light), PorterDuff.Mode.SRC_IN);
                 sortRecover.setColorFilter(LikeActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
@@ -286,7 +286,7 @@ public class LikeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadLikeBottleInListView();
-                loadWishBottleInListView();
+                //loadWishBottleInListView();
                 sortMap.setColorFilter(LikeActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
                 sortColor.setColorFilter(LikeActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
                 sortRecover.setColorFilter(LikeActivity.this.getColor(R.color.green_light), PorterDuff.Mode.SRC_IN);
@@ -299,7 +299,7 @@ public class LikeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadSortYearLikeBottleInListView();
-                loadSortYearWishBottleInListView();
+                //loadSortYearWishBottleInListView();
                 sortMap.setColorFilter(LikeActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
                 sortColor.setColorFilter(LikeActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
                 sortRecover.setColorFilter(LikeActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
@@ -312,7 +312,7 @@ public class LikeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadSortApogeeLikeBottleInListView();
-                loadSortApogeeWishBottleInListView();
+                //loadSortApogeeWishBottleInListView();
                 sortMap.setColorFilter(LikeActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
                 sortColor.setColorFilter(LikeActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);
                 sortRecover.setColorFilter(LikeActivity.this.getColor(R.color.green_middle_light), PorterDuff.Mode.SRC_IN);

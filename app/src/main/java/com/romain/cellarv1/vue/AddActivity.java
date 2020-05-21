@@ -26,6 +26,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,6 +54,8 @@ import com.romain.cellarv1.outils.Tools;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -186,7 +189,7 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
-        // Instanciation du menuBis coulissant
+        // Instanciation et animation du menuBis coulissant
         FrameLayout menuBis = (FrameLayout) findViewById(R.id.menuBis);
         menuBis.setTranslationY(300f);
         menuBis.animate().translationY(0f).setInterpolator(interpolator).setDuration(1500).start();
@@ -195,14 +198,47 @@ public class AddActivity extends AppCompatActivity {
         recoverWineBottle();
         recoverFABWineColor();
         recoverJsonCountries();
-        //pulsar();
         progressBar();
 
     }
 
+    // Au retour de la sélection d'une image (après appel de startactivityforresult)
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        ImageView scanImageView = (ImageView) findViewById(R.id.scanImageView); // DOIT ETRE DECLAREE ICI !!!!!!!!!!!!!!!!!!!!!!
+        // Vérification du bon code de retour et l'état du retour ok
+        switch (requestCode) {
+            case CAMERA_REQUEST_CODE :
+                // Récupération de l'image
+                Bitmap imageCamera = BitmapFactory.decodeFile(photoPath);
+                // Afficher l'image
+                scanImageView.setImageBitmap(imageCamera);
+                break;
+            case GALLERY_REQUEST_CODE : // Vérifie si une image est récupérée
+                // Accès à l'image à partir de data
+                Uri selectedImage = data.getData();
+                // Mémorisation du path précis
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                // Curseur d'accès au chemin de l'image
+                Cursor cursor = this.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                // Position sur la première ligne (normalement une seule)
+                cursor.moveToFirst();
+                // Récupération du chemin précis de l'image
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String imgPath = cursor.getString(columnIndex);
+                cursor.close();
+                // Récupération de l'image
+                Bitmap imageGallery = BitmapFactory.decodeFile(imgPath);
+                // Redimentionner l'image
+                imageGallery = changeSizeBitmap(imageGallery, 0.8f);
+                // Affichage de l'image
+                scanImageView.setImageBitmap(imageGallery);
+                break;
+        }
 
-
+    }
 
     public void accesGallery(View view) {
         // Permission pour accès Gallery
@@ -213,6 +249,55 @@ public class AddActivity extends AppCompatActivity {
         } else {
             galleryRequestPermission();
         }
+    }
+
+    public void takePicture(View view) {
+        if(ActivityCompat.checkSelfPermission(AddActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            // Crée un intent pour ouvrir une fenêtre pour prendre la photo
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            // Test pour contrôler que l'intent peut être géré
+            if(intent.resolveActivity(getPackageManager()) != null) {
+                // Créer un nom de fichier unique
+                String time = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                File photoDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                try {
+                    File photoFile = File.createTempFile("photo" + time, ".jpg", photoDir);
+                    // Enregistrer le chemin complet
+                    photoPath = photoFile.getAbsolutePath();
+                    // Créer l'URI
+                    Uri photoUri = FileProvider.getUriForFile(getApplicationContext(), getApplicationContext().getPackageName() + ".provider", photoFile);
+                    // Transfert uri vers l'intent pour enregistrement photo dans fichier temporaire
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                    // Ouvrir l'activity par rapport à l'intent
+                    startActivityForResult(intent, CAMERA_REQUEST_CODE);
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            cameraRequestPermission();
+        }
+    }
+
+    private Bitmap changeSizeBitmap(Bitmap bitmap, float proportion) {
+        // Métrique qui permet de récupérer les dimensions de l'écran
+        DisplayMetrics metrics = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        // Taille de l'écran (et affecter les proportions)
+        float screenHeight = metrics.heightPixels*proportion;
+        float screenWidth = metrics.widthPixels*proportion;
+        // Taille de l'image
+        float bitmapHeight = bitmap.getHeight();
+        float bitmapWidth = bitmap.getWidth();
+        // Calcul du ratio entre taille image et écran
+        float ratioHeight = screenHeight/bitmapHeight;
+        float ratioWidth = screenWidth/bitmapWidth;
+        // Récupération du plus petit ratio
+        float ratio = Math.min(ratioHeight, ratioWidth);
+        // Redimentionnement de l'image par rapport au ratio
+        bitmap = Bitmap.createScaledBitmap(bitmap, (int) (bitmapWidth*ratio), (int) (bitmapHeight*ratio), true);
+        // envoie la nouvelle image
+        return bitmap;
     }
 
     private void galleryRequestPermission() {
@@ -263,93 +348,6 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
-    // Au retour de la sélection d'une image (après appel de startactivityforresult)
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        ImageView scanImageView = (ImageView) findViewById(R.id.scanImageView); // DOIT ETRE DECLAREE ICI !!!!!!!!!!!!!!!!!!!!!!
-        // Vérification du bon code de retour et l'état du retour ok
-        switch (requestCode) {
-            case CAMERA_REQUEST_CODE :
-                // Récupération de l'image
-                Bitmap imageCamera = BitmapFactory.decodeFile(photoPath);
-                // Afficher l'image
-                scanImageView.setImageBitmap(imageCamera);
-                break;
-            case GALLERY_REQUEST_CODE : // Vérifie si une image est récupérée
-                // Accès à l'image à partir de data
-                Uri selectedImage = data.getData();
-                // Mémorisation du path précis
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                // Curseur d'accès au chemin de l'image
-                Cursor cursor = this.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                // Position sur la première ligne (normalement une seule)
-                cursor.moveToFirst();
-                // Récupération du chemin précis de l'image
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                String imgPath = cursor.getString(columnIndex);
-                cursor.close();
-                // Récupération de l'image
-                Bitmap imageGallery = BitmapFactory.decodeFile(imgPath);
-                // Redimentionner l'image
-                imageGallery = changeSizeBitmap(imageGallery, 0.8f);
-                // Affichage de l'image
-                scanImageView.setImageBitmap(imageGallery);
-                break;
-        }
-
-    }
-
-    public void takePicture(View view) {
-        if(ActivityCompat.checkSelfPermission(AddActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            // Crée un intent pour ouvrir une fenêtre pour prendre la photo
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            // Test pour contrôler que l'intent peut être géré
-            if(intent.resolveActivity(getPackageManager()) != null) {
-                // Créer un nom de fichier unique
-                String time = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                File photoDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-                try {
-                    File photoFile = File.createTempFile("photo" + time, ".jpg", photoDir);
-                    // Enregistrer le chemin complet
-                    photoPath = photoFile.getAbsolutePath();
-                    // Créer l'URI
-                    Uri photoUri = FileProvider.getUriForFile(getApplicationContext(), getApplicationContext().getPackageName() + ".provider", photoFile);
-                    // Transfert uri vers l'intent pour enregistrement photo dans fichier temporaire
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                    // Ouvrir l'activity par rapport à l'intent
-                    startActivityForResult(intent, CAMERA_REQUEST_CODE);
-                } catch(IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        } else {
-            cameraRequestPermission();
-        }
-
-    }
-
-    private Bitmap changeSizeBitmap(Bitmap bitmap, float proportion) {
-        // Métrique qui permet de récupérer les dimensions de l'écran
-        DisplayMetrics metrics = new DisplayMetrics();
-        this.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        // Taille de l'écran (et affecter les proportions)
-        float screenHeight = metrics.heightPixels*proportion;
-        float screenWidth = metrics.widthPixels*proportion;
-        // Taille de l'image
-        float bitmapHeight = bitmap.getHeight();
-        float bitmapWidth = bitmap.getWidth();
-        // Calcul du ratio entre taille image et écran
-        float ratioHeight = screenHeight/bitmapHeight;
-        float ratioWidth = screenWidth/bitmapWidth;
-        // Récupération du plus petit ratio
-        float ratio = Math.min(ratioHeight, ratioWidth);
-        // Redimentionnement de l'image par rapport au ratio
-        bitmap = Bitmap.createScaledBitmap(bitmap, (int) (bitmapWidth*ratio), (int) (bitmapHeight*ratio), true);
-        // envoie la nouvelle image
-        return bitmap;
-    }
-
         /*
     public void askCameraPermissions(View view) {
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -383,6 +381,7 @@ public class AddActivity extends AppCompatActivity {
         }
     }
      */
+
 
 
 
@@ -512,17 +511,44 @@ public class AddActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
+
+                        Bitmap bitmap = BitmapFactory.decodeResource(AddActivity.this.getResources(), R.drawable.popup_add_bottle);
+
+                        /*
+                        // Ca fonctionne
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        byte[] b = stream.toByteArray();
+                        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+                        image = imageEncoded;
+
+                         */
+
+
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream(bitmap.getWidth() * bitmap.getHeight());
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        imageLarge = stream.toByteArray();
+
+
+
+                        /*
                         try {
                             Bitmap bitmap = ((BitmapDrawable) scanImageView.getDrawable()).getBitmap();
-                            image = (tool.bitmapToString(bitmap));
+                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
+                            imageLarge = stream.toByteArray();
+                            //image = (tool.bitmapToString(bitmap));
                         } catch(Exception e) {
                             e.printStackTrace();
                         }
+
+                         */
 
                         afficheResult(country, region, wineColor, domain, appellation, year, apogee, number, estimate, image, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp, random);
 
                         popupAdd.dismiss();
 
+                        // Affiche le logo de validation 1 seconde
                         popupSuccess.show();
                         // Permet de faire aparaitre le panneau 1 seconde sans interventions
                         new Handler().postDelayed(new Runnable() {
@@ -555,7 +581,6 @@ public class AddActivity extends AppCompatActivity {
     /**
      * Récupération de la wineBottle si elle a été SERIALISEE et si le champ pays n'est pas null
      */
-
     private void recoverWineBottle() {
         if(controle.getCountry() != null) {
             txtCountry.setText(controle.getCountry());
@@ -576,12 +601,11 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
-
-
     /**
-     * Chargement et récupération des infos du fichier JSon
+     * Chargement et récupération des infos du fichier JSon pour le nom des pays
      */
     public void getJsonCountries() {
+
         String json;
         try {
             //Load File
@@ -643,15 +667,6 @@ public class AddActivity extends AppCompatActivity {
 
         }
     }
-
-    /*
-    private void pulsar() {
-        PulsatorLayout pulsatorLayout = (PulsatorLayout) findViewById(R.id.pulsator);
-        pulsatorLayout.start();
-    }
-
-     */
-
 
     public void wineColorSelector(View view) {
         ImageButton redWineButton = (ImageButton) findViewById(R.id.redWineButton);
@@ -942,30 +957,25 @@ public class AddActivity extends AppCompatActivity {
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch(item.getItemId()){
                         case R.id.user:
-                            //Toast.makeText(AddActivity.this, "USER", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), UserActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                             //overridePendingTransition(0, 0);
                             return true;
                         case R.id.cellar:
-                            //Toast.makeText(AddActivity.this, "CELLAR", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), CellarActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                             //overridePendingTransition(0, 0);
                             return true;
                         case R.id.scan:
-                            //Toast.makeText(AddActivity.this, "SCAN", Toast.LENGTH_SHORT).show();
                             //startActivity(new Intent(getApplicationContext(), ScanActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                             //overridePendingTransition(0, 0);
                             return true;
                         case R.id.like:
-                            //Toast.makeText(AddActivity.this, "LIKE", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), LikeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                             //overridePendingTransition(0, 0);
                             return true;
                         case R.id.search:
-                            //Toast.makeText(AddActivity.this, "SEARCH", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), SearchActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                             //overridePendingTransition(0, 0);

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.romain.cellarv1.R;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -53,6 +54,12 @@ public class Tools {
 
             return null;
         }
+    }
+
+    public Bitmap ByteToBitmap(byte[] byteArray) {
+        ByteArrayInputStream arrayInputStream = new ByteArrayInputStream(byteArray);
+        Bitmap bitmap = BitmapFactory.decodeStream(arrayInputStream);
+        return bitmap;
     }
 
 }
