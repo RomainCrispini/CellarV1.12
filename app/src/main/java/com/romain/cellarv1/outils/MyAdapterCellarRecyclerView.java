@@ -348,20 +348,24 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
 
          */
 
+
+        /*
         byte[] byt = currentItem.getImageLarge();
         Bitmap bmp = BitmapFactory.decodeByteArray(byt, 0, byt.length);
         holder.image.setImageBitmap(bmp);
 
+         */
 
-        /*
-        // Ca fonctionne
+
+
+        // Méthode qui fonctionne
         byte[] decodedByte = Base64.decode(currentItem.getImage(), 0);
         //return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
         //byte[] image = currentItem.getImage();
         //ByteArrayOutputStream stream = new ByteArrayOutputStream(currentItem.getImageLarge());
         holder.image.setImageBitmap(BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length));
 
-         */
+
 
 
 

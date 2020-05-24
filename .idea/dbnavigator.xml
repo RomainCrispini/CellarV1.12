@@ -24,13 +24,13 @@
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
     <loaded-nodes>
-      <connection connection-id="0ebad9c8-fb3c-44b1-a89b-4a20782ee421">
-        <schema name="" object-types="constraint, dataset trigger, table, view, index, column" />
+      <connection connection-id="a84fa530-a37a-4d20-99f2-3802b601ce6a">
+        <schema name="" object-types="dataset trigger, constraint, column, index, table" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="0ebad9c8-fb3c-44b1-a89b-4a20782ee421">
+    <connection id="a84fa530-a37a-4d20-99f2-3802b601ce6a">
       <console name="Connection" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
@@ -38,10 +38,10 @@
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="0ebad9c8-fb3c-44b1-a89b-4a20782ee421" />
+    <connection id="a84fa530-a37a-4d20-99f2-3802b601ce6a" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="0ebad9c8-fb3c-44b1-a89b-4a20782ee421" dataset=".bottle" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="a84fa530-a37a-4d20-99f2-3802b601ce6a" dataset=".bottle" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -66,7 +66,7 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="0ebad9c8-fb3c-44b1-a89b-4a20782ee421" active="true">
+      <connection id="a84fa530-a37a-4d20-99f2-3802b601ce6a" active="true">
         <database>
           <name value="Connection" />
           <description value="" />

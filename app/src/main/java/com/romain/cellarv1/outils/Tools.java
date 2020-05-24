@@ -3,6 +3,7 @@ package com.romain.cellarv1.outils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.util.Base64;
 import android.util.Log;
 import android.view.animation.AnimationUtils;
@@ -60,6 +61,39 @@ public class Tools {
         ByteArrayInputStream arrayInputStream = new ByteArrayInputStream(byteArray);
         Bitmap bitmap = BitmapFactory.decodeStream(arrayInputStream);
         return bitmap;
+    }
+
+
+    /**
+     * Permet de redimensionner une image à 100px de large
+     * @param bm
+     * @return
+     */
+    public Bitmap getResizedBitmap100(Bitmap bm) {
+
+        float aspectRatio = bm.getWidth() /
+                (float) bm.getHeight();
+        int width = 100;
+        int height = Math.round(width / aspectRatio);
+
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bm, width, height, false);
+        return resizedBitmap;
+    }
+
+    /**
+     * Permet de redimensionner une image à 100px de large
+     * @param bm
+     * @return
+     */
+    public Bitmap getResizedBitmap1000(Bitmap bm) {
+
+        float aspectRatio = bm.getWidth() /
+                (float) bm.getHeight();
+        int width = 1000;
+        int height = Math.round(width / aspectRatio);
+
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bm, width, height, false);
+        return resizedBitmap;
     }
 
 }

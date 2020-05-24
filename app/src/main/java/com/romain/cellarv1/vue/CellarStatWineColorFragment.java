@@ -1,5 +1,6 @@
 package com.romain.cellarv1.vue;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -105,6 +107,11 @@ public class CellarStatWineColorFragment extends Fragment {
         Integer nbTotalBottle = accesLocal.nbTotal();
 
         txtTotalNumber.setText(nbTotalBottle.toString());
+
+        // Affiche un message s'il n'y a pas de bouteille dans la BDD
+        if(nbTotalBottle == 0) {
+            Toast.makeText(getContext(), "RRRRRRR", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void loadWineColorPieChart() {
@@ -112,7 +119,7 @@ public class CellarStatWineColorFragment extends Fragment {
         pieChartWineColor.setUsePercentValues(false);
 
         // Caractéristiques du message s'il n'y a pas de données
-        pieChartWineColor.setNoDataText("Il manque quelques bouteilles pour éditer des statistiques !");
+        pieChartWineColor.setNoDataText("Il manque quelques bouteilles pour éditer des statistiques fiables !");
         //pieChart.invalidate();
         Paint p = pieChartWineColor.getPaint(PieChart.PAINT_INFO);
         p.setTextSize(15f);

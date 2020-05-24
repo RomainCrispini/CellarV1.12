@@ -512,22 +512,30 @@ public class AddActivity extends AppCompatActivity {
                         }
 
 
-                        Bitmap bitmap = BitmapFactory.decodeResource(AddActivity.this.getResources(), R.drawable.popup_add_bottle);
+                        Tools tools = new Tools();
 
-                        /*
-                        // Ca fonctionne
-                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        //Bitmap bitmap = BitmapFactory.decodeResource(AddActivity.this.getResources(), R.drawable.test_image);
+                        Bitmap bitmap = ((BitmapDrawable) scanImageView.getDrawable()).getBitmap();
+                        Bitmap bitmapresized = tools.getResizedBitmap100(bitmap);
+                        //bitmap = Bitmap.createScaledBitmap(bitmap, 30, 30, true);
+
+
+                        // Méthode qui fonctionne
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream(bitmapresized.getWidth() * bitmap.getHeight());
+                        bitmapresized.compress(Bitmap.CompressFormat.PNG, 0, stream);
                         byte[] b = stream.toByteArray();
                         String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
                         image = imageEncoded;
 
-                         */
 
 
+
+                        /*
                         ByteArrayOutputStream stream = new ByteArrayOutputStream(bitmap.getWidth() * bitmap.getHeight());
                         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                         imageLarge = stream.toByteArray();
+
+                         */
 
 
 
