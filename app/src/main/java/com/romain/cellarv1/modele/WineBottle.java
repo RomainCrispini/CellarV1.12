@@ -18,9 +18,10 @@ public class WineBottle implements Serializable {
     private Integer apogee;
     private Integer number;
     private Integer estimate;
+    private String pictureLarge;
+    private String pictureSmall;
     private byte[] imageLarge;
     private byte[] imageSmall;
-    private String image;
     private Float rate;
     private String favorite;
     private String wish;
@@ -32,7 +33,7 @@ public class WineBottle implements Serializable {
 
 
     // Constructeur
-    public WineBottle(Date dateAddNewBottle, String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String image, byte[] imageLarge, byte[] imageSmall, Float rate, String favorite, String wish, Float lattitude, Float longitude, String timeStamp, String random) {
+    public WineBottle(Date dateAddNewBottle, String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Float rate, String favorite, String wish, Float lattitude, Float longitude, String timeStamp, String random) {
         this.dateAddNewBottle = dateAddNewBottle;
         this.country = country;
         this.region = region;
@@ -43,7 +44,8 @@ public class WineBottle implements Serializable {
         this.apogee = apogee;
         this.number = number;
         this.estimate = estimate;
-        this.image = image;
+        this.pictureLarge = pictureLarge;
+        this.pictureSmall = pictureSmall;
         this.imageLarge = imageLarge;
         this.imageSmall = imageSmall;
         this.rate = rate;
@@ -136,6 +138,22 @@ public class WineBottle implements Serializable {
         this.estimate = estimate;
     }
 
+    public String getPictureLarge() {
+        return pictureLarge;
+    }
+
+    public void setPictureLarge(String pictureLarge) {
+        this.pictureLarge = pictureLarge;
+    }
+
+    public String getPictureSmall() {
+        return pictureSmall;
+    }
+
+    public void setPictureSmall(String pictureSmall) {
+        this.pictureSmall = pictureSmall;
+    }
+
     public byte[] getImageLarge() {
         return imageLarge;
     }
@@ -150,14 +168,6 @@ public class WineBottle implements Serializable {
 
     public void setImageSmall(byte[] imageSmall) {
         this.imageSmall = imageSmall;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public Float getRate() {
@@ -218,7 +228,7 @@ public class WineBottle implements Serializable {
 
     @Override
     public String toString() {
-        return "Pays : " + country + ", Région : " + region + ", Couleur : " + wineColor + image + "\n";
+        return "Pays : " + country + ", Région : " + region + ", Couleur : " + wineColor + pictureLarge + "\n";
     }
 
     /*

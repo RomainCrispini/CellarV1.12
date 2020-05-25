@@ -56,13 +56,14 @@ public class Controle {
      * @param apogee
      * @param number
      * @param estimate
-     * @param image
+     * @param pictureLarge
+     * @param pictureSmall
      * @param favorite
      * @param wish
      * @param random
      */
-    public void createWineBottle(String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String image, byte[] imageLarge, byte[] imageSmall, Float rate, String favorite, String wish, Float lattitude, Float longitude, String timeStamp, String random, Context context) {
-        wineBottle = new WineBottle(new Date(), country, region, wineColor, domain, appellation, year, apogee, number, estimate, image, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp, random);
+    public void createWineBottle(String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Float rate, String favorite, String wish, Float lattitude, Float longitude, String timeStamp, String random, Context context) {
+        wineBottle = new WineBottle(new Date(), country, region, wineColor, domain, appellation, year, apogee, number, estimate, pictureLarge, pictureSmall, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp, random);
         //Serializer.serialize(serializableFile, wineBottle, context);
         accesLocal.add(wineBottle);
     }
@@ -149,14 +150,6 @@ public class Controle {
             return null;
         } else {
             return wineBottle.getEstimate();
-        }
-    }
-
-    public String getImage() {
-        if(wineBottle == null) {
-            return null;
-        } else {
-            return wineBottle.getImage();
         }
     }
 

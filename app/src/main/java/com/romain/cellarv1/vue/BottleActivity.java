@@ -3,10 +3,12 @@ package com.romain.cellarv1.vue;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
@@ -157,7 +159,7 @@ public class BottleActivity extends AppCompatActivity {
                         break;
                 }
 
-                String image = getIntent().getStringExtra("imageBottle");
+                String image = getIntent().getStringExtra("imageBottleSmall");
                 Tools tools = new Tools();
                 imageBottle.setImageBitmap(tools.stringToBitmap(image));
 
@@ -277,7 +279,7 @@ public class BottleActivity extends AppCompatActivity {
                         break;
                 }
 
-                String image = getIntent().getStringExtra("imageBottle");
+                String image = getIntent().getStringExtra("imageBottleSmall");
                 Tools tools = new Tools();
                 imageBottle.setImageBitmap(tools.stringToBitmap(image));
 
@@ -374,9 +376,19 @@ public class BottleActivity extends AppCompatActivity {
                 break;
         }
 
-        String image = getIntent().getStringExtra("imageBottle");
-        Tools tools = new Tools();
-        imageBottle.setImageBitmap(tools.stringToBitmap(image));
+
+        // On cherche l'image la moins compressée
+        String image = getIntent().getStringExtra("imageBottleLarge");
+        //Tools tools = new Tools();
+        //imageBottle.setImageBitmap(tools.stringToBitmap(image));
+        byte[] decodedByte = Base64.decode(image, 0);
+        //return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
+        //byte[] image = currentItem.getImage();
+        //ByteArrayOutputStream stream = new ByteArrayOutputStream(currentItem.getImageLarge());
+        imageBottle.setImageBitmap(BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length));
+
+
+
 
         String rate = getIntent().getStringExtra("rate");
         Float floatRate = Float.valueOf(rate);

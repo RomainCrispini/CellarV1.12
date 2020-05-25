@@ -135,7 +135,8 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                 Intent intent = new Intent(mContext, BottleActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 
                 intent.putExtra("wineColor", wineBottle.getWineColor());
-                intent.putExtra("imageBottle", wineBottle.getImage());
+                intent.putExtra("imageBottleLarge", wineBottle.getPictureLarge());
+                intent.putExtra("imageBottleSmall", wineBottle.getPictureSmall());
                 intent.putExtra("country", wineBottle.getCountry());
                 intent.putExtra("region", wineBottle.getRegion());
                 intent.putExtra("domain", wineBottle.getDomain());
@@ -249,7 +250,7 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                 popupSuccess.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
                 Tools tools = new Tools();
-                imageBottle.setImageBitmap(tools.stringToBitmap(wineBottle.getImage()));
+                imageBottle.setImageBitmap(tools.stringToBitmap(wineBottle.getPictureSmall()));
 
                 switch(wineBottle.getWineColor().trim()) {
                     case "Rouge" :
@@ -328,6 +329,7 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
         // On applique l'animation sur la CardView
         holder.cardView.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.slide_animation_cardview));
 
+
         // On set les infos dans le cardview layout
         WineBottle currentItem = wineBottleArrayList.get(position);
 
@@ -349,8 +351,9 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
          */
 
 
+
         /*
-        byte[] byt = currentItem.getImageLarge();
+        byte[] byt = currentItem.getPictureSmall();
         Bitmap bmp = BitmapFactory.decodeByteArray(byt, 0, byt.length);
         holder.image.setImageBitmap(bmp);
 
@@ -358,14 +361,12 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
 
 
 
-        // Méthode qui fonctionne
-        byte[] decodedByte = Base64.decode(currentItem.getImage(), 0);
-        //return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
-        //byte[] image = currentItem.getImage();
+
+
+        // On cherche l'image la plus compressée
+        byte[] decodedByte = Base64.decode(currentItem.getPictureSmall(), 0);
         //ByteArrayOutputStream stream = new ByteArrayOutputStream(currentItem.getImageLarge());
         holder.image.setImageBitmap(BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length));
-
-
 
 
 

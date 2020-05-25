@@ -56,7 +56,7 @@ public class MyAdapterCellarListView extends BaseAdapter {
         WineBottle wineBottle = arrayList.get(position);
 
         Tools tools = new Tools();
-        image.setImageBitmap(tools.stringToBitmap(wineBottle.getImage()));
+        image.setImageBitmap(tools.stringToBitmap(wineBottle.getPictureSmall()));
 
         region.setText(wineBottle.getRegion());
         appellation.setText((wineBottle.getAppellation()));

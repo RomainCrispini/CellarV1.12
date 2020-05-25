@@ -65,15 +65,15 @@ public class Tools {
 
 
     /**
-     * Permet de redimensionner une image à 100px de large
+     * Permet de redimensionner une image à 70px de large
      * @param bm
      * @return
      */
-    public Bitmap getResizedBitmap100(Bitmap bm) {
+    public Bitmap getResizedBitmap100px(Bitmap bm) {
 
         float aspectRatio = bm.getWidth() /
                 (float) bm.getHeight();
-        int width = 100;
+        int width = 70;
         int height = Math.round(width / aspectRatio);
 
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(bm, width, height, false);
@@ -81,15 +81,15 @@ public class Tools {
     }
 
     /**
-     * Permet de redimensionner une image à 100px de large
+     * Permet de redimensionner une image à 1000px de large
      * @param bm
      * @return
      */
-    public Bitmap getResizedBitmap1000(Bitmap bm) {
+    public Bitmap getResizedBitmap1000px(Bitmap bm) {
 
         float aspectRatio = bm.getWidth() /
                 (float) bm.getHeight();
-        int width = 1000;
+        int width = 500;
         int height = Math.round(width / aspectRatio);
 
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(bm, width, height, false);

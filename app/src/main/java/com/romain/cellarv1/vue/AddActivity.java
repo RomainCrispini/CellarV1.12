@@ -458,7 +458,8 @@ public class AddActivity extends AppCompatActivity {
                         int apogee = 0;
                         int number = 0;
                         int estimate = 0;
-                        String image = "";
+                        String pictureLarge = "";
+                        String pictureSmall = "";
                         byte[] imageLarge = null;
                         byte[] imageSmall = null;
                         Float rate = 0f;
@@ -512,20 +513,47 @@ public class AddActivity extends AppCompatActivity {
                         }
 
 
-                        Tools tools = new Tools();
 
-                        //Bitmap bitmap = BitmapFactory.decodeResource(AddActivity.this.getResources(), R.drawable.test_image);
+
+                        // Pour les tests de compression
+                        //Bitmap bitmap1 = BitmapFactory.decodeResource(AddActivity.this.getResources(), R.drawable.test_image);
+                        //Bitmap bitmap2 = BitmapFactory.decodeResource(AddActivity.this.getResources(), R.drawable.champ_wine);
                         Bitmap bitmap = ((BitmapDrawable) scanImageView.getDrawable()).getBitmap();
-                        Bitmap bitmapresized = tools.getResizedBitmap100(bitmap);
-                        //bitmap = Bitmap.createScaledBitmap(bitmap, 30, 30, true);
 
 
-                        // Méthode qui fonctionne
-                        ByteArrayOutputStream stream = new ByteArrayOutputStream(bitmapresized.getWidth() * bitmap.getHeight());
-                        bitmapresized.compress(Bitmap.CompressFormat.PNG, 0, stream);
-                        byte[] b = stream.toByteArray();
-                        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
-                        image = imageEncoded;
+                        Tools tools = new Tools();
+                        Bitmap bitmap100 = tools.getResizedBitmap100px(bitmap);
+                        Bitmap bitmap1000 = tools.getResizedBitmap1000px(bitmap);
+
+                        // Enregistrement de bitmap100 dans pictureSmall
+                        //ByteArrayOutputStream stream100 = new ByteArrayOutputStream(bitmap100.getWidth() * bitmap.getHeight());
+                        ByteArrayOutputStream stream100 = new ByteArrayOutputStream();
+                        bitmap100.compress(Bitmap.CompressFormat.PNG, 0, stream100);
+                        byte[] b100 = stream100.toByteArray();
+                        String image100 = Base64.encodeToString(b100, Base64.DEFAULT);
+                        pictureSmall = image100;
+                        try {
+                            stream100.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        // Enregistrement de bitmap1000 dans pictureLarge
+                        ByteArrayOutputStream stream1000 = new ByteArrayOutputStream();
+                        bitmap1000.compress(Bitmap.CompressFormat.PNG, 0, stream1000);
+                        byte[] b1000 = stream1000.toByteArray();
+                        String image1000 = Base64.encodeToString(b1000, Base64.DEFAULT);
+                        pictureLarge = image1000;
+                        try {
+                            stream1000.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+
+
 
 
 
@@ -552,7 +580,7 @@ public class AddActivity extends AppCompatActivity {
 
                          */
 
-                        afficheResult(country, region, wineColor, domain, appellation, year, apogee, number, estimate, image, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp, random);
+                        afficheResult(country, region, wineColor, domain, appellation, year, apogee, number, estimate, pictureLarge, pictureSmall, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp, random);
 
                         popupAdd.dismiss();
 
@@ -582,8 +610,8 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
-    private void afficheResult(String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String image, byte[] imageLarge, byte[] imageSmall, Float rate, String favorite, String wish, Float lattitude, Float longitude, String timeStamp, String random) {
-        this.controle.createWineBottle(country, region, wineColor, domain, appellation, year, apogee, number, estimate, image, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp, random,  AddActivity.this);
+    private void afficheResult(String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Float rate, String favorite, String wish, Float lattitude, Float longitude, String timeStamp, String random) {
+        this.controle.createWineBottle(country, region, wineColor, domain, appellation, year, apogee, number, estimate, pictureLarge, pictureSmall, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp, random,  AddActivity.this);
     }
 
     /**
