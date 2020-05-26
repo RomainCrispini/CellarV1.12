@@ -33,12 +33,7 @@ public class CellarStatMillesimeFragment extends Fragment {
 
     private BarChart barChartMillesime;
 
-    private TextView txtTotalEstimate;
-
-
-
-
-
+    private TextView txtTotalEstimate, txtTextEstimate, txtEmptyPieChart;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -88,9 +83,12 @@ public class CellarStatMillesimeFragment extends Fragment {
         View cellarStatMillesimeFragment = inflater.inflate(R.layout.fragment_cellar_stat_millesime, container, false);
 
         barChartMillesime = (BarChart) cellarStatMillesimeFragment.findViewById(R.id.barChartMillesime);
+
         txtTotalEstimate = (TextView) cellarStatMillesimeFragment.findViewById(R.id.txtTotalEstimate);
 
-
+        txtTextEstimate = (TextView) cellarStatMillesimeFragment.findViewById(R.id.txtTextEstimate);
+        txtEmptyPieChart = (TextView) cellarStatMillesimeFragment.findViewById(R.id.txtEmptyPieChart);
+        txtEmptyPieChart.setVisibility(View.INVISIBLE);
 
         loadTotalEstimate();
         loadMillesimeBarChart();
@@ -104,6 +102,13 @@ public class CellarStatMillesimeFragment extends Fragment {
         Integer nbTotalEstimate = accesLocal.nbTotalEstimate();
 
         txtTotalEstimate.setText(nbTotalEstimate.toString() + " €");
+
+        // Affiche un message s'il n'y a pas d'estimation de bouteilles dans la BDD & efface quelques TextView
+        if(nbTotalEstimate < 1) {
+            txtTotalEstimate.setVisibility(View.INVISIBLE);
+            txtTextEstimate.setVisibility(View.INVISIBLE);
+            txtEmptyPieChart.setVisibility(View.VISIBLE);
+        }
     }
 
     private void loadMillesimeBarChart() {
@@ -130,6 +135,7 @@ public class CellarStatMillesimeFragment extends Fragment {
         barChartMillesime.getAxisLeft().setDrawAxisLine(false);
         barChartMillesime.getAxisRight().setDrawAxisLine(false);
         barChartMillesime.setDrawValueAboveBar(false);
+
         barChartMillesime.getAxisRight().setDrawLabels(false);
         barChartMillesime.getAxisLeft().setDrawLabels(false);
         barChartMillesime.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -146,7 +152,10 @@ public class CellarStatMillesimeFragment extends Fragment {
 
 
 
-        ArrayList<Integer> colors = new ArrayList<>();
+        ArrayList<Integer> COLORS = new ArrayList<>();
+        COLORS.add(Color.rgb(141, 179, 197));
+        COLORS.add(Color.rgb(103, 130, 143));
+        COLORS.add(Color.rgb(87, 111, 122));
 
         ArrayList<BarEntry> values = new ArrayList<>();
         values.add(new BarEntry(1, 123));
@@ -157,45 +166,16 @@ public class CellarStatMillesimeFragment extends Fragment {
         values.add(new BarEntry(6, 54));
         values.add(new BarEntry(7, 54));
         values.add(new BarEntry(8, 54));
+        values.add(new BarEntry(9, 54));
+        values.add(new BarEntry(10, 54));
+        values.add(new BarEntry(11, 54));
 
 
-        /*
-        if(nbRed > 0) {
-            values.add(new PieEntry(nbRed, "Rouge"));
-            //COLORS.add(Color.rgb(159, 6, 52)); // Rouge
-        } else {
-            values.add(new PieEntry(0, "Rouge"));
-            //COLORS.add(Color.rgb(159, 6, 52)); // Rouge
-        }
 
-        if(nbRose > 0) {
-            values.add(new PieEntry(nbRose, "Rosé"));
-            //COLORS.add(Color.rgb(249, 175, 164)); // Rosé
-        } else {
-            values.add(new PieEntry(0, "Rosé"));
-            //COLORS.add(Color.rgb(249, 175, 164)); // Rosé
-        }
-
-        if(nbWhite > 0) {
-            values.add(new PieEntry(nbWhite, "Blanc"));
-            //COLORS.add(Color.rgb(254, 207, 29)); // Blanc
-        } else {
-            values.add(new PieEntry(0, "Blanc"));
-            //COLORS.add(Color.rgb(254, 207, 29)); // Blanc
-        }
-
-        if(nbChamp > 0) {
-            values.add(new PieEntry(nbChamp, "Effervescent"));
-            //COLORS.add(Color.rgb(222, 203, 135)); // Effervescent
-        } else {
-            values.add(new PieEntry(0, "Effervescent"));
-            //COLORS.add(Color.rgb(222, 203, 135)); // Effervescent
-        }
-
-         */
 
         BarDataSet barDataSet = new BarDataSet(values, "Cells");
-
+        // Set les 3 couleurs définies dans COLORS
+        barDataSet.setColors(COLORS);
 
 
         ArrayList<String> labels = new ArrayList<>();
@@ -205,10 +185,18 @@ public class CellarStatMillesimeFragment extends Fragment {
 
         BarData data = new BarData(barDataSet);
 
-        data.setBarWidth(1f);
-
+        // Largeur des bars
+        data.setBarWidth(0.9f);
         barChartMillesime.setData(data);
-        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+
+        // couleur des valeurs dans les bars
+        barDataSet.setValueTextColor(getResources().getColor(R.color.green_dark));
+        barDataSet.setValueTextSize(10);
+
+        // 6 colonnes maximum affichées
+        barChartMillesime.setVisibleXRangeMaximum(6);
+        //barChartMillesime.zoomIn();
+
         barChartMillesime.invalidate();
 
         //barChartMillesime.setDescription("description ??????????");
@@ -248,7 +236,13 @@ public class CellarStatMillesimeFragment extends Fragment {
 
         @Override
         public String getFormattedValue(float value) {
-            return mFormat.format(value);
+
+            // Le if permet de ne rien écrire si la valeur est < 1
+            if(value > 0) {
+                return mFormat.format(value);
+            } else {
+                return "";
+            }
         }
     }
 

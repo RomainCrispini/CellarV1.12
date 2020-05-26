@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ public class CellarStatWineColorFragment extends Fragment {
     private PieChart pieChartWineColor;
 
     // TextViews
-    private TextView txtTotalNumber;
+    private TextView txtTotalNumber, txtTextNumber, txtEmptyPieChart;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -94,10 +95,12 @@ public class CellarStatWineColorFragment extends Fragment {
         pieChartWineColor = (PieChart) cellarStatWineColorFragment.findViewById(R.id.pieChartWineColor);
         txtTotalNumber = (TextView) cellarStatWineColorFragment.findViewById(R.id.txtTotalNumber);
 
+        txtTextNumber = (TextView) cellarStatWineColorFragment.findViewById(R.id.txtTextNumber);
+        txtEmptyPieChart = (TextView) cellarStatWineColorFragment.findViewById(R.id.txtEmptyPieChart);
+        txtEmptyPieChart.setVisibility(View.INVISIBLE);
 
         loadTotalNumber();
         loadWineColorPieChart();
-
 
         return cellarStatWineColorFragment;
     }
@@ -108,9 +111,12 @@ public class CellarStatWineColorFragment extends Fragment {
 
         txtTotalNumber.setText(nbTotalBottle.toString());
 
-        // Affiche un message s'il n'y a pas de bouteille dans la BDD
-        if(nbTotalBottle == 0) {
-            Toast.makeText(getContext(), "RRRRRRR", Toast.LENGTH_LONG).show();
+        // Affiche un message s'il n'y a pas de bouteille dans la BDD & efface quelques TextView
+        if(nbTotalBottle < 1) {
+            txtTotalNumber.setVisibility(View.INVISIBLE);
+            txtTextNumber.setVisibility(View.INVISIBLE);
+            txtEmptyPieChart.setVisibility(View.VISIBLE);
+            pieChartWineColor.getLegend().setEnabled(false);
         }
     }
 
@@ -118,8 +124,6 @@ public class CellarStatWineColorFragment extends Fragment {
 
         pieChartWineColor.setUsePercentValues(false);
 
-        // Caractéristiques du message s'il n'y a pas de données
-        pieChartWineColor.setNoDataText("Il manque quelques bouteilles pour éditer des statistiques fiables !");
         //pieChart.invalidate();
         Paint p = pieChartWineColor.getPaint(PieChart.PAINT_INFO);
         p.setTextSize(15f);
@@ -145,7 +149,7 @@ public class CellarStatWineColorFragment extends Fragment {
         Integer nbWhite = accesLocal.nbWhite();
         Integer nbChamp = accesLocal.nbChamp();
 
-        // Modifie le nombre de couleurs du pie suivant les celle des bouteilles
+        // Modifie le nombre de couleurs du pie suivant celle des bouteilles
         ArrayList<Integer> COLORS = new ArrayList<>();
         ArrayList<PieEntry> values = new ArrayList<>();
 
@@ -221,7 +225,13 @@ public class CellarStatWineColorFragment extends Fragment {
 
         @Override
         public String getFormattedValue(float value) {
-            return mFormat.format(value);
+
+            // Le if permet de ne rien écrire si la valeur est < 1
+            if(value > 0) {
+                return mFormat.format(value);
+            } else {
+                return "";
+            }
         }
     }
 }
