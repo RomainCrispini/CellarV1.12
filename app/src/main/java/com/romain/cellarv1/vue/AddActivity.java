@@ -195,7 +195,7 @@ public class AddActivity extends AppCompatActivity {
         menuBis.animate().translationY(0f).setInterpolator(interpolator).setDuration(1500).start();
 
         addWineBottle();
-        recoverWineBottle();
+        //recoverWineBottle();
         recoverFABWineColor();
         recoverJsonCountries();
         progressBar();
@@ -515,11 +515,11 @@ public class AddActivity extends AppCompatActivity {
 
 
 
+
                         // Pour les tests de compression
                         //Bitmap bitmap1 = BitmapFactory.decodeResource(AddActivity.this.getResources(), R.drawable.test_image);
                         //Bitmap bitmap2 = BitmapFactory.decodeResource(AddActivity.this.getResources(), R.drawable.champ_wine);
                         Bitmap bitmap = ((BitmapDrawable) scanImageView.getDrawable()).getBitmap();
-
 
                         Tools tools = new Tools();
                         Bitmap bitmap100 = tools.getResizedBitmap100px(bitmap);
@@ -549,6 +549,9 @@ public class AddActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+
+
+
 
 
 
@@ -612,29 +615,6 @@ public class AddActivity extends AppCompatActivity {
 
     private void afficheResult(String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Float rate, String favorite, String wish, Float lattitude, Float longitude, String timeStamp, String random) {
         this.controle.createWineBottle(country, region, wineColor, domain, appellation, year, apogee, number, estimate, pictureLarge, pictureSmall, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp, random,  AddActivity.this);
-    }
-
-    /**
-     * Récupération de la wineBottle si elle a été SERIALISEE et si le champ pays n'est pas null
-     */
-    private void recoverWineBottle() {
-        if(controle.getCountry() != null) {
-            txtCountry.setText(controle.getCountry());
-            txtRegion.setText(controle.getRegion());
-            txtDomain.setText(controle.getDomain());
-            txtAppellation.setText(controle.getAppellation());
-            nbYear.setText(controle.getYear().toString());
-            nbApogee.setText(controle.getApogee().toString());
-            nbNumber.setText(controle.getNumber().toString());
-            nbEstimate.setText(controle.getEstimate().toString());
-
-            //rdFemme.setChecked(true);
-            //if(controle.getSexe() == 1){
-            //    rdHomme.setChecked(true);
-            //}
-            // Simule le clic sur le bouton calcul
-            //((Button) findViewById(R.id.btnAdd)).performClick();
-        }
     }
 
     /**

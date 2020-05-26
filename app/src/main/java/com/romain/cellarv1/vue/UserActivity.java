@@ -57,6 +57,7 @@ public class UserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user);
         init();
 
+        /*
         String apikey = "AIzaSyBG9tWlQvjS-Dl0bbMHj7pXdsdpMObmtb0";
         if(!Places.isInitialized()) {
             Places.initialize(getApplicationContext(), apikey);
@@ -66,6 +67,8 @@ public class UserActivity extends AppCompatActivity {
 
         final AutocompleteSupportFragment autocompleteSupportFragment =
                 (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete2);
+
+
 
 
 
@@ -87,6 +90,8 @@ public class UserActivity extends AppCompatActivity {
 
             }
         });
+
+         */
 
     }
 

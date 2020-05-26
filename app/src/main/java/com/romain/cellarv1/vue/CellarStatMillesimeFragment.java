@@ -10,17 +10,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.StackedValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.romain.cellarv1.R;
 import com.romain.cellarv1.modele.AccesLocal;
+import com.romain.cellarv1.modele.WineBottle;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -114,7 +122,7 @@ public class CellarStatMillesimeFragment extends Fragment {
     private void loadMillesimeBarChart() {
 
         // Caractéristiques du message s'il n'y a pas de données
-        barChartMillesime.setNoDataText("Il manque quelques bouteilles pour éditer des statistiques !");
+        barChartMillesime.setNoDataText("");
 
         //pieChart.invalidate();
         //Paint p = barChartMillesime.getPaint(PieChart.PAINT_INFO);
@@ -144,11 +152,35 @@ public class CellarStatMillesimeFragment extends Fragment {
         barChartMillesime.getAxisLeft().setAxisLineColor(getResources().getColor(R.color.green_very_light));
         barChartMillesime.getXAxis().setTextColor(getResources().getColor(R.color.green_very_light));
 
+        // Récupération de la liste des bouteilles
         accesLocal = new AccesLocal(getContext());
-        //Integer nbRed = accesLocal.nbRed();
-        //Integer nbRose = accesLocal.nbRose();
-        //Integer nbWhite = accesLocal.nbWhite();
-        //Integer nbChamp = accesLocal.nbChamp();
+        ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleList();
+
+        Iterator iterator = wineBottleList.iterator();
+
+        // Injection des données dans le barChart
+        ArrayList<BarEntry> values = new ArrayList<>();
+
+        while (iterator.hasNext()) {
+            WineBottle wineBottle = (WineBottle) iterator.next();
+            if(wineBottle.getEstimate() > 0) {
+                values.add(new BarEntry(wineBottle.getYear(), wineBottle.getEstimate()));
+            } else {
+            }
+        }
+
+        /*
+        for(int i = 0; i < wineBottleList.size(); i++) {
+            if(wineBottleList.get(i).getEstimate() > 0) {
+
+                values.add(new BarEntry(wineBottleList.get(i).getYear(), wineBottleList.get(i).getEstimate()));
+                //Toast.makeText(getContext(), wineBottleList.get(i).getYear(), Toast.LENGTH_SHORT).show();
+            } else {
+            }
+
+        }
+
+         */
 
 
 
@@ -157,8 +189,9 @@ public class CellarStatMillesimeFragment extends Fragment {
         COLORS.add(Color.rgb(103, 130, 143));
         COLORS.add(Color.rgb(87, 111, 122));
 
+        /*
         ArrayList<BarEntry> values = new ArrayList<>();
-        values.add(new BarEntry(1, 123));
+        values.add(new BarEntry(1, 0));
         values.add(new BarEntry(2, 543));
         values.add(new BarEntry(3, 54));
         values.add(new BarEntry(4, 54));
@@ -170,6 +203,8 @@ public class CellarStatMillesimeFragment extends Fragment {
         values.add(new BarEntry(10, 54));
         values.add(new BarEntry(11, 54));
 
+         */
+
 
 
 
@@ -177,21 +212,18 @@ public class CellarStatMillesimeFragment extends Fragment {
         // Set les 3 couleurs définies dans COLORS
         barDataSet.setColors(COLORS);
 
-
-        ArrayList<String> labels = new ArrayList<>();
-        labels.add("Dec");
-        labels.add("Jv");
-        labels.add("Fev");
-
         BarData data = new BarData(barDataSet);
 
-        // Largeur des bars
+        // Largeur des bars (90% de la largeur totale)
         data.setBarWidth(0.9f);
+
         barChartMillesime.setData(data);
 
         // couleur des valeurs dans les bars
         barDataSet.setValueTextColor(getResources().getColor(R.color.green_dark));
         barDataSet.setValueTextSize(10);
+
+        barDataSet.setValueFormatter(new MyPieChartValueFormatter());
 
         // 6 colonnes maximum affichées
         barChartMillesime.setVisibleXRangeMaximum(6);
@@ -199,29 +231,9 @@ public class CellarStatMillesimeFragment extends Fragment {
 
         barChartMillesime.invalidate();
 
-        //barChartMillesime.setDescription("description ??????????");
-
-        //barChartMillesime.setDrawEntryLabels(false);
-        //barChartMillesime.setEntryLabelTextSize(4f);
-        //barChartMillesime.setEntryLabelColor(Color.parseColor("#2F3B40"));
-
-
-
-        //Legend legend = barChartMillesime.getLegend();
-        //legend.setTextColor(Color.parseColor("#8DB3C5"));
-        //legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
-
-        //dataSet.setColors(COLORS);
-
-
         barChartMillesime.animateY(1000);
 
-        //data.setValueTextSize(15f);
-        //data.setValueFormatter(new CellarStatMillesimeFragment.MyPieChartValueFormatter());
-        //data.setValueTextColor(Color.parseColor("#2F3B40"));
-
-        //barChartMillesime.setData(data);
-        //barChartMillesime.notifyDataSetChanged();
+        barChartMillesime.notifyDataSetChanged();
 
     }
 

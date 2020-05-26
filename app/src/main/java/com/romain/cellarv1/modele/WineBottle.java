@@ -32,7 +32,7 @@ public class WineBottle implements Serializable {
 
 
 
-    // Constructeur
+    // Constructeur total
     public WineBottle(Date dateAddNewBottle, String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Float rate, String favorite, String wish, Float lattitude, Float longitude, String timeStamp, String random) {
         this.dateAddNewBottle = dateAddNewBottle;
         this.country = country;

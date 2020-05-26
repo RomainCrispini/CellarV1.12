@@ -125,17 +125,18 @@ public class AccesLocal {
         return nbChamp;
     }
 
-
-
-
-
-
+    /**
+     * Méthode qui permet de sortir une bouteille
+     */
     public void takeOutBottle(String random) {
         bd = accesBD.getWritableDatabase();
         bd.delete("bottle", "random = ?", new String[] { random });
         bd.close();
     }
 
+    /**
+     * Méthode qui permet d'ajouter un like à une bouteille
+     */
     public void addLikeToABottle(String random) {
         bd = accesBD.getWritableDatabase();
         ContentValues args = new ContentValues();
@@ -148,6 +149,9 @@ public class AccesLocal {
         bd.close();
     }
 
+    /**
+     * Méthode qui permet de retirer in like à une bouteille
+     */
     public void removeLikeToABottle(String random) {
         bd = accesBD.getWritableDatabase();
         ContentValues args = new ContentValues();
@@ -160,6 +164,9 @@ public class AccesLocal {
         bd.close();
     }
 
+    /**
+     * Méthode qui permet d'upload les infos d'une bouteille
+     */
     public void updateBottle(String random, String country, String region, String domain, String appellation, int year, int apogee, int number, int estimate, Float rate, String favorite, String wish) {
         bd = accesBD.getWritableDatabase();
         ContentValues args = new ContentValues();

@@ -430,6 +430,7 @@
                     android:id="@+id/scanImageView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:src="@drawable/none_listview"
                     android:outlineProvider="none"
                     android:scaleType="centerCrop" />
 
