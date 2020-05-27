@@ -190,6 +190,7 @@ public class CellarStatWineColorFragment extends Fragment {
         //pieChart.setEntryLabelTextSize(4f);
         //pieChart.setEntryLabelColor(Color.parseColor("#2F3B40"));
 
+        // Arrangement de la légende
         Legend legend = pieChartWineColor.getLegend();
         //legend.setTextColor(Color.parseColor("#8DB3C5"));
         legend.setTextColor(getResources().getColor(R.color.green_very_light));
@@ -211,7 +212,7 @@ public class CellarStatWineColorFragment extends Fragment {
         data.setValueTextColor(getResources().getColor(R.color.green_very_dark));
 
         pieChartWineColor.setData(data);
-        pieChartWineColor.notifyDataSetChanged();
+        //pieChartWineColor.notifyDataSetChanged();
 
     }
 
