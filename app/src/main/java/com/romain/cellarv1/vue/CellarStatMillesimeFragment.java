@@ -13,12 +13,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.StackedValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
@@ -122,20 +124,19 @@ public class CellarStatMillesimeFragment extends Fragment {
 
     private void loadMillesimeBarChart() {
 
-        // Caractéristiques du message s'il n'y a pas de données
+        ArrayList<Integer> COLORS = new ArrayList<>();
+        COLORS.add(Color.rgb(141, 179, 197));
+        COLORS.add(Color.rgb(103, 130, 143));
+
+        // Caractéristiques null du message s'il n'y a pas de données
         barChartMillesime.setNoDataText("");
 
-        //pieChart.invalidate();
-        //Paint p = barChartMillesime.getPaint(PieChart.PAINT_INFO);
-        //p.setTextSize(15f);
-        //p.setColor(Color.parseColor("#8DB3C5"));
-
+        // Caractéristiques du BarChart
         barChartMillesime.getDescription().setEnabled(false);
         barChartMillesime.getLegend().setEnabled(true);
         //barChartMillesime.setDrawBarShadow(true);
         //barChartMillesime.setDrawValueAboveBar(true);
         //barChartMillesime.setMaxVisibleValueCount(50);
-        //barChartMillesime.setPinchZoom(false);
         //barChartMillesime.setDrawGridBackground(false);
         barChartMillesime.getXAxis().setDrawGridLines(false);
         barChartMillesime.getAxisLeft().setDrawGridLines(false);
@@ -153,7 +154,11 @@ public class CellarStatMillesimeFragment extends Fragment {
         barChartMillesime.getAxisLeft().setAxisLineColor(getResources().getColor(R.color.green_very_light));
         barChartMillesime.getXAxis().setTextColor(getResources().getColor(R.color.green_very_light));
 
-        barChartMillesime.setExtraOffsets(5, 10, 5, 5);
+        // Permet de réduire l'espace entre les barres et les Xlabels
+        barChartMillesime.getAxisLeft().setAxisMinimum(0);
+        barChartMillesime.getAxisRight().setAxisMinimum(0);
+
+        barChartMillesime.setExtraOffsets(0, 0, 0, 15);
 
         // Arrangement de la légende
         Legend legend = barChartMillesime.getLegend();
@@ -177,46 +182,42 @@ public class CellarStatMillesimeFragment extends Fragment {
 
 
 
+        BarDataSet barDataSet = new BarDataSet(values(), "");
+        // Set de la couleur
+        barDataSet.setColors(COLORS);
+        // Set des deux labels
+        String[] labels = {"Quantité", "Estimation (€)"};
+        barDataSet.setStackLabels(labels);
 
+        BarData data = new BarData(barDataSet);
 
+        // Largeur des bars (80% de la largeur 1f)
+        data.setBarWidth(0.8f);
 
-        BarDataSet barDataSetEstimate = new BarDataSet(estimateValues(), "Estimation");
-        BarDataSet barDataSetNumber = new BarDataSet(numberValues(), "Quantité");
-        // Set des deux couleurs
-        barDataSetEstimate.setColors(Color.rgb(141, 179, 197));
-        barDataSetNumber.setColors(Color.rgb(103, 130, 143));
+        barChartMillesime.setData(data);
 
-
-        BarData data = new BarData(barDataSetEstimate, barDataSetNumber);
-
-        // Largeur des bars (90% de la largeur totale)
-        data.setBarWidth(0.9f);
+        // Caractéristiques XAxis
+        XAxis xAxis = barChartMillesime.getXAxis();
+        xAxis.setValueFormatter(new MyPieChartValueFormatter());
+        // 6 colonnes maximum affichées
+        barChartMillesime.setVisibleXRangeMaximum(6);
+        barChartMillesime.setMinimumWidth(6);
 
 
         // couleur et taille des valeurs dans les bars
-        barDataSetEstimate.setValueTextColor(getResources().getColor(R.color.green_dark));
-        barDataSetEstimate.setValueTextSize(10);
-        barDataSetNumber.setValueTextColor(getResources().getColor(R.color.green_dark));
-        barDataSetNumber.setValueTextSize(10);
+        barDataSet.setValueTextColor(getResources().getColor(R.color.green_dark));
+        barDataSet.setValueTextSize(10);
 
-        barDataSetEstimate.setValueFormatter(new MyPieChartValueFormatter());
-        barDataSetNumber.setValueFormatter(new MyPieChartValueFormatter());
-
-        // 6 colonnes maximum affichées
-        barChartMillesime.setVisibleXRangeMaximum(6);
+        // Remove decimal bar values
+        barDataSet.setValueFormatter(new MyPieChartValueFormatter());
 
         barChartMillesime.animateY(1000);
-
-        barChartMillesime.setData(data);
         barChartMillesime.invalidate();
-
-
-
-        //barChartMillesime.notifyDataSetChanged();
+        barChartMillesime.notifyDataSetChanged();
 
     }
 
-    private ArrayList<BarEntry> estimateValues(){
+    private ArrayList<BarEntry> values(){
         // Récupération de la liste des bouteilles
         accesLocal = new AccesLocal(getContext());
         ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleList();
@@ -228,32 +229,12 @@ public class CellarStatMillesimeFragment extends Fragment {
         while (iterator.hasNext()) {
             WineBottle wineBottle = (WineBottle) iterator.next();
             if(wineBottle.getEstimate() > 0) {
-                valuesEstimate.add(new BarEntry(wineBottle.getYear(), wineBottle.getEstimate()));
+                valuesEstimate.add(new BarEntry(wineBottle.getYear(), new float[]{wineBottle.getEstimate(), wineBottle.getNumber()}));
             } else {
             }
         }
         return valuesEstimate;
     }
-
-    private ArrayList<BarEntry> numberValues(){
-        // Récupération de la liste des bouteilles
-        accesLocal = new AccesLocal(getContext());
-        ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleList();
-
-        Iterator iterator = wineBottleList.iterator();
-
-        // Injection des données dans le barChart
-        ArrayList<BarEntry> valuesNumber = new ArrayList<>();
-        while (iterator.hasNext()) {
-            WineBottle wineBottle = (WineBottle) iterator.next();
-            if(wineBottle.getEstimate() > 0) {
-                valuesNumber.add(new BarEntry(wineBottle.getYear(), wineBottle.getNumber()));
-            } else {
-            }
-        }
-        return valuesNumber;
-    }
-
 
     public class MyPieChartValueFormatter extends ValueFormatter {
 
