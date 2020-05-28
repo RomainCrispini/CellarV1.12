@@ -38,6 +38,7 @@ public class SearchActivity extends AppCompatActivity {
     private Boolean isFABWineMenuOpen = false;
 
     // Search
+    private ImageButton btnMap;
     private ImageButton btnSearch;
     private EditText txtSearch;
 
@@ -90,6 +91,14 @@ public class SearchActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnMap.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SearchActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
     }
 
     private void loadSearchBottleInRecycleView() {
@@ -118,6 +127,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private void init() {
 
+        btnMap = (ImageButton) findViewById(R.id.btnMap);
         btnSearch = (ImageButton) findViewById(R.id.btnSearch);
 
         popupSearch = new Dialog(this);

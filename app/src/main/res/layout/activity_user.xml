@@ -257,6 +257,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/curvedBottomNavigationView" />
 
+    <!--
     <ImageView
         android:id="@+id/imageTest"
         android:layout_width="300dp"
@@ -264,7 +265,7 @@
         android:background="@color/green_apple"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"/> -->
 
 
 

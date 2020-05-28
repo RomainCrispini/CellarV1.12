@@ -35,11 +35,32 @@
             android:layout_marginRight="10dp"
             android:orientation="horizontal">
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/green_very_dark"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="0dp">
+
+                <ImageButton
+                    android:id="@+id/btnMap"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/transparent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icone_menubis_map"
+                    android:tint="@color/green_third_light" />
+
+            </androidx.cardview.widget.CardView>
+
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/fond_textinput"
                 android:backgroundTint="@color/green_dark"
@@ -68,9 +89,8 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.cardview.widget.CardView
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 app:cardBackgroundColor="@color/green_very_dark"
                 app:cardCornerRadius="15dp"

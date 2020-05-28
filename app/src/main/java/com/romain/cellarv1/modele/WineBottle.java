@@ -57,6 +57,14 @@ public class WineBottle implements Serializable {
         this.random = random;
     }
 
+    // Constructeur pour pouvoir faire la somme estimate & number group by year
+    public WineBottle(Integer year, Integer number, Integer estimate, String random) {
+        this.year = year;
+        this.number = number;
+        this.estimate = estimate;
+        this.random = random;
+    }
+
     // Getters et setters
     public Date getDateAddNewBottle() {
         return dateAddNewBottle;

@@ -192,7 +192,7 @@ public class CellarStatMillesimeFragment extends Fragment {
         BarData data = new BarData(barDataSet);
 
         // Largeur des bars (80% de la largeur 1f)
-        data.setBarWidth(0.8f);
+        data.setBarWidth(0.7f);
 
         barChartMillesime.setData(data);
 
@@ -220,20 +220,20 @@ public class CellarStatMillesimeFragment extends Fragment {
     private ArrayList<BarEntry> values(){
         // Récupération de la liste des bouteilles
         accesLocal = new AccesLocal(getContext());
-        ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleList();
+        ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleListOrderByYear();
 
         Iterator iterator = wineBottleList.iterator();
 
         // Injection des données dans le barChart
-        ArrayList<BarEntry> valuesEstimate = new ArrayList<>();
+        ArrayList<BarEntry> values = new ArrayList<>();
         while (iterator.hasNext()) {
             WineBottle wineBottle = (WineBottle) iterator.next();
             if(wineBottle.getEstimate() > 0) {
-                valuesEstimate.add(new BarEntry(wineBottle.getYear(), new float[]{wineBottle.getEstimate(), wineBottle.getNumber()}));
+                values.add(new BarEntry(wineBottle.getYear(), new float[]{wineBottle.getNumber(), (wineBottle.getNumber() * wineBottle.getEstimate())}));
             } else {
             }
         }
-        return valuesEstimate;
+        return values;
     }
 
     public class MyPieChartValueFormatter extends ValueFormatter {

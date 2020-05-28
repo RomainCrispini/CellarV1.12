@@ -231,6 +231,31 @@ public class AccesLocal {
 
     /**
      * Récupération de la liste des bouteilles enregistrées dans le cellier
+     * @return Liste exhaustive des bouteilles de vin group by year avec somme du nombre et de l'estimation
+     */
+    public List<WineBottle> recoverWineBottleListOrderByYear() {
+        List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
+        bd = accesBD.getReadableDatabase();
+        WineBottle wineBottle;
+        String requete = "select year, sum(number), sum(estimate), random from bottle group by year";
+        Cursor cursor = bd.rawQuery(requete, null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()) {
+            Integer year = cursor.getInt(0);
+            Integer number = cursor.getInt(1);
+            Integer estimate = cursor.getInt(2);
+            String random = cursor.getString(3);
+            wineBottle = new WineBottle(year, number, estimate, random);
+            wineBottleList.add(wineBottle);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        bd.close();
+        return wineBottleList;
+    }
+
+    /**
+     * Récupération de la liste des bouteilles enregistrées dans le cellier
      * @return Liste exhaustive des bouteilles de vin dont favorite = 1
      */
     public List<WineBottle> recoverLikeWineBottleList() {
