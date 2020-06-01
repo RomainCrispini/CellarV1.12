@@ -275,14 +275,6 @@ public class AccesLocal {
         return wineBottleList;
     }
 
-
-    /**
-     * Récupération de la liste des bouteilles enregistrées dans le cellier
-     * @return Liste exhaustive des bouteilles de vin group by year avec somme du nombre et de l'estimation
-     */
-
-    //TODO
-
     /**
      * Récupération de la liste des bouteilles enregistrées dans le cellier
      * @return Liste exhaustive des bouteilles de vin dont favorite = 1

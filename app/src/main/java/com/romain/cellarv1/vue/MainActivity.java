@@ -14,6 +14,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -45,7 +47,10 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.romain.cellarv1.R;
+import com.romain.cellarv1.modele.AccesLocal;
+import com.romain.cellarv1.modele.WineBottle;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
+import com.romain.cellarv1.outils.Tools;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,6 +75,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     // Boutons Zoom In Out Map
     private ImageButton zoomIn, zoomOut;
+
+    // Déclaration d'une liste de bouteilles
+    private List<WineBottle> wineBottleList;
 
 
     @Override
@@ -300,7 +308,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Log.e(TAG, "Can't find style. Error: ", e);
         }
 
-        ArrayList<Bitmap> bitmapList = new ArrayList<>();
 
         /*
         for(int i=0; i<markers_location.length; i++){
@@ -310,19 +317,70 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
          */
 
 
+
+
+
+
+
+        AccesLocal accesLocal = new AccesLocal(MainActivity.this);
+        ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleList();
+
+        /*
+        List<Long> LatLong = new ArrayList<Long, Long>();
+        LatLong.add(4.345433, 3.454333);
+
+         */
+
+
+
+
+
+
+        /*
+        for(wineBottleArrayList)
+        WineBottle wineBottle = wineBottleArrayList.get(1).;
+
+         */
+
+
         // Nouvelles dimensions du marker
-        int height = 80;
-        int width = 80;
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.champ_wine);
-        Bitmap smallMarker = Bitmap.createScaledBitmap(bitmap, width, height, false);
+        int height = 100;
+        int width = 100;
+
+
+
+        // Test avec une bouteille de la liste
+        Tools tools = new Tools();
+        String etiquette = wineBottleList.get(1).getPictureSmall();
+        byte[] decodedByte = Base64.decode(etiquette, 0);
+        Bitmap etiquetteBitmap = BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
+        Bitmap roundEtiquette = tools.getRoundBitmap(etiquetteBitmap);
+
+
+
+        // Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.champ_wine);
+        Bitmap smallMarker = Bitmap.createScaledBitmap(roundEtiquette, width, height, false);
         BitmapDescriptor smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker);
 
-        LatLng nancy = new LatLng(48.687646, 6.181732);
-        MarkerOptions markerOptions = new MarkerOptions().position(nancy).title("NomDuVin").icon(smallMarkerIcon);
-        map.addMarker(markerOptions);
+
+
+
+
+
+
+
+
+
+
+
+
 
         // Initialisation default position sur Nancy
-        LatLng defaultPosition = new LatLng(48.687646, 6.181732);
+        LatLng nancy = new LatLng(48.687646, 6.181732);
+        MarkerOptions markerOptions = new MarkerOptions().position(nancy).title(wineBottleList.get(1).getRegion()).icon(smallMarkerIcon);
+        map.addMarker(markerOptions);
+        LatLng defaultPosition = nancy; // Coordonnées LatLng de Nancy
+
         CameraUpdate cameraPosition = CameraUpdateFactory.newLatLngZoom(defaultPosition, 5);
         map.moveCamera(cameraPosition);
         map.animateCamera(cameraPosition);
@@ -363,7 +421,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION
             }, MAP_REQUEST_PERMISSION);
-            // TODO: Consider calling
+
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,

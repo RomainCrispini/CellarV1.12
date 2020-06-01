@@ -178,31 +178,6 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                     accesLocal.removeLikeToABottle(String.valueOf(valueId));
 
                 }
-
-
-
-                /*
-                ArrayList<WineBottle> wineBottleArrayList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleList();
-                MyAdapterCellarRecyclerView myAdapterCellarRecyclerView = new MyAdapterCellarRecyclerView(mContext, wineBottleArrayList);
-                myAdapterCellarRecyclerView.notifyDataSetChanged();
-
-
-                mRecyclerView.setHasFixedSize(true);
-
-
-                //mLayoutManager = new LinearLayoutManager(getContext());
-                //mRecyclerView.setLayoutManager(mLayoutManager);
-
-                mAdapter = new MyAdapterCellarRecyclerView(getContext(), wineBottleArrayList);
-
-                mRecyclerView.setAdapter(mAdapter);
-
-                 */
-
-
-
-
-
             }
         });
 
@@ -280,13 +255,7 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                         accesLocal.takeOutBottle(valueId);
                         popupDelete.dismiss();
 
-
-                        // TODO RECHARGER RECYCLERVIEW WHEN A BOTTLE IS DELETED
-                        // Rechargement du RecyclerView avec la nouvelle liste de bouteilles à l'effacement d'une bouteille
-                        //accesLocal.recoverWineBottleList();
-                        //mContext.notifyDataSetChanged();
-
-
+                        removeCardViewAt(holder.getAdapterPosition());
 
                         popupSuccess.show();
                         // Permet de faire aparaitre le panneau 1 seconde sans intervention
@@ -321,6 +290,7 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
 
         // On set les infos dans le cardview layout
         WineBottle currentItem = wineBottleArrayList.get(position);
+
 
 
 
@@ -396,6 +366,12 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                 break;
         }
 
+    }
+
+    private void removeCardViewAt(int position) {
+        wineBottleArrayList.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, wineBottleArrayList.size());
     }
 
     @Override
