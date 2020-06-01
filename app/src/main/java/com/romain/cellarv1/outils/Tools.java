@@ -96,4 +96,8 @@ public class Tools {
         return resizedBitmap;
     }
 
+
+
+
+
 }

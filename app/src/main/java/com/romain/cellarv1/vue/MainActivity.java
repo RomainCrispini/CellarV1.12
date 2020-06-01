@@ -243,6 +243,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         //Toast.makeText(UserActivity.this, "USER", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, UserActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
                         //overridePendingTransition(0, 0);
                         return true;
                     case R.id.cellar:

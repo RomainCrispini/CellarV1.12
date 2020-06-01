@@ -7,6 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import android.Manifest;
+import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -30,7 +31,9 @@ import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
+import android.view.animation.Transformation;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -49,7 +52,9 @@ import com.google.android.material.snackbar.Snackbar;
 import com.romain.cellarv1.R;
 import com.romain.cellarv1.controleur.Controle;
 import com.romain.cellarv1.modele.AccesLocal;
+import com.romain.cellarv1.modele.WineBottle;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
+import com.romain.cellarv1.outils.ProgressBarAnimation;
 import com.romain.cellarv1.outils.Tools;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,6 +64,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Blob;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -91,7 +97,7 @@ public class AddActivity extends AppCompatActivity {
 
     // ProgessBar
     private ProgressBar progressBar;
-    //private Handler handler = new Handler();
+    private boolean check = true;
 
     // Champs texte
     private AutoCompleteTextView txtCountry;
@@ -521,6 +527,7 @@ public class AddActivity extends AppCompatActivity {
                         //Bitmap bitmap2 = BitmapFactory.decodeResource(AddActivity.this.getResources(), R.drawable.champ_wine);
                         Bitmap bitmap = ((BitmapDrawable) scanImageView.getDrawable()).getBitmap();
 
+                        /*
                         Tools tools = new Tools();
                         Bitmap bitmap100 = tools.getResizedBitmap100px(bitmap);
                         Bitmap bitmap1000 = tools.getResizedBitmap1000px(bitmap);
@@ -550,6 +557,7 @@ public class AddActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
+                         */
 
 
 
@@ -561,12 +569,13 @@ public class AddActivity extends AppCompatActivity {
 
 
 
-                        /*
+
+
                         ByteArrayOutputStream stream = new ByteArrayOutputStream(bitmap.getWidth() * bitmap.getHeight());
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
                         imageLarge = stream.toByteArray();
 
-                         */
+
 
 
 
@@ -583,7 +592,13 @@ public class AddActivity extends AppCompatActivity {
 
                          */
 
-                        afficheResult(country, region, wineColor, domain, appellation, year, apogee, number, estimate, pictureLarge, pictureSmall, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp, random);
+                        //afficheResult(country, region, wineColor, domain, appellation, year, apogee, number, estimate, pictureLarge, pictureSmall, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp, random);
+
+                        WineBottle wb = new WineBottle(null, country, region, wineColor, domain, appellation, year, apogee, number, estimate, pictureLarge, pictureSmall, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp, random);
+
+                        AccesLocal al = new AccesLocal(AddActivity.this);
+
+                        wb.setId(al.add(wb));
 
                         popupAdd.dismiss();
 
@@ -611,10 +626,6 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void afficheResult(String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Float rate, String favorite, String wish, Float lattitude, Float longitude, String timeStamp, String random) {
-        this.controle.createWineBottle(country, region, wineColor, domain, appellation, year, apogee, number, estimate, pictureLarge, pictureSmall, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp, random,  AddActivity.this);
     }
 
     /**
@@ -724,9 +735,9 @@ public class AddActivity extends AppCompatActivity {
     private void progressBar() {
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        //holder.progressBar.isIndeterminate(false);
-        progressBar.setMax(7);
+        progressBar.setMax(700);
         progressBar.setProgress(0);
+        final ProgressBarAnimation progressBarAnimation = new ProgressBarAnimation(progressBar, 1000);
 
         txtCountry = (AutoCompleteTextView) findViewById(R.id.textCountry);
         txtCountry.addTextChangedListener(new TextWatcher() {
@@ -734,28 +745,30 @@ public class AddActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
-            boolean check = true;
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s.length() > 0) {
                     if(check) {
-                        progressBar.incrementProgressBy(1);
-                        //progressBar.setProgress(progressBar.getProgress() + 1);
-                        if(progressBar.getProgress() == 7) {
+                        progressBarAnimation.setProgressOnly(progressBar.getProgress() + 100);
+                        if(progressBar.getProgress() == 700) {
                             btnAdd.setColorFilter(Color.parseColor("#97C58D"));
-                        } else if(progressBar.getProgress() < 7) {
+                        } else if(progressBar.getProgress() < 700) {
                             btnAdd.setColorFilter(Color.parseColor("#67828f"));
                         }
                         check = false;
                     }
-                }
-                else {
-                    progressBar.incrementProgressBy(-1);
-                    //progressBar.setProgress(progressBar.getProgress() - 1);
-                    //progressBar.getProgressDrawable().setColorFilter(Color.parseColor("#282828"), android.graphics.PorterDuff.Mode.SRC_IN);
-                    check = true;
+                } else {
+                    if(progressBar.getProgress() > 0) {
+                        progressBarAnimation.setProgressOnly(progressBar.getProgress() - 100);
+                        check = true;
+                    } else {
+                        check = true;
+                    }
                 }
             }
+
+
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -773,18 +786,21 @@ public class AddActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s.length() > 0) {
                     if(check) {
-                        progressBar.incrementProgressBy(1);
-                        if(progressBar.getProgress() == 7) {
+                        progressBarAnimation.setProgressOnly(progressBar.getProgress() + 100);
+                        if(progressBar.getProgress() == 700) {
                             btnAdd.setColorFilter(Color.parseColor("#97C58D"));
-                        } else if(progressBar.getProgress() < 7) {
+                        } else if(progressBar.getProgress() < 700) {
                             btnAdd.setColorFilter(Color.parseColor("#67828f"));
                         }
                         check = false;
                     }
-                }
-                else {
-                    progressBar.setProgress(progressBar.getProgress() - 1);
-                    check = true;
+                } else {
+                    if(progressBar.getProgress() > 0) {
+                        progressBarAnimation.setProgressOnly(progressBar.getProgress() - 100);
+                        check = true;
+                    } else {
+                        check = true;
+                    }
                 }
             }
 
@@ -804,18 +820,21 @@ public class AddActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s.length() > 0) {
                     if(check) {
-                        progressBar.setProgress(progressBar.getProgress() + 1);
-                        if(progressBar.getProgress() == 7) {
+                        progressBarAnimation.setProgressOnly(progressBar.getProgress() + 100);
+                        if(progressBar.getProgress() == 700) {
                             btnAdd.setColorFilter(Color.parseColor("#97C58D"));
-                        } else if(progressBar.getProgress() < 7) {
+                        } else if(progressBar.getProgress() < 700) {
                             btnAdd.setColorFilter(Color.parseColor("#67828f"));
                         }
                         check = false;
                     }
-                }
-                else {
-                    progressBar.setProgress(progressBar.getProgress() - 1);
-                    check = true;
+                } else {
+                    if(progressBar.getProgress() > 0) {
+                        progressBarAnimation.setProgressOnly(progressBar.getProgress() - 100);
+                        check = true;
+                    } else {
+                        check = true;
+                    }
                 }
             }
 
@@ -835,18 +854,21 @@ public class AddActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s.length() > 0) {
                     if(check) {
-                        progressBar.setProgress(progressBar.getProgress() + 1);
-                        if(progressBar.getProgress() == 7) {
+                        progressBarAnimation.setProgressOnly(progressBar.getProgress() + 100);
+                        if(progressBar.getProgress() == 700) {
                             btnAdd.setColorFilter(Color.parseColor("#97C58D"));
-                        } else if(progressBar.getProgress() < 7) {
+                        } else if(progressBar.getProgress() < 700) {
                             btnAdd.setColorFilter(Color.parseColor("#67828f"));
                         }
                         check = false;
                     }
-                }
-                else {
-                    progressBar.setProgress(progressBar.getProgress() - 1);
-                    check = true;
+                } else {
+                    if(progressBar.getProgress() > 0) {
+                        progressBarAnimation.setProgressOnly(progressBar.getProgress() - 100);
+                        check = true;
+                    } else {
+                        check = true;
+                    }
                 }
             }
 
@@ -866,18 +888,21 @@ public class AddActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s.length() > 0) {
                     if(check) {
-                        progressBar.setProgress(progressBar.getProgress() + 1);
-                        if(progressBar.getProgress() == 7) {
+                        progressBarAnimation.setProgressOnly(progressBar.getProgress() + 100);
+                        if(progressBar.getProgress() == 700) {
                             btnAdd.setColorFilter(Color.parseColor("#97C58D"));
-                        } else if(progressBar.getProgress() < 7) {
+                        } else if(progressBar.getProgress() < 700) {
                             btnAdd.setColorFilter(Color.parseColor("#67828f"));
                         }
                         check = false;
                     }
-                }
-                else {
-                    progressBar.setProgress(progressBar.getProgress() - 1);
-                    check = true;
+                } else {
+                    if(progressBar.getProgress() > 0) {
+                        progressBarAnimation.setProgressOnly(progressBar.getProgress() - 100);
+                        check = true;
+                    } else {
+                        check = true;
+                    }
                 }
             }
 
@@ -897,18 +922,21 @@ public class AddActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s.length() > 0) {
                     if(check) {
-                        progressBar.setProgress(progressBar.getProgress() + 1);
-                        if(progressBar.getProgress() == 7) {
+                        progressBarAnimation.setProgressOnly(progressBar.getProgress() + 100);
+                        if(progressBar.getProgress() == 700) {
                             btnAdd.setColorFilter(Color.parseColor("#97C58D"));
-                        } else if(progressBar.getProgress() < 7) {
+                        } else if(progressBar.getProgress() < 700) {
                             btnAdd.setColorFilter(Color.parseColor("#67828f"));
                         }
                         check = false;
                     }
-                }
-                else {
-                    progressBar.setProgress(progressBar.getProgress() - 1);
-                    check = true;
+                } else {
+                    if(progressBar.getProgress() > 0) {
+                        progressBarAnimation.setProgressOnly(progressBar.getProgress() - 100);
+                        check = true;
+                    } else {
+                        check = true;
+                    }
                 }
             }
 
@@ -928,18 +956,21 @@ public class AddActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s.length() > 0) {
                     if(check) {
-                        progressBar.setProgress(progressBar.getProgress() + 1);
-                        if(progressBar.getProgress() == 7) {
+                        progressBarAnimation.setProgressOnly(progressBar.getProgress() + 100);
+                        if(progressBar.getProgress() == 700) {
                             btnAdd.setColorFilter(Color.parseColor("#97C58D"));
-                        } else if(progressBar.getProgress() < 7) {
+                        } else if(progressBar.getProgress() < 700) {
                             btnAdd.setColorFilter(Color.parseColor("#67828f"));
                         }
                         check = false;
                     }
-                }
-                else {
-                    progressBar.setProgress(progressBar.getProgress() - 1);
-                    check = true;
+                } else {
+                    if(progressBar.getProgress() > 0) {
+                        progressBarAnimation.setProgressOnly(progressBar.getProgress() - 100);
+                        check = true;
+                    } else {
+                        check = true;
+                    }
                 }
             }
 
@@ -947,23 +978,6 @@ public class AddActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-
-
-
-
-        //if(!txtCountry.getText().toString().isEmpty() && !txtRegion.getText().toString().isEmpty()) {
-        //    progressBar.getProgressDrawable().setColorFilter(Color.parseColor("#159700"), android.graphics.PorterDuff.Mode.SRC_IN);
-        //}
-        //txtCountry.getText().toString().isEmpty();
-        //txtRegion.getText().toString().isEmpty();
-        //txtDomain.getText().toString().isEmpty();
-        //txtAppellation.getText().toString().isEmpty();
-        //nbYear.getText().toString().isEmpty();
-        //nbNumber.getText().toString().isEmpty();
-        //nbEstimate.getText().toString().isEmpty();
-        //if(!txtCountry.getText().toString().isEmpty() && !txtRegion.getText().toString().isEmpty()) {
-        //    progressBar.getProgressDrawable().setColorFilter(Color.parseColor("#159700"), android.graphics.PorterDuff.Mode.SRC_IN);
-        //}
 
     }
 

@@ -8,7 +8,7 @@ import java.util.Date;
 public class WineBottle implements Serializable {
 
     // Propriétés
-    private Date dateAddNewBottle;
+    private Integer id;
     private String country;
     private String region;
     private String wineColor;
@@ -33,8 +33,14 @@ public class WineBottle implements Serializable {
 
 
     // Constructeur total
-    public WineBottle(Date dateAddNewBottle, String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Float rate, String favorite, String wish, Float lattitude, Float longitude, String timeStamp, String random) {
-        this.dateAddNewBottle = dateAddNewBottle;
+    public WineBottle(Integer id, String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Float rate, String favorite, String wish, Float lattitude, Float longitude, String timeStamp, String random) {
+
+        if (id != null ){
+            this.id = id;
+        }else{
+            this.id = -1;
+        }
+
         this.country = country;
         this.region = region;
         this.wineColor = wineColor;
@@ -66,12 +72,12 @@ public class WineBottle implements Serializable {
     }
 
     // Getters et setters
-    public Date getDateAddNewBottle() {
-        return dateAddNewBottle;
+    public Integer getId() {
+        return id;
     }
 
-    public void setDateAddNewBottle(Date dateAddNewBottle) {
-        this.dateAddNewBottle = dateAddNewBottle;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getCountry() {

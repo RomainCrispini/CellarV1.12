@@ -95,7 +95,7 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
             delete = itemView.findViewById(R.id.delete);
 
 
-            CurvedBottomNavigationView curvedBottomNavigationView = itemView.findViewById(R.id.curvedBottomNavigationView);
+            //CurvedBottomNavigationView curvedBottomNavigationView = itemView.findViewById(R.id.curvedBottomNavigationView);
 
         }
     }
@@ -105,7 +105,7 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
     public CellarViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
 
         View v = LayoutInflater.from(mContext).inflate(R.layout.activity_cellar_custom_list_view, viewGroup, false);
-        CellarViewHolder cellarViewHolder = new CellarViewHolder(v);
+        //CellarViewHolder cellarViewHolder = new CellarViewHolder(v);
 
         popupDelete.setContentView(R.layout.popup_take_out_bottle);
         popupSuccess.setContentView(R.layout.popup_success_update_bottle);
@@ -185,13 +185,16 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                 if (wineBottle.getFavorite().matches("0")) {
                     accesLocal.addLikeToABottle(valueRandom);
 
+
                     /*
                     // COMMENT INSTANCIER BOTTOM NAV VIEW DANS LE RECYCLER VIEW ???????????????????????????????????????????????
-                    CellarActivity cellarActivity = new CellarActivity();
+                    //CellarActivity cellarActivity = new CellarActivity();
                     CurvedBottomNavigationView curvedBottomNavigationView = new CurvedBottomNavigationView(cellarActivity);
                     curvedBottomNavigationView.getOrCreateBadge(R.id.like).setBackgroundColor(Color.RED);
 
                      */
+
+
 
                 } else if(wineBottle.getFavorite().matches("1")) {
                     accesLocal.removeLikeToABottle(valueRandom);

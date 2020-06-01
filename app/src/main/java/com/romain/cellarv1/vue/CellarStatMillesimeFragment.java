@@ -220,7 +220,7 @@ public class CellarStatMillesimeFragment extends Fragment {
     private ArrayList<BarEntry> values(){
         // Récupération de la liste des bouteilles
         accesLocal = new AccesLocal(getContext());
-        ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleListOrderByYear();
+        ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleListNumberGroupByYear();
 
         Iterator iterator = wineBottleList.iterator();
 

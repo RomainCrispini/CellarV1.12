@@ -2,6 +2,7 @@ package com.romain.cellarv1.modele;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.romain.cellarv1.outils.MySQLiteOpenHelper;
@@ -20,7 +21,7 @@ public class AccesLocal {
     // Propriétés
     private String nomBase = "cellar.sqlite";
     private Integer versionBase = 1;
-    private MySQLiteOpenHelper accesBD; // Accès à la BDD SQLite
+    public MySQLiteOpenHelper accesBD; // Accès à la BDD SQLite
     private SQLiteDatabase bd; // Propriété qui permet de créer des canaux pour lire et/ou écrire dans la BDD
 
     /**
@@ -36,12 +37,38 @@ public class AccesLocal {
      * Ajout d'une bouteille dans la BDD
      * @param wineBottle
      */
-    public void add(WineBottle wineBottle) {
+    public Integer add(WineBottle wineBottle) {
+
         bd = accesBD.getWritableDatabase();
-        String requete = "insert into bottle (dateaddnewbottle, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random) values ";
-        requete += "(\""+ wineBottle.getDateAddNewBottle() +"\", \""+wineBottle.getCountry()+"\", \""+wineBottle.getRegion()+"\", \""+wineBottle.getWineColor()+" \", \""+wineBottle.getDomain()+"\", \""+wineBottle.getAppellation()+"\", "+wineBottle.getYear()+", "+wineBottle.getApogee()+", "+wineBottle.getNumber()+", "+wineBottle.getEstimate()+", \""+wineBottle.getPictureLarge()+"\", \""+wineBottle.getPictureSmall()+"\", \""+wineBottle.getImageLarge()+"\", \""+ wineBottle.getImageSmall() +"\", "+wineBottle.getRate()+", \""+wineBottle.getFavorite()+"\", \""+wineBottle.getWish()+"\", "+wineBottle.getLattitude()+", "+wineBottle.getLongitude()+", \""+wineBottle.getTimeStamp()+"\", \""+wineBottle.getRandom()+"\")";
-        bd.execSQL(requete);
+      /*  String requete = "insert into bottle (country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random) values ";
+        requete += "(\""+wineBottle.getCountry()+"\", \""+wineBottle.getRegion()+"\", \""+wineBottle.getWineColor()+" \", \""+wineBottle.getDomain()+"\", \""+wineBottle.getAppellation()+"\", "+wineBottle.getYear()+", "+wineBottle.getApogee()+", "+wineBottle.getNumber()+", "+wineBottle.getEstimate()+", \""+wineBottle.getPictureLarge()+"\", \""+wineBottle.getPictureSmall()+"\", \""+wineBottle.getImageLarge()+"\", \""+ wineBottle.getImageSmall() +"\", "+wineBottle.getRate()+", \""+wineBottle.getFavorite()+"\", \""+wineBottle.getWish()+"\", "+wineBottle.getLattitude()+", "+wineBottle.getLongitude()+", \""+wineBottle.getTimeStamp()+"\", \""+wineBottle.getRandom()+"\")";
+        Integer thatId = bd.insert("table", )*/
+        ContentValues cv = new ContentValues();
+        cv.put(accesBD.FIELD_COUNTRY, wineBottle.getCountry());
+        cv.put(accesBD.FIELD_REGION, wineBottle.getRegion());
+        cv.put(accesBD.FIELD_WINECOLOR, wineBottle.getWineColor());
+        cv.put(accesBD.FIELD_DOMAIN, wineBottle.getDomain());
+        cv.put(accesBD.FIELD_APPELLATION, wineBottle.getAppellation());
+        cv.put(accesBD.FIELD_YEAR, wineBottle.getYear());
+        cv.put(accesBD.FIELD_APOGEE, wineBottle.getApogee());
+        cv.put(accesBD.FIELD_NUMBER, wineBottle.getNumber());
+        cv.put(accesBD.FIELD_ESTIMATE, wineBottle.getEstimate());
+        cv.put(accesBD.FIELD_PICTURELARGE, wineBottle.getPictureLarge());
+        cv.put(accesBD.FIELD_PICTURESMALL, wineBottle.getPictureSmall());
+        cv.put(accesBD.FIELD_IMAGELARGE, wineBottle.getImageLarge());
+        cv.put(accesBD.FIELD_IMAGESMALL, wineBottle.getImageSmall());
+        cv.put(accesBD.FIELD_RATE, wineBottle.getRate());
+        cv.put(accesBD.FIELD_FAVORITE, wineBottle.getFavorite());
+        cv.put(accesBD.FIELD_WISH, wineBottle.getWish());
+        cv.put(accesBD.FIELD_LATTITUDE, wineBottle.getLattitude());
+        cv.put(accesBD.FIELD_LONGITUDE, wineBottle.getLongitude());
+        cv.put(accesBD.FIELD_TIMESTAMP, wineBottle.getTimeStamp());
+        cv.put(accesBD.FIELD_RANDOM, wineBottle.getRandom());
+        Long idFromInsert = bd.insert(accesBD.TABLE_BOTTLE, null, cv);
+        int id = idFromInsert.intValue();
         bd.close();
+
+        return id;
     }
 
     /**
@@ -195,11 +222,13 @@ public class AccesLocal {
         List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
         bd = accesBD.getReadableDatabase();
         WineBottle wineBottle;
-        String requete = "select * from bottle order by dateaddnewbottle desc";
+        String requete = "select * from " + accesBD.TABLE_BOTTLE + " order by " + accesBD.FIELD_ID + " desc";
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
-            Date date = new Date();
+            //Date date = new Date();
+
+            int id = cursor.getInt(0);
             String country = cursor.getString(1);
             String region = cursor.getString(2);
             String winecolor = cursor.getString(3);
@@ -220,7 +249,7 @@ public class AccesLocal {
             Float longitude = cursor.getFloat(18);
             String timestamp = cursor.getString(19);
             String random = cursor.getString(20);
-            wineBottle = new WineBottle(date, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
+            wineBottle = new WineBottle(id, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
             wineBottleList.add(wineBottle);
             cursor.moveToNext();
         }
@@ -233,7 +262,7 @@ public class AccesLocal {
      * Récupération de la liste des bouteilles enregistrées dans le cellier
      * @return Liste exhaustive des bouteilles de vin group by year avec somme du nombre et de l'estimation
      */
-    public List<WineBottle> recoverWineBottleListOrderByYear() {
+    public List<WineBottle> recoverWineBottleListNumberGroupByYear() {
         List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
         bd = accesBD.getReadableDatabase();
         WineBottle wineBottle;
@@ -254,6 +283,35 @@ public class AccesLocal {
         return wineBottleList;
     }
 
+
+    /**
+     * Récupération de la liste des bouteilles enregistrées dans le cellier
+     * @return Liste exhaustive des bouteilles de vin group by year avec somme du nombre et de l'estimation
+     */
+    /*
+    public List<WineBottle> recoverWineBottleListGroupByYear() {
+        List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
+        bd = accesBD.getReadableDatabase();
+        WineBottle wineBottle;
+        String requete = "select year, sum(number), sum(estimate), random from bottle group by year";
+        Cursor cursor = bd.rawQuery(requete, null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()) {
+            Integer year = cursor.getInt(0);
+            Integer number = cursor.getInt(1);
+            Integer estimate = cursor.getInt(2);
+            String random = cursor.getString(3);
+            wineBottle = new WineBottle(year, number, estimate, random);
+            wineBottleList.add(wineBottle);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        bd.close();
+        return wineBottleList;
+    }
+
+     */
+
     /**
      * Récupération de la liste des bouteilles enregistrées dans le cellier
      * @return Liste exhaustive des bouteilles de vin dont favorite = 1
@@ -266,29 +324,7 @@ public class AccesLocal {
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
-            Date date = new Date();
-            String country = cursor.getString(1);
-            String region = cursor.getString(2);
-            String winecolor = cursor.getString(3);
-            String domain = cursor.getString(4);
-            String appellation = cursor.getString(5);
-            Integer year = cursor.getInt(6);
-            Integer apogee = cursor.getInt(7);
-            Integer number = cursor.getInt(8);
-            Integer estimate = cursor.getInt(9);
-            String picturelarge = cursor.getString(10);
-            String picturesmall = cursor.getString(11);
-            byte[] imagelarge = cursor.getBlob(12);
-            byte[] imagesmall = cursor.getBlob(13);
-            Float rate = cursor.getFloat(14);
-            String favorite = cursor.getString(15);
-            String wish = cursor.getString(16);
-            Float lattitude = cursor.getFloat(17);
-            Float longitude = cursor.getFloat(18);
-            String timestamp = cursor.getString(19);
-            String random = cursor.getString(20);
-            wineBottle = new WineBottle(date, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
-            wineBottleList.add(wineBottle);
+            wineBottleList.add(this.cursorToWineBottle(cursor));
             cursor.moveToNext();
         }
         cursor.close();
@@ -308,29 +344,7 @@ public class AccesLocal {
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
-            Date date = new Date();
-            String country = cursor.getString(1);
-            String region = cursor.getString(2);
-            String winecolor = cursor.getString(3);
-            String domain = cursor.getString(4);
-            String appellation = cursor.getString(5);
-            Integer year = cursor.getInt(6);
-            Integer apogee = cursor.getInt(7);
-            Integer number = cursor.getInt(8);
-            Integer estimate = cursor.getInt(9);
-            String picturelarge = cursor.getString(10);
-            String picturesmall = cursor.getString(11);
-            byte[] imagelarge = cursor.getBlob(12);
-            byte[] imagesmall = cursor.getBlob(13);
-            Float rate = cursor.getFloat(14);
-            String favorite = cursor.getString(15);
-            String wish = cursor.getString(16);
-            Float lattitude = cursor.getFloat(17);
-            Float longitude = cursor.getFloat(18);
-            String timestamp = cursor.getString(19);
-            String random = cursor.getString(20);
-            wineBottle = new WineBottle(date, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
-            wineBottleList.add(wineBottle);
+            wineBottleList.add(this.cursorToWineBottle(cursor));
             cursor.moveToNext();
         }
         cursor.close();
@@ -346,29 +360,7 @@ public class AccesLocal {
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
-            Date date = new Date();
-            String country = cursor.getString(1);
-            String region = cursor.getString(2);
-            String winecolor = cursor.getString(3);
-            String domain = cursor.getString(4);
-            String appellation = cursor.getString(5);
-            Integer year = cursor.getInt(6);
-            Integer apogee = cursor.getInt(7);
-            Integer number = cursor.getInt(8);
-            Integer estimate = cursor.getInt(9);
-            String picturelarge = cursor.getString(10);
-            String picturesmall = cursor.getString(11);
-            byte[] imagelarge = cursor.getBlob(12);
-            byte[] imagesmall = cursor.getBlob(13);
-            Float rate = cursor.getFloat(14);
-            String favorite = cursor.getString(15);
-            String wish = cursor.getString(16);
-            Float lattitude = cursor.getFloat(17);
-            Float longitude = cursor.getFloat(18);
-            String timestamp = cursor.getString(19);
-            String random = cursor.getString(20);
-            wineBottle = new WineBottle(date, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
-            wineBottleList.add(wineBottle);
+            wineBottleList.add(this.cursorToWineBottle(cursor));
             cursor.moveToNext();
         }
         cursor.close();
@@ -384,29 +376,7 @@ public class AccesLocal {
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
-            Date date = new Date();
-            String country = cursor.getString(1);
-            String region = cursor.getString(2);
-            String winecolor = cursor.getString(3);
-            String domain = cursor.getString(4);
-            String appellation = cursor.getString(5);
-            Integer year = cursor.getInt(6);
-            Integer apogee = cursor.getInt(7);
-            Integer number = cursor.getInt(8);
-            Integer estimate = cursor.getInt(9);
-            String picturelarge = cursor.getString(10);
-            String picturesmall = cursor.getString(11);
-            byte[] imagelarge = cursor.getBlob(12);
-            byte[] imagesmall = cursor.getBlob(13);
-            Float rate = cursor.getFloat(14);
-            String favorite = cursor.getString(15);
-            String wish = cursor.getString(16);
-            Float lattitude = cursor.getFloat(17);
-            Float longitude = cursor.getFloat(18);
-            String timestamp = cursor.getString(19);
-            String random = cursor.getString(20);
-            wineBottle = new WineBottle(date, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
-            wineBottleList.add(wineBottle);
+            wineBottleList.add(this.cursorToWineBottle(cursor));
             cursor.moveToNext();
         }
         cursor.close();
@@ -422,29 +392,7 @@ public class AccesLocal {
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
-            Date date = new Date();
-            String country = cursor.getString(1);
-            String region = cursor.getString(2);
-            String winecolor = cursor.getString(3);
-            String domain = cursor.getString(4);
-            String appellation = cursor.getString(5);
-            Integer year = cursor.getInt(6);
-            Integer apogee = cursor.getInt(7);
-            Integer number = cursor.getInt(8);
-            Integer estimate = cursor.getInt(9);
-            String picturelarge = cursor.getString(10);
-            String picturesmall = cursor.getString(11);
-            byte[] imagelarge = cursor.getBlob(12);
-            byte[] imagesmall = cursor.getBlob(13);
-            Float rate = cursor.getFloat(14);
-            String favorite = cursor.getString(15);
-            String wish = cursor.getString(16);
-            Float lattitude = cursor.getFloat(17);
-            Float longitude = cursor.getFloat(18);
-            String timestamp = cursor.getString(19);
-            String random = cursor.getString(20);
-            wineBottle = new WineBottle(date, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
-            wineBottleList.add(wineBottle);
+            wineBottleList.add(this.cursorToWineBottle(cursor));
             cursor.moveToNext();
         }
         cursor.close();
@@ -460,29 +408,7 @@ public class AccesLocal {
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
-            Date date = new Date();
-            String country = cursor.getString(1);
-            String region = cursor.getString(2);
-            String winecolor = cursor.getString(3);
-            String domain = cursor.getString(4);
-            String appellation = cursor.getString(5);
-            Integer year = cursor.getInt(6);
-            Integer apogee = cursor.getInt(7);
-            Integer number = cursor.getInt(8);
-            Integer estimate = cursor.getInt(9);
-            String picturelarge = cursor.getString(10);
-            String picturesmall = cursor.getString(11);
-            byte[] imagelarge = cursor.getBlob(12);
-            byte[] imagesmall = cursor.getBlob(13);
-            Float rate = cursor.getFloat(14);
-            String favorite = cursor.getString(15);
-            String wish = cursor.getString(16);
-            Float lattitude = cursor.getFloat(17);
-            Float longitude = cursor.getFloat(18);
-            String timestamp = cursor.getString(19);
-            String random = cursor.getString(20);
-            wineBottle = new WineBottle(date, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
-            wineBottleList.add(wineBottle);
+            wineBottleList.add(this.cursorToWineBottle(cursor));
             cursor.moveToNext();
         }
         cursor.close();
@@ -498,29 +424,7 @@ public class AccesLocal {
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
-            Date date = new Date();
-            String country = cursor.getString(1);
-            String region = cursor.getString(2);
-            String winecolor = cursor.getString(3);
-            String domain = cursor.getString(4);
-            String appellation = cursor.getString(5);
-            Integer year = cursor.getInt(6);
-            Integer apogee = cursor.getInt(7);
-            Integer number = cursor.getInt(8);
-            Integer estimate = cursor.getInt(9);
-            String picturelarge = cursor.getString(10);
-            String picturesmall = cursor.getString(11);
-            byte[] imagelarge = cursor.getBlob(12);
-            byte[] imagesmall = cursor.getBlob(13);
-            Float rate = cursor.getFloat(14);
-            String favorite = cursor.getString(15);
-            String wish = cursor.getString(16);
-            Float lattitude = cursor.getFloat(17);
-            Float longitude = cursor.getFloat(18);
-            String timestamp = cursor.getString(19);
-            String random = cursor.getString(20);
-            wineBottle = new WineBottle(date, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
-            wineBottleList.add(wineBottle);
+            wineBottleList.add(this.cursorToWineBottle(cursor));
             cursor.moveToNext();
         }
         cursor.close();
@@ -536,29 +440,7 @@ public class AccesLocal {
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
-            Date date = new Date();
-            String country = cursor.getString(1);
-            String region = cursor.getString(2);
-            String winecolor = cursor.getString(3);
-            String domain = cursor.getString(4);
-            String appellation = cursor.getString(5);
-            Integer year = cursor.getInt(6);
-            Integer apogee = cursor.getInt(7);
-            Integer number = cursor.getInt(8);
-            Integer estimate = cursor.getInt(9);
-            String picturelarge = cursor.getString(10);
-            String picturesmall = cursor.getString(11);
-            byte[] imagelarge = cursor.getBlob(12);
-            byte[] imagesmall = cursor.getBlob(13);
-            Float rate = cursor.getFloat(14);
-            String favorite = cursor.getString(15);
-            String wish = cursor.getString(16);
-            Float lattitude = cursor.getFloat(17);
-            Float longitude = cursor.getFloat(18);
-            String timestamp = cursor.getString(19);
-            String random = cursor.getString(20);
-            wineBottle = new WineBottle(date, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
-            wineBottleList.add(wineBottle);
+            wineBottleList.add(this.cursorToWineBottle(cursor));
             cursor.moveToNext();
         }
         cursor.close();
@@ -574,29 +456,7 @@ public class AccesLocal {
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
-            Date date = new Date();
-            String country = cursor.getString(1);
-            String region = cursor.getString(2);
-            String winecolor = cursor.getString(3);
-            String domain = cursor.getString(4);
-            String appellation = cursor.getString(5);
-            Integer year = cursor.getInt(6);
-            Integer apogee = cursor.getInt(7);
-            Integer number = cursor.getInt(8);
-            Integer estimate = cursor.getInt(9);
-            String picturelarge = cursor.getString(10);
-            String picturesmall = cursor.getString(11);
-            byte[] imagelarge = cursor.getBlob(12);
-            byte[] imagesmall = cursor.getBlob(13);
-            Float rate = cursor.getFloat(14);
-            String favorite = cursor.getString(15);
-            String wish = cursor.getString(16);
-            Float lattitude = cursor.getFloat(17);
-            Float longitude = cursor.getFloat(18);
-            String timestamp = cursor.getString(19);
-            String random = cursor.getString(20);
-            wineBottle = new WineBottle(date, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
-            wineBottleList.add(wineBottle);
+            wineBottleList.add(this.cursorToWineBottle(cursor));
             cursor.moveToNext();
         }
         cursor.close();
@@ -612,29 +472,7 @@ public class AccesLocal {
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
-            Date date = new Date();
-            String country = cursor.getString(1);
-            String region = cursor.getString(2);
-            String winecolor = cursor.getString(3);
-            String domain = cursor.getString(4);
-            String appellation = cursor.getString(5);
-            Integer year = cursor.getInt(6);
-            Integer apogee = cursor.getInt(7);
-            Integer number = cursor.getInt(8);
-            Integer estimate = cursor.getInt(9);
-            String picturelarge = cursor.getString(10);
-            String picturesmall = cursor.getString(11);
-            byte[] imagelarge = cursor.getBlob(12);
-            byte[] imagesmall = cursor.getBlob(13);
-            Float rate = cursor.getFloat(14);
-            String favorite = cursor.getString(15);
-            String wish = cursor.getString(16);
-            Float lattitude = cursor.getFloat(17);
-            Float longitude = cursor.getFloat(18);
-            String timestamp = cursor.getString(19);
-            String random = cursor.getString(20);
-            wineBottle = new WineBottle(date, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
-            wineBottleList.add(wineBottle);
+            wineBottleList.add(this.cursorToWineBottle(cursor));
             cursor.moveToNext();
         }
         cursor.close();
@@ -650,29 +488,7 @@ public class AccesLocal {
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
-            Date date = new Date();
-            String country = cursor.getString(1);
-            String region = cursor.getString(2);
-            String winecolor = cursor.getString(3);
-            String domain = cursor.getString(4);
-            String appellation = cursor.getString(5);
-            Integer year = cursor.getInt(6);
-            Integer apogee = cursor.getInt(7);
-            Integer number = cursor.getInt(8);
-            Integer estimate = cursor.getInt(9);
-            String picturelarge = cursor.getString(10);
-            String picturesmall = cursor.getString(11);
-            byte[] imagelarge = cursor.getBlob(12);
-            byte[] imagesmall = cursor.getBlob(13);
-            Float rate = cursor.getFloat(14);
-            String favorite = cursor.getString(15);
-            String wish = cursor.getString(16);
-            Float lattitude = cursor.getFloat(17);
-            Float longitude = cursor.getFloat(18);
-            String timestamp = cursor.getString(19);
-            String random = cursor.getString(20);
-            wineBottle = new WineBottle(date, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
-            wineBottleList.add(wineBottle);
+            wineBottleList.add(this.cursorToWineBottle(cursor));
             cursor.moveToNext();
         }
         cursor.close();
@@ -688,29 +504,7 @@ public class AccesLocal {
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
-            Date date = new Date();
-            String country = cursor.getString(1);
-            String region = cursor.getString(2);
-            String winecolor = cursor.getString(3);
-            String domain = cursor.getString(4);
-            String appellation = cursor.getString(5);
-            Integer year = cursor.getInt(6);
-            Integer apogee = cursor.getInt(7);
-            Integer number = cursor.getInt(8);
-            Integer estimate = cursor.getInt(9);
-            String picturelarge = cursor.getString(10);
-            String picturesmall = cursor.getString(11);
-            byte[] imagelarge = cursor.getBlob(12);
-            byte[] imagesmall = cursor.getBlob(13);
-            Float rate = cursor.getFloat(14);
-            String favorite = cursor.getString(15);
-            String wish = cursor.getString(16);
-            Float lattitude = cursor.getFloat(17);
-            Float longitude = cursor.getFloat(18);
-            String timestamp = cursor.getString(19);
-            String random = cursor.getString(20);
-            wineBottle = new WineBottle(date, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
-            wineBottleList.add(wineBottle);
+            wineBottleList.add(this.cursorToWineBottle(cursor));
             cursor.moveToNext();
         }
         cursor.close();
@@ -726,29 +520,7 @@ public class AccesLocal {
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
-            Date date = new Date();
-            String country = cursor.getString(1);
-            String region = cursor.getString(2);
-            String winecolor = cursor.getString(3);
-            String domain = cursor.getString(4);
-            String appellation = cursor.getString(5);
-            Integer year = cursor.getInt(6);
-            Integer apogee = cursor.getInt(7);
-            Integer number = cursor.getInt(8);
-            Integer estimate = cursor.getInt(9);
-            String picturelarge = cursor.getString(10);
-            String picturesmall = cursor.getString(11);
-            byte[] imagelarge = cursor.getBlob(12);
-            byte[] imagesmall = cursor.getBlob(13);
-            Float rate = cursor.getFloat(14);
-            String favorite = cursor.getString(15);
-            String wish = cursor.getString(16);
-            Float lattitude = cursor.getFloat(17);
-            Float longitude = cursor.getFloat(18);
-            String timestamp = cursor.getString(19);
-            String random = cursor.getString(20);
-            wineBottle = new WineBottle(date, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
-            wineBottleList.add(wineBottle);
+            wineBottleList.add(this.cursorToWineBottle(cursor));
             cursor.moveToNext();
         }
         cursor.close();
@@ -764,29 +536,7 @@ public class AccesLocal {
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
-            Date date = new Date();
-            String country = cursor.getString(1);
-            String region = cursor.getString(2);
-            String winecolor = cursor.getString(3);
-            String domain = cursor.getString(4);
-            String appellation = cursor.getString(5);
-            Integer year = cursor.getInt(6);
-            Integer apogee = cursor.getInt(7);
-            Integer number = cursor.getInt(8);
-            Integer estimate = cursor.getInt(9);
-            String picturelarge = cursor.getString(10);
-            String picturesmall = cursor.getString(11);
-            byte[] imagelarge = cursor.getBlob(12);
-            byte[] imagesmall = cursor.getBlob(13);
-            Float rate = cursor.getFloat(14);
-            String favorite = cursor.getString(15);
-            String wish = cursor.getString(16);
-            Float lattitude = cursor.getFloat(17);
-            Float longitude = cursor.getFloat(18);
-            String timestamp = cursor.getString(19);
-            String random = cursor.getString(20);
-            wineBottle = new WineBottle(date, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
-            wineBottleList.add(wineBottle);
+            wineBottleList.add(this.cursorToWineBottle(cursor));
             cursor.moveToNext();
         }
         cursor.close();
@@ -802,29 +552,7 @@ public class AccesLocal {
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
-            Date date = new Date();
-            String country = cursor.getString(1);
-            String region = cursor.getString(2);
-            String winecolor = cursor.getString(3);
-            String domain = cursor.getString(4);
-            String appellation = cursor.getString(5);
-            Integer year = cursor.getInt(6);
-            Integer apogee = cursor.getInt(7);
-            Integer number = cursor.getInt(8);
-            Integer estimate = cursor.getInt(9);
-            String picturelarge = cursor.getString(10);
-            String picturesmall = cursor.getString(11);
-            byte[] imagelarge = cursor.getBlob(12);
-            byte[] imagesmall = cursor.getBlob(13);
-            Float rate = cursor.getFloat(14);
-            String favorite = cursor.getString(15);
-            String wish = cursor.getString(16);
-            Float lattitude = cursor.getFloat(17);
-            Float longitude = cursor.getFloat(18);
-            String timestamp = cursor.getString(19);
-            String random = cursor.getString(20);
-            wineBottle = new WineBottle(date, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
-            wineBottleList.add(wineBottle);
+            wineBottleList.add(this.cursorToWineBottle(cursor));
             cursor.moveToNext();
         }
         cursor.close();
@@ -839,73 +567,39 @@ public class AccesLocal {
         String requete = "select * from bottle where wish = '1' order by apogee desc";
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
-        while(!cursor.isAfterLast()) {
-            Date date = new Date();
-            String country = cursor.getString(1);
-            String region = cursor.getString(2);
-            String winecolor = cursor.getString(3);
-            String domain = cursor.getString(4);
-            String appellation = cursor.getString(5);
-            Integer year = cursor.getInt(6);
-            Integer apogee = cursor.getInt(7);
-            Integer number = cursor.getInt(8);
-            Integer estimate = cursor.getInt(9);
-            String picturelarge = cursor.getString(10);
-            String picturesmall = cursor.getString(11);
-            byte[] imagelarge = cursor.getBlob(12);
-            byte[] imagesmall = cursor.getBlob(13);
-            Float rate = cursor.getFloat(14);
-            String favorite = cursor.getString(15);
-            String wish = cursor.getString(16);
-            Float lattitude = cursor.getFloat(17);
-            Float longitude = cursor.getFloat(18);
-            String timestamp = cursor.getString(19);
-            String random = cursor.getString(20);
-            wineBottle = new WineBottle(date, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
-            wineBottleList.add(wineBottle);
-            cursor.moveToNext();
-        }
+
         cursor.close();
         bd.close();
         return wineBottleList;
     }
 
-    /**
-     * Récupération de la dernière bouteille de la BDD
-     * @return wineBottle
-     */
-    public WineBottle getLastWineBottle() {
-        bd = accesBD.getReadableDatabase();
-        WineBottle wineBottle = null;
-        String requete = "select * from bottle";
-        Cursor cursor = bd.rawQuery(requete, null);
-        cursor.moveToLast();
-        if(!cursor.isAfterLast()) {
-            Date date = new Date();
-            String country = cursor.getString(1);
-            String region = cursor.getString(2);
-            String winecolor = cursor.getString(3);
-            String domain = cursor.getString(4);
-            String appellation = cursor.getString(5);
-            Integer year = cursor.getInt(6);
-            Integer apogee = cursor.getInt(7);
-            Integer number = cursor.getInt(8);
-            Integer estimate = cursor.getInt(9);
-            String picturelarge = cursor.getString(10);
-            String picturesmall = cursor.getString(11);
-            byte[] imagelarge = cursor.getBlob(12);
-            byte[] imagesmall = cursor.getBlob(13);
-            Float rate = cursor.getFloat(14);
-            String favorite = cursor.getString(15);
-            String wish = cursor.getString(16);
-            Float lattitude = cursor.getFloat(17);
-            Float longitude = cursor.getFloat(18);
-            String timestamp = cursor.getString(19);
-            String random = cursor.getString(20);
-            wineBottle = new WineBottle(date, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
-        }
-        cursor.close();
-        bd.close();
+    private WineBottle cursorToWineBottle (Cursor cursor){
+        WineBottle wineBottle;
+
+        Integer id = cursor.getInt(0);
+        String country = cursor.getString(1);
+        String region = cursor.getString(2);
+        String winecolor = cursor.getString(3);
+        String domain = cursor.getString(4);
+        String appellation = cursor.getString(5);
+        Integer year = cursor.getInt(6);
+        Integer apogee = cursor.getInt(7);
+        Integer number = cursor.getInt(8);
+        Integer estimate = cursor.getInt(9);
+        String picturelarge = cursor.getString(10);
+        String picturesmall = cursor.getString(11);
+        byte[] imagelarge = cursor.getBlob(12);
+        byte[] imagesmall = cursor.getBlob(13);
+        Float rate = cursor.getFloat(14);
+        String favorite = cursor.getString(15);
+        String wish = cursor.getString(16);
+        Float lattitude = cursor.getFloat(17);
+        Float longitude = cursor.getFloat(18);
+        String timestamp = cursor.getString(19);
+        String random = cursor.getString(20);
+        wineBottle = new WineBottle(id, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
+        cursor.moveToNext();
+
         return wineBottle;
     }
 }
