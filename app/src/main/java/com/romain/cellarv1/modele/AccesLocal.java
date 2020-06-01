@@ -2,17 +2,10 @@ package com.romain.cellarv1.modele;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.romain.cellarv1.outils.MySQLiteOpenHelper;
-
-import java.sql.Blob;
-import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -40,31 +33,27 @@ public class AccesLocal {
     public Integer add(WineBottle wineBottle) {
 
         bd = accesBD.getWritableDatabase();
-      /*  String requete = "insert into bottle (country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random) values ";
-        requete += "(\""+wineBottle.getCountry()+"\", \""+wineBottle.getRegion()+"\", \""+wineBottle.getWineColor()+" \", \""+wineBottle.getDomain()+"\", \""+wineBottle.getAppellation()+"\", "+wineBottle.getYear()+", "+wineBottle.getApogee()+", "+wineBottle.getNumber()+", "+wineBottle.getEstimate()+", \""+wineBottle.getPictureLarge()+"\", \""+wineBottle.getPictureSmall()+"\", \""+wineBottle.getImageLarge()+"\", \""+ wineBottle.getImageSmall() +"\", "+wineBottle.getRate()+", \""+wineBottle.getFavorite()+"\", \""+wineBottle.getWish()+"\", "+wineBottle.getLattitude()+", "+wineBottle.getLongitude()+", \""+wineBottle.getTimeStamp()+"\", \""+wineBottle.getRandom()+"\")";
-        Integer thatId = bd.insert("table", )*/
-        ContentValues cv = new ContentValues();
-        cv.put(accesBD.FIELD_COUNTRY, wineBottle.getCountry());
-        cv.put(accesBD.FIELD_REGION, wineBottle.getRegion());
-        cv.put(accesBD.FIELD_WINECOLOR, wineBottle.getWineColor());
-        cv.put(accesBD.FIELD_DOMAIN, wineBottle.getDomain());
-        cv.put(accesBD.FIELD_APPELLATION, wineBottle.getAppellation());
-        cv.put(accesBD.FIELD_YEAR, wineBottle.getYear());
-        cv.put(accesBD.FIELD_APOGEE, wineBottle.getApogee());
-        cv.put(accesBD.FIELD_NUMBER, wineBottle.getNumber());
-        cv.put(accesBD.FIELD_ESTIMATE, wineBottle.getEstimate());
-        cv.put(accesBD.FIELD_PICTURELARGE, wineBottle.getPictureLarge());
-        cv.put(accesBD.FIELD_PICTURESMALL, wineBottle.getPictureSmall());
-        cv.put(accesBD.FIELD_IMAGELARGE, wineBottle.getImageLarge());
-        cv.put(accesBD.FIELD_IMAGESMALL, wineBottle.getImageSmall());
-        cv.put(accesBD.FIELD_RATE, wineBottle.getRate());
-        cv.put(accesBD.FIELD_FAVORITE, wineBottle.getFavorite());
-        cv.put(accesBD.FIELD_WISH, wineBottle.getWish());
-        cv.put(accesBD.FIELD_LATTITUDE, wineBottle.getLattitude());
-        cv.put(accesBD.FIELD_LONGITUDE, wineBottle.getLongitude());
-        cv.put(accesBD.FIELD_TIMESTAMP, wineBottle.getTimeStamp());
-        cv.put(accesBD.FIELD_RANDOM, wineBottle.getRandom());
-        Long idFromInsert = bd.insert(accesBD.TABLE_BOTTLE, null, cv);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(accesBD.FIELD_COUNTRY, wineBottle.getCountry());
+        contentValues.put(accesBD.FIELD_REGION, wineBottle.getRegion());
+        contentValues.put(accesBD.FIELD_WINECOLOR, wineBottle.getWineColor());
+        contentValues.put(accesBD.FIELD_DOMAIN, wineBottle.getDomain());
+        contentValues.put(accesBD.FIELD_APPELLATION, wineBottle.getAppellation());
+        contentValues.put(accesBD.FIELD_YEAR, wineBottle.getYear());
+        contentValues.put(accesBD.FIELD_APOGEE, wineBottle.getApogee());
+        contentValues.put(accesBD.FIELD_NUMBER, wineBottle.getNumber());
+        contentValues.put(accesBD.FIELD_ESTIMATE, wineBottle.getEstimate());
+        contentValues.put(accesBD.FIELD_PICTURELARGE, wineBottle.getPictureLarge());
+        contentValues.put(accesBD.FIELD_PICTURESMALL, wineBottle.getPictureSmall());
+        contentValues.put(accesBD.FIELD_IMAGELARGE, wineBottle.getImageLarge());
+        contentValues.put(accesBD.FIELD_IMAGESMALL, wineBottle.getImageSmall());
+        contentValues.put(accesBD.FIELD_RATE, wineBottle.getRate());
+        contentValues.put(accesBD.FIELD_FAVORITE, wineBottle.getFavorite());
+        contentValues.put(accesBD.FIELD_WISH, wineBottle.getWish());
+        contentValues.put(accesBD.FIELD_LATTITUDE, wineBottle.getLattitude());
+        contentValues.put(accesBD.FIELD_LONGITUDE, wineBottle.getLongitude());
+        contentValues.put(accesBD.FIELD_TIMESTAMP, wineBottle.getTimeStamp());
+        Long idFromInsert = bd.insert(accesBD.TABLE_BOTTLE, null, contentValues);
         int id = idFromInsert.intValue();
         bd.close();
 
@@ -107,94 +96,100 @@ public class AccesLocal {
     public int nbRed() {
         int nbRed = 0;
         bd = accesBD.getReadableDatabase();
-        String requete = "select sum(number) from bottle where winecolor = 'Rouge '";
+        String requete = "select sum(number) from bottle where winecolor = 'Rouge'";
         Cursor cursor = bd.rawQuery(requete, null);
         if(cursor.moveToFirst()) {
             nbRed = cursor.getInt(0);
         }
         while (cursor.moveToNext());
+        cursor.close();
         return nbRed;
     }
 
     public int nbRose() {
         int nbRose = 0;
         bd = accesBD.getReadableDatabase();
-        String requete = "select sum(number) from bottle where winecolor = 'Rose '";
+        String requete = "select sum(number) from bottle where winecolor = 'Rose'";
         Cursor cursor = bd.rawQuery(requete, null);
         if(cursor.moveToFirst()) {
             nbRose = cursor.getInt(0);
         }
         while (cursor.moveToNext());
+        cursor.close();
+        bd.close();
         return nbRose;
     }
 
     public int nbWhite() {
         int nbWhite = 0;
         bd = accesBD.getReadableDatabase();
-        String requete = "select sum(number) from bottle where winecolor = 'Blanc '";
+        String requete = "select sum(number) from bottle where winecolor = 'Blanc'";
         Cursor cursor = bd.rawQuery(requete, null);
         if(cursor.moveToFirst()) {
             nbWhite = cursor.getInt(0);
         }
         while (cursor.moveToNext());
+        cursor.close();
+        bd.close();
         return nbWhite;
     }
 
     public int nbChamp() {
         int nbChamp = 0;
         bd = accesBD.getReadableDatabase();
-        String requete = "select sum(number) from bottle where winecolor = 'Effervescent '";
+        String requete = "select sum(number) from bottle where winecolor = 'Effervescent'";
         Cursor cursor = bd.rawQuery(requete, null);
         if(cursor.moveToFirst()) {
             nbChamp = cursor.getInt(0);
         }
         while (cursor.moveToNext());
+        cursor.close();
+        bd.close();
         return nbChamp;
     }
 
     /**
-     * Méthode qui permet de sortir une bouteille
+     * Méthode qui permet de sortir une bouteille suivant son id
      */
-    public void takeOutBottle(String random) {
+    public void takeOutBottle(Integer id) {
         bd = accesBD.getWritableDatabase();
-        bd.delete("bottle", "random = ?", new String[] { random });
+        bd.delete("bottle", "id = ?", new String[] { String.valueOf(id) });
+
         bd.close();
     }
 
     /**
-     * Méthode qui permet d'ajouter un like à une bouteille
+     * Méthode qui permet d'ajouter un like à une bouteille suivant son id
      */
-    public void addLikeToABottle(String random) {
+    public void addLikeToABottle(String id) {
         bd = accesBD.getWritableDatabase();
         ContentValues args = new ContentValues();
         args.put("favorite", "1");
-        String where = "random=?";
-        String[] whereArgs = new String[] {String.valueOf(random)};
+        String where = "id = ?";
+        String[] whereArgs = new String[] {String.valueOf(id)};
         bd.update("bottle", args, where, whereArgs);
 
-        //bd.execSQL(requete);
         bd.close();
     }
 
     /**
      * Méthode qui permet de retirer in like à une bouteille
      */
-    public void removeLikeToABottle(String random) {
+    public void removeLikeToABottle(String id) {
         bd = accesBD.getWritableDatabase();
         ContentValues args = new ContentValues();
         args.put("favorite", "0");
-        String where = "random=?";
-        String[] whereArgs = new String[] {String.valueOf(random)};
+        String where = "id = ?";
+        String[] whereArgs = new String[] {String.valueOf(id)};
         bd.update("bottle", args, where, whereArgs);
 
-        //bd.execSQL(requete);
         bd.close();
     }
 
     /**
      * Méthode qui permet d'upload les infos d'une bouteille
      */
-    public void updateBottle(String random, String country, String region, String domain, String appellation, int year, int apogee, int number, int estimate, Float rate, String favorite, String wish) {
+    public void updateBottle(Integer id, String country, String region, String domain, String appellation, int year, int apogee, int number, int estimate, Float rate, String favorite, String wish) {
         bd = accesBD.getWritableDatabase();
         ContentValues args = new ContentValues();
         args.put("country", country);
@@ -208,10 +203,9 @@ public class AccesLocal {
         args.put("rate", rate);
         args.put("favorite", favorite);
         args.put("wish", wish);
+        bd.update("bottle", args, "id = " + id, null);
 
-        String where = "random=?";
-        bd.update("bottle", args, "random=" + random, null);
-
+        bd.close();
     }
 
     /**
@@ -226,7 +220,6 @@ public class AccesLocal {
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
-            //Date date = new Date();
 
             int id = cursor.getInt(0);
             String country = cursor.getString(1);
@@ -248,8 +241,7 @@ public class AccesLocal {
             Float lattitude = cursor.getFloat(17);
             Float longitude = cursor.getFloat(18);
             String timestamp = cursor.getString(19);
-            String random = cursor.getString(20);
-            wineBottle = new WineBottle(id, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
+            wineBottle = new WineBottle(id, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp);
             wineBottleList.add(wineBottle);
             cursor.moveToNext();
         }
@@ -266,15 +258,15 @@ public class AccesLocal {
         List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
         bd = accesBD.getReadableDatabase();
         WineBottle wineBottle;
-        String requete = "select year, sum(number), sum(estimate), random from bottle group by year";
+        String requete = "select id, year, sum(number), sum(estimate) from bottle group by year";
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
-            Integer year = cursor.getInt(0);
-            Integer number = cursor.getInt(1);
-            Integer estimate = cursor.getInt(2);
-            String random = cursor.getString(3);
-            wineBottle = new WineBottle(year, number, estimate, random);
+            Integer id = cursor.getInt(0);
+            Integer year = cursor.getInt(1);
+            Integer number = cursor.getInt(2);
+            Integer estimate = cursor.getInt(3);
+            wineBottle = new WineBottle(id, year, number, estimate);
             wineBottleList.add(wineBottle);
             cursor.moveToNext();
         }
@@ -288,29 +280,8 @@ public class AccesLocal {
      * Récupération de la liste des bouteilles enregistrées dans le cellier
      * @return Liste exhaustive des bouteilles de vin group by year avec somme du nombre et de l'estimation
      */
-    /*
-    public List<WineBottle> recoverWineBottleListGroupByYear() {
-        List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
-        bd = accesBD.getReadableDatabase();
-        WineBottle wineBottle;
-        String requete = "select year, sum(number), sum(estimate), random from bottle group by year";
-        Cursor cursor = bd.rawQuery(requete, null);
-        cursor.moveToFirst();
-        while(!cursor.isAfterLast()) {
-            Integer year = cursor.getInt(0);
-            Integer number = cursor.getInt(1);
-            Integer estimate = cursor.getInt(2);
-            String random = cursor.getString(3);
-            wineBottle = new WineBottle(year, number, estimate, random);
-            wineBottleList.add(wineBottle);
-            cursor.moveToNext();
-        }
-        cursor.close();
-        bd.close();
-        return wineBottleList;
-    }
 
-     */
+    //TODO
 
     /**
      * Récupération de la liste des bouteilles enregistrées dans le cellier
@@ -319,8 +290,7 @@ public class AccesLocal {
     public List<WineBottle> recoverLikeWineBottleList() {
         List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
         bd = accesBD.getReadableDatabase();
-        WineBottle wineBottle;
-        String requete = "select * from bottle where favorite = '1'";
+        String requete = "select * from bottle where favorite = '1' order by id desc";
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
@@ -339,7 +309,6 @@ public class AccesLocal {
     public List<WineBottle> recoverRateWineBottleList() {
         List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
         bd = accesBD.getReadableDatabase();
-        WineBottle wineBottle;
         String requete = "select * from bottle order by rate desc";
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
@@ -355,8 +324,7 @@ public class AccesLocal {
     public List<WineBottle> recoverWishWineBottleList() {
         List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
         bd = accesBD.getReadableDatabase();
-        WineBottle wineBottle;
-        String requete = "select * from bottle where wish = '1'";
+        String requete = "select * from bottle where wish = '1' order by id desc";
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
@@ -371,8 +339,7 @@ public class AccesLocal {
     public List<WineBottle> recoverSearchWineBottleList(String searchWord) {
         List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
         bd = accesBD.getReadableDatabase();
-        WineBottle wineBottle;
-        String requete = "select * from bottle where (country like '%" + searchWord + "%') or (region like '%" + searchWord + "%') or (domain like '%" + searchWord + "%') or (appellation like '%" + searchWord + "%') or (year like '%" + searchWord + "%') or (apogee like '%" + searchWord + "%')";
+        String requete = "select * from bottle where (country like '%" + searchWord + "%') or (region like '%" + searchWord + "%') or (domain like '%" + searchWord + "%') or (appellation like '%" + searchWord + "%') or (year like '%" + searchWord + "%') or (apogee like '%" + searchWord + "%') order by id desc";
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
@@ -387,7 +354,6 @@ public class AccesLocal {
     public List<WineBottle> sortMapWineBottleList() {
         List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
         bd = accesBD.getReadableDatabase();
-        WineBottle wineBottle;
         String requete = "select * from bottle order by region asc";
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
@@ -403,7 +369,6 @@ public class AccesLocal {
     public List<WineBottle> sortColorWineBottleList() {
         List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
         bd = accesBD.getReadableDatabase();
-        WineBottle wineBottle;
         String requete = "select * from bottle order by winecolor desc";
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
@@ -419,7 +384,6 @@ public class AccesLocal {
     public List<WineBottle> sortYearWineBottleList() {
         List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
         bd = accesBD.getReadableDatabase();
-        WineBottle wineBottle;
         String requete = "select * from bottle order by year asc";
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
@@ -435,7 +399,6 @@ public class AccesLocal {
     public List<WineBottle> sortApogeeWineBottleList() {
         List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
         bd = accesBD.getReadableDatabase();
-        WineBottle wineBottle;
         String requete = "select * from bottle order by apogee desc";
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
@@ -451,7 +414,6 @@ public class AccesLocal {
     public List<WineBottle> sortMapLikeBottleList() {
         List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
         bd = accesBD.getReadableDatabase();
-        WineBottle wineBottle;
         String requete = "select * from bottle where favorite = '1' order by region asc";
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
@@ -467,7 +429,6 @@ public class AccesLocal {
     public List<WineBottle> sortColorLikeBottleList() {
         List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
         bd = accesBD.getReadableDatabase();
-        WineBottle wineBottle;
         String requete = "select * from bottle where favorite = '1' order by winecolor desc";
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
@@ -483,7 +444,6 @@ public class AccesLocal {
     public List<WineBottle> sortYearLikeBottleList() {
         List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
         bd = accesBD.getReadableDatabase();
-        WineBottle wineBottle;
         String requete = "select * from bottle where favorite = '1' order by year asc";
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
@@ -499,7 +459,6 @@ public class AccesLocal {
     public List<WineBottle> sortApogeeLikeBottleList() {
         List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
         bd = accesBD.getReadableDatabase();
-        WineBottle wineBottle;
         String requete = "select * from bottle where favorite = '1' order by apogee desc";
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
@@ -515,7 +474,6 @@ public class AccesLocal {
     public List<WineBottle> sortMapWishBottleList() {
         List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
         bd = accesBD.getReadableDatabase();
-        WineBottle wineBottle;
         String requete = "select * from bottle where wish = '1' order by region asc";
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
@@ -531,7 +489,6 @@ public class AccesLocal {
     public List<WineBottle> sortColorWishBottleList() {
         List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
         bd = accesBD.getReadableDatabase();
-        WineBottle wineBottle;
         String requete = "select * from bottle where wish = '1' order by winecolor desc";
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
@@ -547,7 +504,6 @@ public class AccesLocal {
     public List<WineBottle> sortYearWishBottleList() {
         List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
         bd = accesBD.getReadableDatabase();
-        WineBottle wineBottle;
         String requete = "select * from bottle where wish = '1' order by year asc";
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
@@ -563,7 +519,6 @@ public class AccesLocal {
     public List<WineBottle> sortApogeeWishBottleList() {
         List<WineBottle> wineBottleList = new ArrayList<>(); ////////////////////// Affiche des crochets et des virgules avec sa méthode toString()
         bd = accesBD.getReadableDatabase();
-        WineBottle wineBottle;
         String requete = "select * from bottle where wish = '1' order by apogee desc";
         Cursor cursor = bd.rawQuery(requete, null);
         cursor.moveToFirst();
@@ -596,8 +551,7 @@ public class AccesLocal {
         Float lattitude = cursor.getFloat(17);
         Float longitude = cursor.getFloat(18);
         String timestamp = cursor.getString(19);
-        String random = cursor.getString(20);
-        wineBottle = new WineBottle(id, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp, random);
+        wineBottle = new WineBottle(id, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp);
         cursor.moveToNext();
 
         return wineBottle;

@@ -111,7 +111,7 @@ public class CellarStatWineColorFragment extends Fragment {
 
         txtTotalNumber.setText(nbTotalBottle.toString());
 
-        // Affiche un message s'il n'y a pas de bouteille dans la BDD & efface quelques TextView
+        // Affiche un message s'il n'y a pas de bouteille dans la BDD & efface 2 TextView
         if(nbTotalBottle < 1) {
             txtTotalNumber.setVisibility(View.INVISIBLE);
             txtTextNumber.setVisibility(View.INVISIBLE);

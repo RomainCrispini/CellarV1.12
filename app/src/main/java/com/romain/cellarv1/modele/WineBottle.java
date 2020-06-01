@@ -28,16 +28,15 @@ public class WineBottle implements Serializable {
     private Float lattitude;
     private Float longitude;
     private String timeStamp;
-    private String random;
 
 
 
     // Constructeur total
-    public WineBottle(Integer id, String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Float rate, String favorite, String wish, Float lattitude, Float longitude, String timeStamp, String random) {
+    public WineBottle(Integer id, String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Float rate, String favorite, String wish, Float lattitude, Float longitude, String timeStamp) {
 
         if (id != null ){
             this.id = id;
-        }else{
+        } else {
             this.id = -1;
         }
 
@@ -60,15 +59,14 @@ public class WineBottle implements Serializable {
         this.lattitude = lattitude;
         this.longitude = longitude;
         this.timeStamp = timeStamp;
-        this.random = random;
     }
 
     // Constructeur pour pouvoir faire la somme estimate & number group by year
-    public WineBottle(Integer year, Integer number, Integer estimate, String random) {
+    public WineBottle(Integer id, Integer year, Integer number, Integer estimate) {
+        this.id = id;
         this.year = year;
         this.number = number;
         this.estimate = estimate;
-        this.random = random;
     }
 
     // Getters et setters
@@ -232,33 +230,10 @@ public class WineBottle implements Serializable {
         this.timeStamp = timeStamp;
     }
 
-    public String getRandom() {
-        return random;
-    }
-
-    public void setRandom(String random) {
-        this.random = random;
-    }
 
     @Override
     public String toString() {
         return "Pays : " + country + ", Région : " + region + ", Couleur : " + wineColor + pictureLarge + "\n";
     }
 
-    /*
-    @Override
-    public String toString() {
-        return "WineBottle{" +
-                "dateMesure=" + dateAddNewBottle +
-                ", country='" + country + '\'' +
-                ", region='" + region + '\'' +
-                ", wineColor=" + wineColor +
-                ", domain='" + domain + '\'' +
-                ", appellation='" + appellation + '\'' +
-                ", year=" + year +
-                ", number=" + number +
-                ", estimate=" + estimate +
-                ", image='" + image + '\'' +
-                '}';
-    }*/
 }

@@ -31,9 +31,6 @@ import com.romain.cellarv1.R;
 import com.romain.cellarv1.modele.AccesLocal;
 import com.romain.cellarv1.modele.WineBottle;
 import com.romain.cellarv1.vue.BottleActivity;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 
@@ -124,15 +121,11 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
             @Override
             public void onClick(View v) {
 
-                // TODO PROBLEME DE DATE
-                /*
-                Date date = wineBottle.getDateAddNewBottle();
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-                String strDate = dateFormat.format(date);
-
-                 */
-
                 Intent intent = new Intent(mContext, BottleActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
+                Tools tools = new Tools();
+                String date = tools.timeStampToStringDate(wineBottle.getTimeStamp());
+                intent.putExtra("date", date);
 
                 intent.putExtra("wineColor", wineBottle.getWineColor());
                 intent.putExtra("imageBottleLarge", wineBottle.getPictureLarge());
@@ -149,7 +142,7 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                 intent.putExtra("favorite", wineBottle.getFavorite());
                 intent.putExtra("wish", wineBottle.getWish());
 
-                intent.putExtra("random", wineBottle.getRandom());
+                intent.putExtra("id", wineBottle.getId().toString());
 
 
                 /*
@@ -176,28 +169,13 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
             public void onClick(View v) {
 
                 // Pour set 1 dans la propriété favorite d'une bottle si elle n'est pas déjà set
-                String valueRandom = wineBottle.getRandom();
+                Integer valueId = wineBottle.getId();
                 AccesLocal accesLocal = new AccesLocal(mContext);
 
-
-
-
                 if (wineBottle.getFavorite().matches("0")) {
-                    accesLocal.addLikeToABottle(valueRandom);
-
-
-                    /*
-                    // COMMENT INSTANCIER BOTTOM NAV VIEW DANS LE RECYCLER VIEW ???????????????????????????????????????????????
-                    //CellarActivity cellarActivity = new CellarActivity();
-                    CurvedBottomNavigationView curvedBottomNavigationView = new CurvedBottomNavigationView(cellarActivity);
-                    curvedBottomNavigationView.getOrCreateBadge(R.id.like).setBackgroundColor(Color.RED);
-
-                     */
-
-
-
+                    accesLocal.addLikeToABottle(String.valueOf(valueId));
                 } else if(wineBottle.getFavorite().matches("1")) {
-                    accesLocal.removeLikeToABottle(valueRandom);
+                    accesLocal.removeLikeToABottle(String.valueOf(valueId));
 
                 }
 
@@ -297,13 +275,21 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                 btnAccept.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String valueRandom = wineBottle.getRandom();
+                        Integer valueId = wineBottle.getId();
                         AccesLocal accesLocal = new AccesLocal(mContext);
-                        accesLocal.takeOutBottle(valueRandom);
+                        accesLocal.takeOutBottle(valueId);
                         popupDelete.dismiss();
 
+
+                        // TODO RECHARGER RECYCLERVIEW WHEN A BOTTLE IS DELETED
+                        // Rechargement du RecyclerView avec la nouvelle liste de bouteilles à l'effacement d'une bouteille
+                        //accesLocal.recoverWineBottleList();
+                        //mContext.notifyDataSetChanged();
+
+
+
                         popupSuccess.show();
-                        // Permet de faire aparaitre le panneau 2 secondes sans interventions
+                        // Permet de faire aparaitre le panneau 1 seconde sans intervention
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {

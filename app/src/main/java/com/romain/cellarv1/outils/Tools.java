@@ -39,30 +39,22 @@ public class Tools {
         return bitmap;
     }
 
-    /**
-     *
-     * @return yyyy-MM-dd HH:mm:ss formate date as string
-     */
-    public static String getCurrentTimeStamp(){
-        try {
-
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String currentTimeStamp = dateFormat.format(new Date()); // Find todays date
-
-            return currentTimeStamp;
-        } catch (Exception e) {
-            e.printStackTrace();
-
-            return null;
-        }
-    }
-
     public Bitmap ByteToBitmap(byte[] byteArray) {
         ByteArrayInputStream arrayInputStream = new ByteArrayInputStream(byteArray);
         Bitmap bitmap = BitmapFactory.decodeStream(arrayInputStream);
         return bitmap;
     }
 
+    /**
+     * Permet de récupérer la date formattée
+     * @param timeStamp
+     * @return
+     */
+    public String timeStampToStringDate(String timeStamp) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String dateString = formatter.format(new Date(Long.parseLong(timeStamp)));
+        return dateString;
+    }
 
     /**
      * Permet de redimensionner une image à 70px de large
@@ -85,7 +77,7 @@ public class Tools {
      * @param bm
      * @return
      */
-    public Bitmap getResizedBitmap1000px(Bitmap bm) {
+    public Bitmap getResizedBitmap500px(Bitmap bm) {
 
         float aspectRatio = bm.getWidth() /
                 (float) bm.getHeight();

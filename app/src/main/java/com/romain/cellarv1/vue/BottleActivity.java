@@ -2,6 +2,7 @@ package com.romain.cellarv1.vue;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -43,6 +44,7 @@ public class BottleActivity extends AppCompatActivity {
     private Boolean isFABWineMenuOpen = false;
 
     // Déclaration des champs texte et des ImageView
+    private TextView dateBottle;
     private EditText countryBottle, regionBottle, domainBottle, appellationBottle;
     private EditText millesimeBottle, apogeeBottle, estimateBottle, numberBottle;
     private ImageView imageBottle, imageWineColor;
@@ -191,7 +193,10 @@ public class BottleActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        String strRandom = getIntent().getStringExtra("random");
+                        // Conversion de l'id à la récupération de l'intent
+                        String strId = getIntent().getStringExtra("id");
+                        Integer intId = Integer.parseInt(strId);
+
                         String strCountry = countryBottle.getText().toString();
                         String strRegion = regionBottle.getText().toString();
                         String strDomain = domainBottle.getText().toString();
@@ -218,7 +223,7 @@ public class BottleActivity extends AppCompatActivity {
                         }
 
                         AccesLocal accesLocal = new AccesLocal(BottleActivity.this);
-                        accesLocal.updateBottle(strRandom, strCountry, strRegion, strDomain, strAppellation, intMillesime, intApogee, intNumber, intEstimate, floatRate, strFavorite, strWish);
+                        accesLocal.updateBottle(intId, strCountry, strRegion, strDomain, strAppellation, intMillesime, intApogee, intNumber, intEstimate, floatRate, strFavorite, strWish);
                         popupUpdate.dismiss();
 
                         popupSuccess.show();
@@ -314,11 +319,18 @@ public class BottleActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        String strRandom = getIntent().getStringExtra("random");
+                        // Conversion de l'id à la récupération de l'intent
+                        String strId = getIntent().getStringExtra("id");
+                        Integer intId = Integer.parseInt(strId);
 
                         AccesLocal accesLocal = new AccesLocal(BottleActivity.this);
-                        accesLocal.takeOutBottle(strRandom);
+                        accesLocal.takeOutBottle(intId);
                         popupDelete.dismiss();
+
+                        // Basculement vers CellarActivity à l'effacement d'une bouteille dans le BottleActivity
+                        Intent intent = new Intent(BottleActivity.this, CellarActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
                         popupSuccess.show();
                         // Permet de faire aparaitre le panneau 2 secondes sans interventions
@@ -349,6 +361,8 @@ public class BottleActivity extends AppCompatActivity {
 
         imageBottle = (ImageView) findViewById(R.id.imageBottle);
         imageWineColor = (ImageView) findViewById(R.id.imageWineColor);
+
+        dateBottle = (TextView) findViewById(R.id.date);
 
         countryBottle = (EditText) findViewById(R.id.countryBottle);
         regionBottle = (EditText) findViewById(R.id.regionBottle);
@@ -417,6 +431,8 @@ public class BottleActivity extends AppCompatActivity {
                 btnWishlist.setChecked(true);
                 break;
         }
+
+        dateBottle.setText(getIntent().getStringExtra("date"));
 
         countryBottle.setText(getIntent().getStringExtra("country"));
         regionBottle.setText(getIntent().getStringExtra("region"));

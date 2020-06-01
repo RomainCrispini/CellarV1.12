@@ -44,6 +44,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -65,10 +66,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
 
 
 public class AddActivity extends AppCompatActivity {
@@ -455,6 +457,8 @@ public class AddActivity extends AppCompatActivity {
 
                          */
 
+                        Tools tools = new Tools();
+
                         String country = "";
                         String region = "";
                         String domain = "";
@@ -473,12 +477,10 @@ public class AddActivity extends AppCompatActivity {
                         String wish = "0";
                         Float lattitude = 0f;
                         Float longitude = 0f;
-                        String timeStamp = "";
-                        String random = "";
 
-                        Tools tool = new Tools();
-
-                        Random randomize = new Random();
+                        // Initialisation du timeStamp
+                        Long timeStampLong = System.currentTimeMillis(); // Résultat en millisecondes
+                        String timeStamp = timeStampLong.toString();
 
                         // Récupération des données saisies
                         try {
@@ -504,7 +506,6 @@ public class AddActivity extends AppCompatActivity {
                                 wish = "0";
                             }
 
-                            random = String.valueOf(randomize.nextInt(10000000));
 
                             country = txtCountry.getText().toString();
                             region = txtRegion.getText().toString();
@@ -519,18 +520,13 @@ public class AddActivity extends AppCompatActivity {
                         }
 
 
-
-
-
                         // Pour les tests de compression
                         //Bitmap bitmap1 = BitmapFactory.decodeResource(AddActivity.this.getResources(), R.drawable.test_image);
                         //Bitmap bitmap2 = BitmapFactory.decodeResource(AddActivity.this.getResources(), R.drawable.champ_wine);
                         Bitmap bitmap = ((BitmapDrawable) scanImageView.getDrawable()).getBitmap();
 
-                        /*
-                        Tools tools = new Tools();
                         Bitmap bitmap100 = tools.getResizedBitmap100px(bitmap);
-                        Bitmap bitmap1000 = tools.getResizedBitmap1000px(bitmap);
+                        Bitmap bitmap500 = tools.getResizedBitmap500px(bitmap);
 
                         // Enregistrement de bitmap100 dans pictureSmall
                         //ByteArrayOutputStream stream100 = new ByteArrayOutputStream(bitmap100.getWidth() * bitmap.getHeight());
@@ -546,65 +542,27 @@ public class AddActivity extends AppCompatActivity {
                         }
 
                         // Enregistrement de bitmap1000 dans pictureLarge
-                        ByteArrayOutputStream stream1000 = new ByteArrayOutputStream();
-                        bitmap1000.compress(Bitmap.CompressFormat.PNG, 0, stream1000);
-                        byte[] b1000 = stream1000.toByteArray();
-                        String image1000 = Base64.encodeToString(b1000, Base64.DEFAULT);
-                        pictureLarge = image1000;
+                        ByteArrayOutputStream stream500 = new ByteArrayOutputStream();
+                        bitmap500.compress(Bitmap.CompressFormat.PNG, 0, stream500);
+                        byte[] b1000 = stream500.toByteArray();
+                        String image500 = Base64.encodeToString(b1000, Base64.DEFAULT);
+                        pictureLarge = image500;
                         try {
-                            stream1000.close();
+                            stream500.close();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
 
-                         */
 
-
-
-
-
-
-
-
-
-
-
-
-
-                        ByteArrayOutputStream stream = new ByteArrayOutputStream(bitmap.getWidth() * bitmap.getHeight());
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
-                        imageLarge = stream.toByteArray();
-
-
-
-
-
-                        /*
-                        try {
-                            Bitmap bitmap = ((BitmapDrawable) scanImageView.getDrawable()).getBitmap();
-                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                            bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
-                            imageLarge = stream.toByteArray();
-                            //image = (tool.bitmapToString(bitmap));
-                        } catch(Exception e) {
-                            e.printStackTrace();
-                        }
-
-                         */
-
-                        //afficheResult(country, region, wineColor, domain, appellation, year, apogee, number, estimate, pictureLarge, pictureSmall, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp, random);
-
-                        WineBottle wb = new WineBottle(null, country, region, wineColor, domain, appellation, year, apogee, number, estimate, pictureLarge, pictureSmall, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp, random);
-
-                        AccesLocal al = new AccesLocal(AddActivity.this);
-
-                        wb.setId(al.add(wb));
+                        WineBottle wineBottle = new WineBottle(null, country, region, wineColor, domain, appellation, year, apogee, number, estimate, pictureLarge, pictureSmall, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp);
+                        AccesLocal accesLocal = new AccesLocal(AddActivity.this);
+                        wineBottle.setId(accesLocal.add(wineBottle));
 
                         popupAdd.dismiss();
 
                         // Affiche le logo de validation 1 seconde
                         popupSuccess.show();
-                        // Permet de faire aparaitre le panneau 1 seconde sans interventions
+                        // Permet de faire aparaitre le panneau de validation 1 seconde
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {

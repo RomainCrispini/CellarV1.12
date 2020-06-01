@@ -27,7 +27,6 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     public final String FIELD_LATTITUDE = "lattitude";
     public final String FIELD_LONGITUDE = "longitude";
     public final String FIELD_TIMESTAMP = "timestamp";
-    public final String FIELD_RANDOM = "random";
 
     public final String TABLE_BOTTLE = "bottle";
 
@@ -52,8 +51,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
             FIELD_WISH + " TEXT," +
             FIELD_LATTITUDE + " REAL," +
             FIELD_LONGITUDE + " REAL," +
-            FIELD_TIMESTAMP + " TEXT," +
-            FIELD_RANDOM + " TEXT);";
+            FIELD_TIMESTAMP + " TEXT);";
 
 
 
