@@ -1,6 +1,7 @@
 package com.romain.cellarv1.vue;
 
 import android.Manifest;
+import android.animation.ObjectAnimator;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,12 +14,15 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -28,9 +32,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import com.github.mikephil.charting.data.BarEntry;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -54,7 +60,10 @@ import com.romain.cellarv1.outils.Tools;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -73,11 +82,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private MapFragment mapFragment;
     private GoogleMap map;
 
+    // Info Window
+    private CardView cardViewInfo;
+    private ImageButton btnInfoExit;
+    private ImageButton btnCellar;
+    private ImageButton btnAddBottle;
+
     // Boutons Zoom In Out Map
     private ImageButton zoomIn, zoomOut;
-
-    // Déclaration d'une liste de bouteilles
-    private List<WineBottle> wineBottleList;
 
 
     @Override
@@ -121,6 +133,43 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         initCurvedNavigationView();
         initFabWineMenu();
         getFabWineMenuValue();
+        infoWindow();
+    }
+
+    private void infoWindow() {
+        cardViewInfo = (CardView) findViewById(R.id.cardViewInfo);
+        btnInfoExit = (ImageButton) findViewById(R.id.btnInfoExit);
+        btnCellar = (ImageButton) findViewById(R.id.btnCellar);
+        btnAddBottle = (ImageButton) findViewById(R.id.btnAddBottle);
+
+        // Animation entrante de la cardView
+        ObjectAnimator fadeIn = ObjectAnimator.ofFloat(cardViewInfo, "translationY", -400, 0);
+        fadeIn.setDuration(500);
+        fadeIn.start();
+
+        btnInfoExit.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO IF LATT LONG NON NULL -> NE PAS AFFICHER INFO CARDVIEW
+                cardViewInfo.setVisibility(View.GONE);
+            }
+        });
+
+        btnCellar.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CellarActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
+
+        btnAddBottle.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, AddActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
     }
 
     private void initFabWineMenu() {
@@ -319,37 +368,61 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
 
-
-
-
+        /*
         AccesLocal accesLocal = new AccesLocal(MainActivity.this);
         ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleList();
 
-        /*
-        List<Long> LatLong = new ArrayList<Long, Long>();
-        LatLong.add(4.345433, 3.454333);
-
          */
 
+        Map<String, List<Double>> villes = new HashMap<>();
+
+        List<Double> latlngBordeaux = new ArrayList<Double>();
+        latlngBordeaux.add(44.833333);
+        latlngBordeaux.add(-0.566667);
+
+        List<Double> latlngParis = new ArrayList<Double>();
+        latlngParis.add(48.856697);
+        latlngParis.add(2.351462);
+
+        List<Double> latlngLyon = new ArrayList<Double>();
+        latlngLyon.add(45.757814);
+        latlngLyon.add(4.832011);
+
+        villes.put("Bordeaux", latlngBordeaux);
+        villes.put("Paris", latlngParis);
+        villes.put("Lyon", latlngLyon);
+
+
+
+
+        Iterator iterator = villes.entrySet().iterator();
+        while(iterator.hasNext()) {
+            Map.Entry mapentry = (Map.Entry) iterator.next();
+
+            String nomVille = (String) mapentry.getKey();
+            List<Double> coordonnees = (List<Double>) mapentry.getValue();
+            //Double latitude = coordonnees.get(0);
+            //Double longitude = coordonnees.get(1);
+            LatLng ville = new LatLng(coordonnees.get(0), coordonnees.get(1));
+            MarkerOptions markerOptions = new MarkerOptions().position(ville).title(nomVille);
+            map.addMarker(markerOptions);
+        }
+
+
+
 
 
 
 
 
         /*
-        for(wineBottleArrayList)
-        WineBottle wineBottle = wineBottleArrayList.get(1).;
-
-         */
-
 
         // Nouvelles dimensions du marker
         int height = 100;
         int width = 100;
 
 
-
-        // Test avec une bouteille de la liste
+        // Test avec la Map villes
         Tools tools = new Tools();
         String etiquette = wineBottleList.get(1).getPictureSmall();
         byte[] decodedByte = Base64.decode(etiquette, 0);
@@ -358,22 +431,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
 
+
+
+
         // Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.champ_wine);
         Bitmap smallMarker = Bitmap.createScaledBitmap(roundEtiquette, width, height, false);
         BitmapDescriptor smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker);
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         // Initialisation default position sur Nancy
         LatLng nancy = new LatLng(48.687646, 6.181732);
@@ -384,6 +447,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         CameraUpdate cameraPosition = CameraUpdateFactory.newLatLngZoom(defaultPosition, 5);
         map.moveCamera(cameraPosition);
         map.animateCamera(cameraPosition);
+
+         */
+
+
+
+
+
+
 
     }
 

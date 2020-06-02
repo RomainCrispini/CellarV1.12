@@ -26,7 +26,7 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="8bc417e7-3299-41d9-a606-74f6714cf154">
+    <connection id="f09b7232-64a3-4aa0-9516-9f106175f955">
       <console name="Connection" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
@@ -34,10 +34,7 @@
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="8bc417e7-3299-41d9-a606-74f6714cf154" />
-  </component>
-  <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="8bc417e7-3299-41d9-a606-74f6714cf154" dataset=".bottle" active-filter-id="EMPTY_FILTER" />
+    <connection id="f09b7232-64a3-4aa0-9516-9f106175f955" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -62,13 +59,13 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="8bc417e7-3299-41d9-a606-74f6714cf154" active="true">
+      <connection id="f09b7232-64a3-4aa0-9516-9f106175f955" active="true">
         <database>
           <name value="Connection" />
           <description value="" />
           <database-type value="SQLITE" />
           <config-type value="BASIC" />
-          <database-version value="3.21" />
+          <database-version value="9999.0" />
           <driver-source value="BUILTIN" />
           <driver-library value="" />
           <driver value="" />
