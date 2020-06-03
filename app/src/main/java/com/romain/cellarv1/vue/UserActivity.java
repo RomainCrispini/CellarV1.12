@@ -72,8 +72,8 @@ public class UserActivity extends AppCompatActivity {
 
 
 
-        //final AutoCompleteTextView autoCompleteTextView=findViewById(R.id.autocomplete);
-        //autoCompleteTextView.setAdapter(new PlaceAutoSuggestAdapter(UserActivity.this,android.R.layout.simple_list_item_1));
+        final AutoCompleteTextView autoCompleteTextView=findViewById(R.id.autocomplete);
+        autoCompleteTextView.setAdapter(new PlaceAutoSuggestAdapter(UserActivity.this,android.R.layout.simple_list_item_1));
 
         autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME));
 
@@ -82,7 +82,7 @@ public class UserActivity extends AppCompatActivity {
             public void onPlaceSelected(@NonNull Place place) {
                 final LatLng latLng = place.getLatLng();
 
-                //Toast.makeText(UserActivity.this, "lattitude : " + latLng.latitude + "longitude" + latLng.longitude, Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserActivity.this, "lattitude : " + latLng.latitude + "longitude" + latLng.longitude, Toast.LENGTH_SHORT).show();
             }
 
             @Override
