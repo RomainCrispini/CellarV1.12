@@ -25,14 +25,14 @@ public class WineBottle implements Serializable {
     private Float rate;
     private String favorite;
     private String wish;
-    private Float lattitude;
+    private Float latitude;
     private Float longitude;
     private String timeStamp;
 
 
 
     // Constructeur total
-    public WineBottle(Integer id, String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Float rate, String favorite, String wish, Float lattitude, Float longitude, String timeStamp) {
+    public WineBottle(Integer id, String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Float rate, String favorite, String wish, Float latitude, Float longitude, String timeStamp) {
 
         if (id != null ){
             this.id = id;
@@ -56,7 +56,7 @@ public class WineBottle implements Serializable {
         this.rate = rate;
         this.favorite = favorite;
         this.wish = wish;
-        this.lattitude = lattitude;
+        this.latitude = latitude;
         this.longitude = longitude;
         this.timeStamp = timeStamp;
     }
@@ -207,11 +207,11 @@ public class WineBottle implements Serializable {
     }
 
     public Float getLattitude() {
-        return lattitude;
+        return latitude;
     }
 
     public void setLattitude(Float lattitude) {
-        this.lattitude = lattitude;
+        this.latitude = lattitude;
     }
 
     public Float getLongitude() {

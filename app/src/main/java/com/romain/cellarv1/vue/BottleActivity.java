@@ -62,8 +62,6 @@ public class BottleActivity extends AppCompatActivity {
     // Buttons MenuBis
     private ToggleButton btnFavorite;
     private ToggleButton btnWishlist;
-    private ImageButton btnBackMap1;
-    private ImageButton btnBackMap2;
 
     // Déclaration des PopupUpdate et PopupDelete
     private Dialog popupUpdate, popupDelete, popupSuccess;
@@ -89,24 +87,6 @@ public class BottleActivity extends AppCompatActivity {
 
         btnUpdateBottle = (Button) findViewById(R.id.btnUpdateBottle);
         btnDeleteBottle = (Button) findViewById(R.id.btnDeleteBottle);
-
-        // Je n'ai pas trouvé d'autres moyens pour rendre toute la surface clickable
-        btnBackMap1 = (ImageButton) findViewById(R.id.btnBackMap1);
-        btnBackMap2 = (ImageButton) findViewById(R.id.btnBackMap2);
-        btnBackMap1.setOnClickListener(new LinearLayout.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            }
-        });
-        btnBackMap2.setOnClickListener(new LinearLayout.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            }
-        });
 
         FrameLayout menuBis = (FrameLayout) findViewById(R.id.menuBis);
         menuBis.setTranslationY(300f);

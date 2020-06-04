@@ -118,12 +118,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.mapView);
         mapFragment.getMapAsync(this);
 
-        // Alpha Boutons Zoom In Out Map
-        zoomIn = (ImageButton) findViewById(R.id.zoomIn);
-        zoomOut = (ImageButton) findViewById(R.id.zoomOut);
-        zoomIn.setAlpha(0.3f);
-        zoomOut.setAlpha(0.3f);
-
         // InfoCardView
         cardViewInfo = (CardView) findViewById(R.id.cardViewInfo);
         btnInfoExit = (ImageButton) findViewById(R.id.btnInfoExit);
@@ -135,22 +129,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         getFabWineMenuValue();
         affichageInfoWindow();
         searchFAB();
+
     }
 
-    /**
-     * Commande les boutons zoom de la map
-     * @param view
-     */
-    public void onZoom(View view) {
-        if(view.getId() == R.id.zoomIn) {
-            googleMap.animateCamera(CameraUpdateFactory.zoomIn());
-        }
-        if(view.getId() == R.id.zoomOut) {
-            googleMap.animateCamera(CameraUpdateFactory.zoomOut());
-        }
-    }
-
-    public void searchFAB() {
+    private void searchFAB() {
         searchFAB = (FloatingActionButton) findViewById(R.id.searchFAB);
         searchFAB.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
@@ -166,9 +148,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
      * Ce qui permet de savoir si on affiche ou non l'infoCardView
      */
     private void affichageInfoWindow() {
-
-
-
 
         // Récupération de la liste de toutes les bouteilles SI ET SEULEMENT SI une BDD existe
         AccesLocal accesLocal = new AccesLocal(MainActivity.this);
@@ -380,7 +359,28 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(final GoogleMap googleMap) {
+
+        // Alpha Boutons Zoom In Out Map
+        zoomIn = (ImageButton) findViewById(R.id.zoomIn);
+        zoomOut = (ImageButton) findViewById(R.id.zoomOut);
+        zoomIn.setAlpha(0.3f);
+        zoomOut.setAlpha(0.3f);
+
+        // Zoom in out sur boutons de la map
+        zoomIn.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                googleMap.animateCamera(CameraUpdateFactory.zoomIn());
+            }
+        });
+
+        zoomOut.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                googleMap.animateCamera(CameraUpdateFactory.zoomOut());
+            }
+        });
 
         // Personnalisation des options d'affichage
         UiSettings mapSettings = googleMap.getUiSettings();

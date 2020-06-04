@@ -250,10 +250,10 @@ public class AccesLocal {
             Float rate = cursor.getFloat(14);
             String favorite = cursor.getString(15);
             String wish = cursor.getString(16);
-            Float lattitude = cursor.getFloat(17);
+            Float latitude = cursor.getFloat(17);
             Float longitude = cursor.getFloat(18);
             String timestamp = cursor.getString(19);
-            wineBottle = new WineBottle(id, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp);
+            wineBottle = new WineBottle(id, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, latitude, longitude, timestamp);
             wineBottleList.add(wineBottle);
             cursor.moveToNext();
         }
@@ -552,10 +552,10 @@ public class AccesLocal {
         Float rate = cursor.getFloat(14);
         String favorite = cursor.getString(15);
         String wish = cursor.getString(16);
-        Float lattitude = cursor.getFloat(17);
+        Float latitude = cursor.getFloat(17);
         Float longitude = cursor.getFloat(18);
         String timestamp = cursor.getString(19);
-        wineBottle = new WineBottle(id, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, lattitude, longitude, timestamp);
+        wineBottle = new WineBottle(id, country, region, winecolor, domain, appellation, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, latitude, longitude, timestamp);
         cursor.moveToNext();
 
         return wineBottle;

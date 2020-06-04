@@ -18,17 +18,17 @@
         android:progressTint="@color/green_apple"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="2dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/menuBis"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/progressBar"
-        app:layout_constraintBottom_toTopOf="@id/menuBis">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progressBar">
 
         <LinearLayout
             android:id="@+id/layoutGlobal"
@@ -36,8 +36,8 @@
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <LinearLayout
                 android:id="@+id/layoutCountryRegion"
@@ -103,7 +103,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/layoutPays">
 
-                    <EditText
+                    <AutoCompleteTextView
                         android:id="@+id/textRegion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -430,9 +430,9 @@
                     android:id="@+id/scanImageView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/none_listview"
                     android:outlineProvider="none"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/none_listview" />
 
             </androidx.cardview.widget.CardView>
 
@@ -443,7 +443,7 @@
     <FrameLayout
         android:id="@+id/menuBis"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="110dp"
         android:background="@color/green_middle_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -454,7 +454,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="60dp"
-            android:gravity="top|center_horizontal|center_vertical"
+            android:layout_gravity="top"
+            android:gravity="top|center_horizontal"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -476,10 +477,10 @@
                         android:layout_width="55dp"
                         android:layout_height="55dp"
                         android:layout_gravity="start"
-                        android:scaleType="centerCrop"
                         android:backgroundTint="@color/transparent"
-
                         android:onClick="takePicture"
+
+                        android:scaleType="centerCrop"
 
                         android:src="@drawable/icon_navbar_scan"
                         android:tint="@color/green_middle_light"
@@ -491,18 +492,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
                     android:layout_weight="1"
-                    android:gravity="center_horizontal"
+                    android:gravity="top|center_horizontal"
                     android:orientation="horizontal">
 
                     <ImageButton
                         android:id="@+id/btnGallery"
                         android:layout_width="55dp"
                         android:layout_height="55dp"
-                        android:scaleType="centerCrop"
                         android:backgroundTint="@color/transparent"
                         android:gravity="end"
-
                         android:onClick="accesGallery"
+
+                        android:scaleType="centerCrop"
 
                         android:src="@drawable/scan_gallery"
                         android:tint="@color/green_middle_light"
@@ -510,47 +511,13 @@
 
                 </LinearLayout>
 
-
-
-
             </LinearLayout>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="80dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="30dp"
-                app:cardBackgroundColor="@color/green_very_dark"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="0dp">
-
-                <ImageButton
-                    android:id="@+id/btnBackMap1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="start|center_vertical"
-                    android:backgroundTint="@color/transparent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/icone_menubis_back"
-                    android:tint="@color/green_third_light" />
-
-                <ImageButton
-                    android:id="@+id/btnBackMap2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="end|center_vertical"
-                    android:backgroundTint="@color/transparent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/icone_menubis_map"
-                    android:tint="@color/green_third_light" />
-
-            </androidx.cardview.widget.CardView>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginTop="10dp"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <ToggleButton

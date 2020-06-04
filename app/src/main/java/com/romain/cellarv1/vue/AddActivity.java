@@ -70,7 +70,9 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 
 public class AddActivity extends AppCompatActivity {
@@ -94,16 +96,16 @@ public class AddActivity extends AppCompatActivity {
     // Gallery
     private ImageButton btnGallery;
 
-    // Liste pays
-    private ArrayList<String> countrylist = new ArrayList<>();
+    // Liste Pays
+    private ArrayList<String> countryList = new ArrayList<>();
 
     // ProgessBar
     private ProgressBar progressBar;
     private boolean check = true;
 
     // Champs texte
-    private AutoCompleteTextView txtCountry;
-    private EditText txtRegion, txtDomain, txtAppellation;
+    private AutoCompleteTextView txtCountry, txtRegion;
+    private EditText txtDomain, txtAppellation;
     private EditText nbYear, nbApogee, nbNumber, nbEstimate;
     private ImageButton btnRed, btnRose, btnWhite, btnChamp;
 
@@ -120,9 +122,6 @@ public class AddActivity extends AppCompatActivity {
     private OvershootInterpolator interpolator = new OvershootInterpolator();
     private ToggleButton btnFavorite;
     private ToggleButton btnWishlist;
-    private ImageView btnBackMap1;
-    private ImageView btnBackMap2;
-
 
 
     @Override
@@ -142,7 +141,7 @@ public class AddActivity extends AppCompatActivity {
         CurvedBottomNavigationView curvedBottomNavigationView = findViewById(R.id.curvedBottomNavigationView);
         curvedBottomNavigationView.setOnNavigationItemSelectedListener(customBottomNavListener);
         txtCountry = (AutoCompleteTextView) findViewById(R.id.textCountry);
-        txtRegion = (EditText) findViewById(R.id.textRegion);
+        txtRegion = (AutoCompleteTextView) findViewById(R.id.textRegion);
         btnRed = (ImageButton) findViewById(R.id.redWineButton);
         btnRose = (ImageButton) findViewById(R.id.roseWineButton);
         btnWhite = (ImageButton) findViewById(R.id.whiteWineButton);
@@ -181,22 +180,6 @@ public class AddActivity extends AppCompatActivity {
         btnWishlist.setTextOn(null);
         btnWishlist.setTextOff(null);
 
-        // Je n'ai pas trouvé d'autres moyens pour rendre toute la surface clickable
-        btnBackMap1 = (ImageView) findViewById(R.id.btnBackMap1);
-        btnBackMap2 = (ImageView) findViewById(R.id.btnBackMap2);
-        btnBackMap1.setOnClickListener(new LinearLayout.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-            }
-        });
-        btnBackMap2.setOnClickListener(new LinearLayout.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-            }
-        });
-
         // Instanciation et animation du menuBis coulissant
         FrameLayout menuBis = (FrameLayout) findViewById(R.id.menuBis);
         menuBis.setTranslationY(300f);
@@ -206,6 +189,7 @@ public class AddActivity extends AppCompatActivity {
         //recoverWineBottle();
         recoverFABWineColor();
         recoverJsonCountries();
+        getRegionsList();
         progressBar();
 
     }
@@ -603,7 +587,7 @@ public class AddActivity extends AppCompatActivity {
             JSONArray jsonArray = new JSONArray(json);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                countrylist.add(jsonObject.getString("name"));
+                countryList.add(jsonObject.getString("name"));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -616,8 +600,19 @@ public class AddActivity extends AppCompatActivity {
     private void recoverJsonCountries() {
         getJsonCountries();
         AutoCompleteTextView textCountries = (AutoCompleteTextView) findViewById(R.id.textCountry);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, countrylist);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, countryList);
         textCountries.setAdapter(adapter);
+    }
+
+    private void getRegionsList() {
+        List<String> regionsList = Arrays.asList("Alsace", "Beaujolais", "Bordelais", "Bourgogne",
+                "Bretagne", "Champagne", "Charentes", "Corse", "Ile-de-France", "Jura",
+                "Languedoc-Roussillon", "Lorraine", "Lyonnais", "Nord-Pas-De-Calais", "Normandie",
+                "Picardie", "Provence", "Savoie-Bugey", "Sud-Ouest", "Tahiti", "Val de Loire", "Vallée du Rhône");
+        AutoCompleteTextView textRegions = (AutoCompleteTextView) findViewById(R.id.textRegion);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, regionsList);
+        textRegions.setAdapter(adapter);
+
     }
 
     private void recoverFABWineColor() {
@@ -733,7 +728,7 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
-        txtRegion = (EditText) findViewById(R.id.textRegion);
+        txtRegion = (AutoCompleteTextView) findViewById(R.id.textRegion);
         txtRegion.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

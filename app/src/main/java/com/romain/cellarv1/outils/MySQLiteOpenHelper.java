@@ -31,8 +31,9 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     public final String TABLE_BOTTLE = "bottle";
 
     // Propriétés : requête de création de la BDD
+    // Que 4 types dispos sur SQLite
     private String creation="create table " + TABLE_BOTTLE + " (" +
-            FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"  +// Que 4 types dispos sur SQLite, pas de format Date
+            FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"  +
             FIELD_COUNTRY + " TEXT," +
             FIELD_REGION + " TEXT," +
             FIELD_WINECOLOR + " TEXT," +
@@ -83,7 +84,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + "bottle");
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BOTTLE);
         onCreate(db);
 
     }

@@ -45,9 +45,6 @@ public class UserActivity extends AppCompatActivity {
     // Initialisation du switchDarkMode
     private SwitchCompat switchDarkMode = null;
 
-    // Initialisation du menu bis
-    private ImageButton btnBackMap1, btnBackMap2;
-
     private PlacesClient placesClient;
 
 
@@ -96,12 +93,6 @@ public class UserActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
     private void init() {
 
         initCurvedNavigationView();
@@ -109,26 +100,6 @@ public class UserActivity extends AppCompatActivity {
         getFabWineMenuValue();
         switchDarkMode();
 
-        // Je n'ai pas trouvé d'autres moyens pour rendre toute la surface clickable
-        btnBackMap1 = (ImageButton) findViewById(R.id.btnBackMap1);
-        btnBackMap2 = (ImageButton) findViewById(R.id.btnBackMap2);
-        btnBackMap1.setOnClickListener(new LinearLayout.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(UserActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            }
-        });
-        btnBackMap2.setOnClickListener(new LinearLayout.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(UserActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            }
-        });
-        FrameLayout sortMenu = (FrameLayout) findViewById(R.id.menuBis);
-        sortMenu.setTranslationY(200f);
-        sortMenu.animate().translationY(0f).setInterpolator(interpolator).setDuration(1500).start();
 
     }
 

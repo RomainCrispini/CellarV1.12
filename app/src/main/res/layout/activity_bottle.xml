@@ -11,7 +11,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="108dp"
+        android:layout_marginBottom="100dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -429,7 +429,7 @@
     <FrameLayout
         android:id="@+id/menuBis"
         android:layout_width="match_parent"
-        android:layout_height="108dp"
+        android:layout_height="100dp"
         android:background="@color/green_middle_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -450,37 +450,11 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <androidx.cardview.widget.CardView
 
-                    android:layout_width="90dp"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="30dp"
-                    app:cardBackgroundColor="@color/green_very_dark"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="0dp">
 
-                    <ImageButton
-                        android:id="@+id/btnBackMap1"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="start|center_vertical"
-                        android:backgroundTint="@color/transparent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/icone_menubis_back"
-                        android:tint="@color/green_third_light" />
 
-                    <ImageButton
-                        android:id="@+id/btnBackMap2"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="end|center_vertical"
-                        android:backgroundTint="@color/transparent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/icone_menubis_map"
-                        android:tint="@color/green_third_light" />
 
-                </androidx.cardview.widget.CardView>
+
 
             </LinearLayout>
 
@@ -604,6 +578,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1"
-        app:menu="@menu/bottom_nav_menu"></com.romain.cellarv1.outils.CurvedBottomNavigationView>
+        app:menu="@menu/bottom_nav_menu">
+    </com.romain.cellarv1.outils.CurvedBottomNavigationView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
