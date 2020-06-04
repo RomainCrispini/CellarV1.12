@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class PlaceApi {
 
-    // Fonction qui retourne une liste d'adresses quand user cherche dans edittext
+    // Fonction qui retourne une liste d'adresses quand un user cherche dans edittext
     public ArrayList<String> autoComplete(String input){
         ArrayList<String> arrayList = new ArrayList();
         HttpURLConnection connection = null;

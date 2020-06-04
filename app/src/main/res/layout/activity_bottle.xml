@@ -364,40 +364,6 @@
 
             </LinearLayout>
 
-
-
-
-
-            <EditText
-                android:id="@+id/latBottle"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@android:color/transparent"
-                android:fontFamily="@font/yanone_kaffeesatz"
-                android:inputType="textNoSuggestions|number"
-                android:maxLines="1"
-                android:text="latitude"
-                android:textColor="@color/green_very_light"
-                android:textSize="18dp" />
-
-            <EditText
-                android:id="@+id/longBottle"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@android:color/transparent"
-                android:fontFamily="@font/yanone_kaffeesatz"
-                android:inputType="textNoSuggestions|number"
-                android:maxLines="1"
-                android:text="longitude"
-                android:textColor="@color/green_very_light"
-                android:textSize="18dp" />
-
-
-
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

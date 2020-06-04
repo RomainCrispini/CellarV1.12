@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/user"
-        android:icon="@drawable/icon_navbar_user"
+    <item android:id="@+id/mapMenu"
+        android:icon="@drawable/icon_navbar_map"
         android:title="" />
 
-    <item android:id="@+id/cellar"
+    <item android:id="@+id/cellarMenu"
         android:icon="@drawable/icon_navbar_cellar"
         android:title="" />
 
-    <item android:id="@+id/scan"
+    <item android:id="@+id/scanMenu"
         android:title="" />
 
-    <item android:id="@+id/like"
+    <item android:id="@+id/likeMenu"
         android:icon="@drawable/icon_navbar_like"
         android:title="" />
 
-    <item android:id="@+id/search"
-        android:icon="@drawable/icon_navbar_search"
+    <item android:id="@+id/userMenu"
+        android:icon="@drawable/icon_navbar_user"
         android:title="" />
 
 </menu>

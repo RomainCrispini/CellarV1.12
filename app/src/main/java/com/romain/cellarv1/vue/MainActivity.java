@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private MapFragment mapFragment;
-    private GoogleMap map;
+    private GoogleMap googleMap;
 
     // Info Window
     private CardView cardViewInfo;
@@ -91,6 +91,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     // Boutons Zoom In Out Map
     private ImageButton zoomIn, zoomOut;
+
+    // FAB Search
+    private FloatingActionButton searchFAB;
 
 
     @Override
@@ -108,24 +111,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-    /**
-     * Commande les boutons zoom de la map
-     * @param view
-     */
-    public void onZoom(View view) {
-        if(view.getId() == R.id.zoomIn) {
-            map.animateCamera(CameraUpdateFactory.zoomIn());
-        }
-        if(view.getId() == R.id.zoomOut) {
-            map.animateCamera(CameraUpdateFactory.zoomOut());
-        }
-    }
-
     private void init() {
 
         // Map Fragment
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.mapView);
         mapFragment.getMapAsync(this);
 
         // Alpha Boutons Zoom In Out Map
@@ -144,6 +134,31 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         initFabWineMenu();
         getFabWineMenuValue();
         affichageInfoWindow();
+        searchFAB();
+    }
+
+    /**
+     * Commande les boutons zoom de la map
+     * @param view
+     */
+    public void onZoom(View view) {
+        if(view.getId() == R.id.zoomIn) {
+            googleMap.animateCamera(CameraUpdateFactory.zoomIn());
+        }
+        if(view.getId() == R.id.zoomOut) {
+            googleMap.animateCamera(CameraUpdateFactory.zoomOut());
+        }
+    }
+
+    public void searchFAB() {
+        searchFAB = (FloatingActionButton) findViewById(R.id.searchFAB);
+        searchFAB.setOnClickListener(new FloatingActionButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, SearchActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
     }
 
     /**
@@ -328,39 +343,33 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void initCurvedNavigationView() {
 
         CurvedBottomNavigationView curvedBottomNavigationView = findViewById(R.id.curvedBottomNavigationView);
+        curvedBottomNavigationView.setSelectedItemId(R.id.mapMenu);
         curvedBottomNavigationView.setOnNavigationItemSelectedListener(new CurvedBottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 switch (item.getItemId()) {
-                    case R.id.user:
-                        //Toast.makeText(UserActivity.this, "USER", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(MainActivity.this, UserActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
-                        //overridePendingTransition(0, 0);
-                        return true;
-                    case R.id.cellar:
+                    case R.id.cellarMenu:
                         //Toast.makeText(UserActivity.this, "CELLAR", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, CellarActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                         //overridePendingTransition(0, 0);
                         return true;
-                    case R.id.scan:
+                    case R.id.scanMenu:
                         //Toast.makeText(UserActivity.this, "SCAN", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, ScanActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                         //overridePendingTransition(0, 0);
                         return true;
-                    case R.id.like:
+                    case R.id.likeMenu:
                         //Toast.makeText(UserActivity.this, "LIKE", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, LikeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                         //overridePendingTransition(0, 0);
                         return true;
-                    case R.id.search:
+                    case R.id.userMenu:
                         //Toast.makeText(UserActivity.this, "SEARCH", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(MainActivity.this, SearchActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        startActivity(new Intent(MainActivity.this, UserActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                         //overridePendingTransition(0, 0);
                         return true;
@@ -372,9 +381,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
-        map = googleMap;
-
 
         // Personnalisation des options d'affichage
         UiSettings mapSettings = googleMap.getUiSettings();
@@ -397,8 +403,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Initialisation default position sur Nancy
         LatLng defaultPosition = new LatLng(48.687646, 6.181732); // Coordonnées LatLng de Nancy
         CameraUpdate cameraPosition = CameraUpdateFactory.newLatLngZoom(defaultPosition, 5);
-        map.moveCamera(cameraPosition);
-        map.animateCamera(cameraPosition);
+        googleMap.moveCamera(cameraPosition);
+        googleMap.animateCamera(cameraPosition);
 
 
 
@@ -440,7 +446,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     // Affichage des markers
                     MarkerOptions markerOptions = new MarkerOptions().position(coordonnees).title(nomVin).icon(smallMarkerIcon);
-                    map.addMarker(markerOptions);
+                    googleMap.addMarker(markerOptions);
                 } else {
                 }
             }

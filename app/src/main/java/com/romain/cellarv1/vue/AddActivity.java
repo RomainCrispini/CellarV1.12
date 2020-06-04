@@ -944,27 +944,27 @@ public class AddActivity extends AppCompatActivity {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch(item.getItemId()){
-                        case R.id.user:
-                            startActivity(new Intent(getApplicationContext(), UserActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        case R.id.mapMenu:
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                             //overridePendingTransition(0, 0);
                             return true;
-                        case R.id.cellar:
+                        case R.id.cellarMenu:
                             startActivity(new Intent(getApplicationContext(), CellarActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                             //overridePendingTransition(0, 0);
                             return true;
-                        case R.id.scan:
+                        case R.id.scanMenu:
                             //startActivity(new Intent(getApplicationContext(), ScanActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                             //overridePendingTransition(0, 0);
                             return true;
-                        case R.id.like:
+                        case R.id.likeMenu:
                             startActivity(new Intent(getApplicationContext(), LikeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                             //overridePendingTransition(0, 0);
                             return true;
-                        case R.id.search:
-                            startActivity(new Intent(getApplicationContext(), SearchActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        case R.id.userMenu:
+                            startActivity(new Intent(getApplicationContext(), UserActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                             //overridePendingTransition(0, 0);
                             return true;

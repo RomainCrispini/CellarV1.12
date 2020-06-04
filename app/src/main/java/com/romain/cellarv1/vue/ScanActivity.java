@@ -178,26 +178,26 @@ public class ScanActivity extends AppCompatActivity {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch(item.getItemId()){
-                        case R.id.user:
+                        case R.id.userMenu:
                             //Toast.makeText(getApplicationContext(), "USER", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(ScanActivity.this, UserActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                             //overridePendingTransition(0, 0);
                             return true;
-                        case R.id.cellar:
+                        case R.id.cellarMenu:
                             //Toast.makeText(getApplicationContext(), "CELLAR", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(ScanActivity.this, CellarActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                             //overridePendingTransition(0, 0);
                             return true;
-                        case R.id.like:
+                        case R.id.likeMenu:
                             //Toast.makeText(getApplicationContext(), "LIKE", Toast.LENGTH_SHORT).show();
                             //startActivity(new Intent(getApplicationContext(), LikeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                             //overridePendingTransition(0, 0);
                             return true;
-                        case R.id.search:
+                        case R.id.mapMenu:
                             //Toast.makeText(getApplicationContext(), "SEARCH", Toast.LENGTH_SHORT).show();
-                            //startActivity(new Intent(getApplicationContext(), SearchActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                            //startActivity(new Intent(getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                             //overridePendingTransition(0, 0);
                             return true;
                         default:

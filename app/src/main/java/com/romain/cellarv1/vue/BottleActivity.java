@@ -70,19 +70,6 @@ public class BottleActivity extends AppCompatActivity {
 
 
 
-
-
-
-    // TEST LAT LONG
-    private EditText latBottle;
-    private EditText longBottle;
-
-
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,12 +77,6 @@ public class BottleActivity extends AppCompatActivity {
         init();
         btnUpdateBottle();
         btnDeleteBottle();
-
-
-        // TEST LAT LONG
-        latBottle = (EditText) findViewById(R.id.latBottle);
-        longBottle = (EditText) findViewById(R.id.longBottle);
-
 
     }
 
@@ -229,14 +210,6 @@ public class BottleActivity extends AppCompatActivity {
                         Float floatRate = ratingBar.getRating();
 
 
-
-                        // TEST LAT LONG
-                        float floatLatBottle = Float.parseFloat(latBottle.getText().toString());
-                        float floatLongBottle = Float.parseFloat(longBottle.getText().toString());
-
-
-
-
                         String strFavorite;
                         if(btnFavorite.isChecked()) {
                             strFavorite = "1";
@@ -252,7 +225,7 @@ public class BottleActivity extends AppCompatActivity {
                         }
 
                         AccesLocal accesLocal = new AccesLocal(BottleActivity.this);
-                        accesLocal.updateBottle(intId, strCountry, strRegion, strDomain, strAppellation, intMillesime, intApogee, intNumber, intEstimate, floatRate, strFavorite, strWish, floatLatBottle, floatLongBottle);
+                        accesLocal.updateBottle(intId, strCountry, strRegion, strDomain, strAppellation, intMillesime, intApogee, intNumber, intEstimate, floatRate, strFavorite, strWish);
                         popupUpdate.dismiss();
 
                         popupSuccess.show();
@@ -589,39 +562,39 @@ public class BottleActivity extends AppCompatActivity {
 
     private void initCurvedNavigationView() {
         CurvedBottomNavigationView curvedBottomNavigationView = findViewById(R.id.curvedBottomNavigationView);
-        curvedBottomNavigationView.setSelectedItemId(R.id.scan);
+        curvedBottomNavigationView.setSelectedItemId(R.id.scanMenu);
         curvedBottomNavigationView.setOnNavigationItemSelectedListener(new CurvedBottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 switch (item.getItemId()) {
-                    case R.id.cellar:
+                    case R.id.mapMenu:
+                        //Toast.makeText(UserActivity.this, "USER", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(BottleActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                        //overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.cellarMenu:
                         //Toast.makeText(UserActivity.this, "USER", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(BottleActivity.this, CellarActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                         //overridePendingTransition(0, 0);
                         return true;
-                    case R.id.user:
-                        //Toast.makeText(UserActivity.this, "USER", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(BottleActivity.this, UserActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        //overridePendingTransition(0, 0);
-                        return true;
-                    case R.id.scan:
+                    case R.id.scanMenu:
                         //Toast.makeText(UserActivity.this, "SCAN", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(BottleActivity.this, ScanActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                         //overridePendingTransition(0, 0);
                         return true;
-                    case R.id.like:
+                    case R.id.likeMenu:
                         //Toast.makeText(UserActivity.this, "SEARCH", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(BottleActivity.this, LikeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                         //overridePendingTransition(0, 0);
                         return true;
-                    case R.id.search:
+                    case R.id.userMenu:
                         //Toast.makeText(UserActivity.this, "SEARCH", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(BottleActivity.this, SearchActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        startActivity(new Intent(BottleActivity.this, UserActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                         //overridePendingTransition(0, 0);
                         return true;

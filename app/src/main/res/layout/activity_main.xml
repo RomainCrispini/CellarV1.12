@@ -10,7 +10,7 @@
 
 
     <fragment
-        android:id="@+id/map"
+        android:id="@+id/mapView"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -115,6 +115,23 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/searchFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:maxImageSize="40dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/green_very_dark"
+        android:src="@drawable/icon_navbar_search"
+        android:tint="@color/green_dark"
+        app:borderWidth="0dp"
+        app:elevation="2dp"
+        app:fabSize="normal"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -233,14 +250,14 @@
         android:layout_centerHorizontal="true"
         app:itemIconSize="31dp"
         android:paddingTop="20dp"
-        app:itemIconTint="@color/green_dark"
         app:labelVisibilityMode="unlabeled"
         app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="1"
+        app:itemIconTint="@drawable/selector_curved_bottom_nav_view"
         app:menu="@menu/bottom_nav_menu">
     </com.romain.cellarv1.outils.CurvedBottomNavigationView>
 
