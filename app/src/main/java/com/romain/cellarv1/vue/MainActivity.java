@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
@@ -96,6 +97,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
         init();
 
         //searchLocation();
@@ -130,28 +134,60 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         zoomIn.setAlpha(0.3f);
         zoomOut.setAlpha(0.3f);
 
-        initCurvedNavigationView();
-        initFabWineMenu();
-        getFabWineMenuValue();
-        infoWindow();
-    }
-
-    private void infoWindow() {
+        // InfoCardView
         cardViewInfo = (CardView) findViewById(R.id.cardViewInfo);
         btnInfoExit = (ImageButton) findViewById(R.id.btnInfoExit);
         btnCellar = (ImageButton) findViewById(R.id.btnCellar);
         btnAddBottle = (ImageButton) findViewById(R.id.btnAddBottle);
 
+        initCurvedNavigationView();
+        initFabWineMenu();
+        getFabWineMenuValue();
+        affichageInfoWindow();
+    }
+
+    /**
+     * Permet de savoir si au moins une bouteille du retour de la liste contient des coordonnées
+     * Ce qui permet de savoir si on affiche ou non l'infoCardView
+     */
+    private void affichageInfoWindow() {
+
+
+
+
+        // Récupération de la liste de toutes les bouteilles SI ET SEULEMENT SI une BDD existe
+        AccesLocal accesLocal = new AccesLocal(MainActivity.this);
+
+        if(accesLocal.doesDBExists() == true) {
+            ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleList();
+            for(int i = 0; i < wineBottleList.size(); i++) {
+                if(wineBottleList.get(i).getLattitude() == null && wineBottleList.get(i).getLongitude() == null
+                && wineBottleList.get(i).getLattitude() == 0f && wineBottleList.get(i).getLongitude() == 0f) {
+
+                } else if(wineBottleList.get(i).getLattitude() != null && wineBottleList.get(i).getLongitude() != null
+                && wineBottleList.get(i).getLattitude() != 0f && wineBottleList.get(i).getLongitude() != 0f) {
+                    cardViewInfo.setVisibility(View.GONE);
+                }
+            }
+        } else {
+        }
+
         // Animation entrante de la cardView
-        ObjectAnimator fadeIn = ObjectAnimator.ofFloat(cardViewInfo, "translationY", -400, 0);
+        ObjectAnimator fadeIn = ObjectAnimator.ofFloat(cardViewInfo, "translationY", -600, 0);
         fadeIn.setDuration(500);
         fadeIn.start();
+
+
+
 
         btnInfoExit.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO IF LATT LONG NON NULL -> NE PAS AFFICHER INFO CARDVIEW
-                cardViewInfo.setVisibility(View.GONE);
+                ObjectAnimator fadeOut = ObjectAnimator.ofFloat(cardViewInfo, "translationY", 0, -600);
+                fadeOut.setDuration(500);
+                fadeOut.start();
+                // TODO FAUT IL FAIRE DISPARAITRE LA CARDVIEW OU SET SA VISIBILITY A GONE / INVISIBLE OU LES DEUX ?
+                //cardViewInfo.setVisibility(View.GONE);
             }
         });
 
@@ -170,6 +206,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
+
     }
 
     private void initFabWineMenu() {
@@ -357,22 +394,62 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Log.e(TAG, "Can't find style. Error: ", e);
         }
 
-
-        /*
-        for(int i=0; i<markers_location.length; i++){
-            coords_markers.add(new LatLng(
-                    lat_markers.get(i).getLatitude,
-                    lon_markers.get(i).getLongitude));}
-         */
+        // Initialisation default position sur Nancy
+        LatLng defaultPosition = new LatLng(48.687646, 6.181732); // Coordonnées LatLng de Nancy
+        CameraUpdate cameraPosition = CameraUpdateFactory.newLatLngZoom(defaultPosition, 5);
+        map.moveCamera(cameraPosition);
+        map.animateCamera(cameraPosition);
 
 
 
 
-        /*
+
+
+
+
+
+
+
+
+        // Nouvelles dimensions du marker
+        int height = 100;
+        int width = 100;
+
+        // Récupération de la liste de toutes les bouteilles SI ET SEULEMENT SI une BDD existe
         AccesLocal accesLocal = new AccesLocal(MainActivity.this);
-        ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleList();
+        if(accesLocal.doesDBExists() == true) {
+            ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleList();
 
-         */
+            for(int i = 0; i < wineBottleList.size(); i++) {
+                if(wineBottleList.get(i).getLattitude() != null && wineBottleList.get(i).getLongitude() != null
+                && wineBottleList.get(i).getLattitude() != 0f && wineBottleList.get(i).getLongitude() != 0f) {
+                    // Positions
+                    String nomVin = wineBottleList.get(i).getDomain();
+                    Float latitude = wineBottleList.get(i).getLattitude();
+                    Float longitude = wineBottleList.get(i).getLongitude();
+                    LatLng coordonnees = new LatLng(latitude, longitude);
+
+                    // Markers ronds
+                    Tools tools = new Tools();
+                    String etiquette = wineBottleList.get(i).getPictureSmall();
+                    byte[] decodedByte = Base64.decode(etiquette, 0);
+                    Bitmap etiquetteBitmap = BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
+                    Bitmap roundEtiquette = tools.getRoundBitmap(etiquetteBitmap);
+                    Bitmap smallMarker = Bitmap.createScaledBitmap(roundEtiquette, width, height, false);
+                    BitmapDescriptor smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker);
+
+                    // Affichage des markers
+                    MarkerOptions markerOptions = new MarkerOptions().position(coordonnees).title(nomVin).icon(smallMarkerIcon);
+                    map.addMarker(markerOptions);
+                } else {
+                }
+            }
+        }
+
+
+
+        /*
+
 
         Map<String, List<Double>> villes = new HashMap<>();
 
@@ -392,9 +469,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         villes.put("Paris", latlngParis);
         villes.put("Lyon", latlngLyon);
 
-
-
-
         Iterator iterator = villes.entrySet().iterator();
         while(iterator.hasNext()) {
             Map.Entry mapentry = (Map.Entry) iterator.next();
@@ -408,47 +482,22 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             map.addMarker(markerOptions);
         }
 
-
-
-
-
-
-
-
-        /*
-
-        // Nouvelles dimensions du marker
-        int height = 100;
-        int width = 100;
-
-
-        // Test avec la Map villes
-        Tools tools = new Tools();
-        String etiquette = wineBottleList.get(1).getPictureSmall();
-        byte[] decodedByte = Base64.decode(etiquette, 0);
-        Bitmap etiquetteBitmap = BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
-        Bitmap roundEtiquette = tools.getRoundBitmap(etiquetteBitmap);
-
-
-
-
-
-
-        // Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.champ_wine);
-        Bitmap smallMarker = Bitmap.createScaledBitmap(roundEtiquette, width, height, false);
-        BitmapDescriptor smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker);
-
-        // Initialisation default position sur Nancy
-        LatLng nancy = new LatLng(48.687646, 6.181732);
-        MarkerOptions markerOptions = new MarkerOptions().position(nancy).title(wineBottleList.get(1).getRegion()).icon(smallMarkerIcon);
-        map.addMarker(markerOptions);
-        LatLng defaultPosition = nancy; // Coordonnées LatLng de Nancy
-
-        CameraUpdate cameraPosition = CameraUpdateFactory.newLatLngZoom(defaultPosition, 5);
-        map.moveCamera(cameraPosition);
-        map.animateCamera(cameraPosition);
-
          */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

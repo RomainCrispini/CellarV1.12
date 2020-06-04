@@ -54,29 +54,61 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/btnCellar"
-                    android:layout_gravity="center_horizontal|bottom"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:backgroundTint="@color/transparent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/icon_navbar_cellar"
-                    android:tint="@color/green_very_light"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/btnAddBottle"
-                    android:layout_gravity="center_horizontal|bottom"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:backgroundTint="@color/transparent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/icon_navbar_add"
-                    android:tint="@color/green_very_light"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/green_light"
+                        android:text="Ma cave" />
+
+                    <ImageButton
+                        android:id="@+id/btnCellar"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:backgroundTint="@color/transparent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/icon_navbar_cellar"
+                        android:tint="@color/green_very_light" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/btnAddBottle"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:backgroundTint="@color/transparent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/icon_navbar_add"
+                        android:tint="@color/green_very_light" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/green_light"
+                        android:text="Ajouter une bouteille" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

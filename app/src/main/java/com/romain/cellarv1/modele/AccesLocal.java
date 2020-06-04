@@ -189,7 +189,7 @@ public class AccesLocal {
     /**
      * Méthode qui permet d'upload les infos d'une bouteille
      */
-    public void updateBottle(Integer id, String country, String region, String domain, String appellation, int year, int apogee, int number, int estimate, Float rate, String favorite, String wish) {
+    public void updateBottle(Integer id, String country, String region, String domain, String appellation, int year, int apogee, int number, int estimate, Float rate, String favorite, String wish, Float lattitude, Float longitude) {
         bd = accesBD.getWritableDatabase();
         ContentValues args = new ContentValues();
         args.put("country", country);
@@ -203,9 +203,23 @@ public class AccesLocal {
         args.put("rate", rate);
         args.put("favorite", favorite);
         args.put("wish", wish);
+        args.put("lattitude", lattitude);
+        args.put("longitude", longitude);
         bd.update("bottle", args, "id = " + id, null);
 
         bd.close();
+    }
+
+    public Boolean doesDBExists() {
+        bd = accesBD.getReadableDatabase();
+        Cursor cursor = bd.rawQuery("select * from " + accesBD.TABLE_BOTTLE, null);
+        Boolean dbExists;
+        if(cursor.moveToFirst()) {
+            dbExists = true;
+        } else {
+            dbExists = false;
+        }
+        return dbExists;
     }
 
     /**

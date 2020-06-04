@@ -294,11 +294,11 @@
 
                     <ImageButton
                         android:id="@+id/delete"
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_gravity="center"
                         android:backgroundTint="@color/transparent"
-                        android:scaleType="centerInside"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/icone_out_cardview"
                         android:tint="@color/green_light" />
                 </androidx.cardview.widget.CardView>

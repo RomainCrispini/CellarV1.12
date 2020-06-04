@@ -69,6 +69,20 @@ public class BottleActivity extends AppCompatActivity {
     private Dialog popupUpdate, popupDelete, popupSuccess;
 
 
+
+
+
+
+    // TEST LAT LONG
+    private EditText latBottle;
+    private EditText longBottle;
+
+
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +90,11 @@ public class BottleActivity extends AppCompatActivity {
         init();
         btnUpdateBottle();
         btnDeleteBottle();
+
+
+        // TEST LAT LONG
+        latBottle = (EditText) findViewById(R.id.latBottle);
+        longBottle = (EditText) findViewById(R.id.longBottle);
 
 
     }
@@ -209,6 +228,15 @@ public class BottleActivity extends AppCompatActivity {
 
                         Float floatRate = ratingBar.getRating();
 
+
+
+                        // TEST LAT LONG
+                        float floatLatBottle = Float.parseFloat(latBottle.getText().toString());
+                        float floatLongBottle = Float.parseFloat(longBottle.getText().toString());
+
+
+
+
                         String strFavorite;
                         if(btnFavorite.isChecked()) {
                             strFavorite = "1";
@@ -224,7 +252,7 @@ public class BottleActivity extends AppCompatActivity {
                         }
 
                         AccesLocal accesLocal = new AccesLocal(BottleActivity.this);
-                        accesLocal.updateBottle(intId, strCountry, strRegion, strDomain, strAppellation, intMillesime, intApogee, intNumber, intEstimate, floatRate, strFavorite, strWish);
+                        accesLocal.updateBottle(intId, strCountry, strRegion, strDomain, strAppellation, intMillesime, intApogee, intNumber, intEstimate, floatRate, strFavorite, strWish, floatLatBottle, floatLongBottle);
                         popupUpdate.dismiss();
 
                         popupSuccess.show();

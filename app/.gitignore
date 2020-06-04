@@ -86,5 +86,3 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 
-/src/main/res/values/map_api.xml
-
