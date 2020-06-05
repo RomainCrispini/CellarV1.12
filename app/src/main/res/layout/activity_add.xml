@@ -243,6 +243,39 @@
                     app:layout_constraintStart_toStartOf="parent" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="@drawable/fond_textinput"
+                android:backgroundTint="@color/green_dark"
+                android:orientation="horizontal"
+                android:textColorHint="@color/green_light"
+                app:helperText=""
+                app:hintTextColor="@color/green_light"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutDomain">
+
+                <EditText
+                    android:id="@+id/textAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:backgroundTint="@color/transparent"
+                    android:fontFamily="@font/yanone_kaffeesatz"
+                    android:gravity="center"
+                    android:hint="Adresse du propriétaire"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/green_apple"
+                    android:textCursorDrawable="@color/green_light"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:id="@+id/layoutYearApogee"
@@ -426,13 +459,25 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layoutNumberEstimate">
 
-                <ImageView
-                    android:id="@+id/scanImageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:outlineProvider="none"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/none_listview" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:outlineProvider="none"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/none_listview" />
+
+                    <ImageView
+                        android:id="@+id/scanImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:outlineProvider="none"
+                        android:scaleType="centerCrop" />
+
+                </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
 
@@ -452,9 +497,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="top"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="60dp"
-            android:layout_gravity="top"
             android:gravity="top|center_horizontal"
             android:orientation="horizontal">
 

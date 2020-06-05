@@ -28,7 +28,7 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginBottom="5dp"
-                android:tint="@color/green_apple"
+                android:tint="@color/pink_light"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:src="@drawable/popup_success" />
 

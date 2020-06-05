@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,7 +13,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="150dp"
         android:layout_height="150dp"
-        app:cardCornerRadius="15dp"
+        app:cardCornerRadius="8dp"
         app:cardBackgroundColor="@color/green_middle_light"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -29,7 +30,7 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginBottom="5dp"
-                android:tint="@color/orange"
+                android:tint="@color/pink_light"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:src="@drawable/popup_search_bottle" />
 
@@ -43,8 +44,9 @@
                 android:fontFamily="@font/yanone_kaffeesatz"
                 android:text="Aucun résultat..."
                 android:textAlignment="center"
-                android:textColor="@color/orange"
-                android:textSize="18dp" />
+                android:textColor="@color/pink_light"
+                android:textSize="18dp"
+                tools:ignore="RtlCompat" />
 
         </LinearLayout>
 

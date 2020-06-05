@@ -2,6 +2,7 @@ package com.romain.cellarv1.vue;
 
 import android.Manifest;
 import android.animation.ObjectAnimator;
+import android.app.Dialog;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +11,8 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -21,6 +24,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
@@ -83,17 +87,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private MapFragment mapFragment;
     private GoogleMap googleMap;
 
-    // Info Window
-    private CardView cardViewInfo;
-    private ImageButton btnInfoExit;
-    private ImageButton btnCellar;
-    private ImageButton btnAddBottle;
-
     // Boutons Zoom In Out Map
     private ImageButton zoomIn, zoomOut;
 
     // FAB Search
     private FloatingActionButton searchFAB;
+
+    // Popup
+    // Popup
+    private Dialog popupInfoMap;
+    private ImageButton btnInfoCellar, btnInfoAddBottle, btnInfoExit;
 
 
     @Override
@@ -118,16 +121,20 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.mapView);
         mapFragment.getMapAsync(this);
 
-        // InfoCardView
-        cardViewInfo = (CardView) findViewById(R.id.cardViewInfo);
-        btnInfoExit = (ImageButton) findViewById(R.id.btnInfoExit);
-        btnCellar = (ImageButton) findViewById(R.id.btnCellar);
-        btnAddBottle = (ImageButton) findViewById(R.id.btnAddBottle);
+        // PopupInfo
+        popupInfoMap = new Dialog(MainActivity.this);
+        popupInfoMap.setContentView(R.layout.popup_info_map);
+        popupInfoMap.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupInfoMap.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        popupInfoMap.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        btnInfoExit = (ImageButton) popupInfoMap.findViewById(R.id.btnInfoExit);
+        btnInfoCellar = (ImageButton) popupInfoMap.findViewById(R.id.btnInfoCamera);
+        btnInfoAddBottle = (ImageButton) popupInfoMap.findViewById(R.id.btnInfoGallery);
 
         initCurvedNavigationView();
         initFabWineMenu();
         getFabWineMenuValue();
-        affichageInfoWindow();
+        displayPopupInfo();
         searchFAB();
 
     }
@@ -147,7 +154,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
      * Permet de savoir si au moins une bouteille du retour de la liste contient des coordonnées
      * Ce qui permet de savoir si on affiche ou non l'infoCardView
      */
-    private void affichageInfoWindow() {
+    private void displayPopupInfo() {
+
+        popupInfoMap.show();
 
         // Récupération de la liste de toutes les bouteilles SI ET SEULEMENT SI une BDD existe
         AccesLocal accesLocal = new AccesLocal(MainActivity.this);
@@ -160,32 +169,20 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 } else if(wineBottleList.get(i).getLattitude() != null && wineBottleList.get(i).getLongitude() != null
                 && wineBottleList.get(i).getLattitude() != 0f && wineBottleList.get(i).getLongitude() != 0f) {
-                    cardViewInfo.setVisibility(View.GONE);
+                    popupInfoMap.dismiss();
                 }
             }
         } else {
         }
 
-        // Animation entrante de la cardView
-        ObjectAnimator fadeIn = ObjectAnimator.ofFloat(cardViewInfo, "translationY", -600, 200);
-        fadeIn.setDuration(500);
-        fadeIn.start();
-
-
-
-
         btnInfoExit.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ObjectAnimator fadeOut = ObjectAnimator.ofFloat(cardViewInfo, "translationY", 200, -600);
-                fadeOut.setDuration(500);
-                fadeOut.start();
-                // TODO FAUT IL FAIRE DISPARAITRE LA CARDVIEW OU SET SA VISIBILITY A GONE / INVISIBLE OU LES DEUX ?
-                //cardViewInfo.setVisibility(View.GONE);
+                popupInfoMap.dismiss();
             }
         });
 
-        btnCellar.setOnClickListener(new ImageButton.OnClickListener() {
+        btnInfoCellar.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, CellarActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
@@ -193,14 +190,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-        btnAddBottle.setOnClickListener(new ImageButton.OnClickListener() {
+        btnInfoAddBottle.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, AddActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
-
     }
 
     private void initFabWineMenu() {

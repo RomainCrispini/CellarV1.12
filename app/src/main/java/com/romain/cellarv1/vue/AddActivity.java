@@ -31,6 +31,7 @@ import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.Transformation;
@@ -112,6 +113,10 @@ public class AddActivity extends AppCompatActivity {
     // Bouton add
     private FloatingActionButton btnAdd;
 
+    // Popup
+    private Dialog popupInfoLabelBottle;
+    private ImageButton btnInfoCamera, btnInfoGallery, btnInfoExit;
+
     // Déclaration du contrôleur
     private Controle controle;
 
@@ -159,16 +164,26 @@ public class AddActivity extends AppCompatActivity {
         btnGallery = (ImageButton) findViewById(R.id.btnGallery);
         scanImageView = (ImageView) findViewById(R.id.scanImageView);
 
-        // Popup
-        popupAdd = new Dialog(this);
+        // PopupAdd & PopupSuccess
+        popupAdd = new Dialog(AddActivity.this);
         popupAdd.setContentView(R.layout.popup_add_bottle);
         popupAdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popupAdd.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
-        popupSuccess = new Dialog(this);
+        popupSuccess = new Dialog(AddActivity.this);
         popupSuccess.setContentView(R.layout.popup_success_add_bottle);
         popupSuccess.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popupSuccess.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
+        // PopupInfo
+        popupInfoLabelBottle = new Dialog(AddActivity.this);
+        popupInfoLabelBottle.setContentView(R.layout.popup_info_label_bottle);
+        popupInfoLabelBottle.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupInfoLabelBottle.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        popupInfoLabelBottle.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        btnInfoExit = (ImageButton) popupInfoLabelBottle.findViewById(R.id.btnInfoExit);
+        btnInfoCamera = (ImageButton) popupInfoLabelBottle.findViewById(R.id.btnInfoCamera);
+        btnInfoGallery = (ImageButton) popupInfoLabelBottle.findViewById(R.id.btnInfoGallery);
 
         // Toggle Buttons
         btnFavorite = (ToggleButton) findViewById(R.id.btnFavorite);
@@ -185,12 +200,57 @@ public class AddActivity extends AppCompatActivity {
         menuBis.setTranslationY(300f);
         menuBis.animate().translationY(0f).setInterpolator(interpolator).setDuration(1500).start();
 
+        displayPopupInfo();
         addWineBottle();
         //recoverWineBottle();
         recoverFABWineColor();
         recoverJsonCountries();
         getRegionsList();
         progressBar();
+
+    }
+
+    private void displayPopupInfo() {
+
+        popupInfoLabelBottle.show();
+
+        // Récupération de la liste de toutes les bouteilles SI ET SEULEMENT SI une BDD existe
+        AccesLocal accesLocal = new AccesLocal(AddActivity.this);
+
+        if(accesLocal.doesDBExists() == true) {
+            ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleList();
+            for(int i = 0; i < wineBottleList.size(); i++) {
+                if(wineBottleList.get(i).getPictureSmall().equals("")) {
+                } else if(!wineBottleList.get(i).getPictureSmall().equals("")) {
+                    popupInfoLabelBottle.dismiss();
+                }
+            }
+        } else {
+        }
+
+        btnInfoExit.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupInfoLabelBottle.dismiss();
+            }
+        });
+
+        btnInfoCamera.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO ACCES A L'APPAREIL PHOTO
+
+            }
+        });
+
+        btnInfoGallery.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO ACCES A LA GALERIE IMAGES
+
+            }
+        });
+
 
     }
 
@@ -340,6 +400,80 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Test si le scanImageView contient un Bitmap
+     */
+    private boolean doesImageLabel() {
+
+        boolean test;
+        BitmapDrawable drawable = (BitmapDrawable) scanImageView.getDrawable();
+        if(drawable == null) {
+            test = false;
+        } else {
+            test = true;
+        }
+        return test;
+    }
+
+    private String getPictureLarge() {
+
+        String pictureSmall = "";
+        Tools tools = new Tools();
+
+        if(doesImageLabel()) {
+            BitmapDrawable drawable = (BitmapDrawable) scanImageView.getDrawable();
+            Bitmap bitmap = drawable.getBitmap();
+
+            Bitmap bitmap500 = tools.getResizedBitmap500px(bitmap);
+
+            // Enregistrement de bitmap1000 dans pictureLarge
+            ByteArrayOutputStream stream500 = new ByteArrayOutputStream();
+            bitmap500.compress(Bitmap.CompressFormat.PNG, 0, stream500);
+            byte[] b1000 = stream500.toByteArray();
+            String image500 = Base64.encodeToString(b1000, Base64.DEFAULT);
+            pictureSmall = image500;
+            try {
+                stream500.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (!doesImageLabel()){
+            pictureSmall = "";
+        }
+
+        return pictureSmall;
+    }
+
+    private String getPictureSmall() {
+
+        String pictureLarge = "";
+        Tools tools = new Tools();
+
+        if(doesImageLabel()) {
+            BitmapDrawable drawable = (BitmapDrawable) scanImageView.getDrawable();
+            Bitmap bitmap = drawable.getBitmap();
+
+            Bitmap bitmap100 = tools.getResizedBitmap100px(bitmap);
+
+            // Enregistrement de bitmap100 dans pictureSmall
+            //ByteArrayOutputStream stream100 = new ByteArrayOutputStream(bitmap100.getWidth() * bitmap.getHeight());
+            ByteArrayOutputStream stream100 = new ByteArrayOutputStream();
+            bitmap100.compress(Bitmap.CompressFormat.PNG, 0, stream100);
+            byte[] b100 = stream100.toByteArray();
+            String image100 = Base64.encodeToString(b100, Base64.DEFAULT);
+            pictureLarge = image100;
+            try {
+                stream100.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (!doesImageLabel()){
+            pictureLarge = "";
+        }
+
+        return pictureLarge;
+    }
+
         /*
     public void askCameraPermissions(View view) {
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -377,6 +511,8 @@ public class AddActivity extends AppCompatActivity {
 
 
 
+
+
     /**
      * Ajout d'une nouvelle bouteille
      */
@@ -399,7 +535,6 @@ public class AddActivity extends AppCompatActivity {
                     Bitmap bitmapEtiquette = ((BitmapDrawable) scanImageView.getDrawable()).getBitmap();
                     imageBottle.setImageBitmap(bitmapEtiquette);
                 } else {
-                    imageBottle.setImageResource(R.drawable.none_listview);
                 }
 
 
@@ -441,8 +576,6 @@ public class AddActivity extends AppCompatActivity {
 
                          */
 
-                        Tools tools = new Tools();
-
                         String country = "";
                         String region = "";
                         String domain = "";
@@ -452,8 +585,6 @@ public class AddActivity extends AppCompatActivity {
                         int apogee = 0;
                         int number = 0;
                         int estimate = 0;
-                        String pictureLarge = "";
-                        String pictureSmall = "";
                         byte[] imageLarge = null;
                         byte[] imageSmall = null;
                         Float rate = 0f;
@@ -490,7 +621,6 @@ public class AddActivity extends AppCompatActivity {
                                 wish = "0";
                             }
 
-
                             country = txtCountry.getText().toString();
                             region = txtRegion.getText().toString();
                             domain = txtDomain.getText().toString();
@@ -503,40 +633,9 @@ public class AddActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-
-                        // Pour les tests de compression
-                        //Bitmap bitmap1 = BitmapFactory.decodeResource(AddActivity.this.getResources(), R.drawable.test_image);
-                        //Bitmap bitmap2 = BitmapFactory.decodeResource(AddActivity.this.getResources(), R.drawable.champ_wine);
-                        Bitmap bitmap = ((BitmapDrawable) scanImageView.getDrawable()).getBitmap();
-
-                        Bitmap bitmap100 = tools.getResizedBitmap100px(bitmap);
-                        Bitmap bitmap500 = tools.getResizedBitmap500px(bitmap);
-
-                        // Enregistrement de bitmap100 dans pictureSmall
-                        //ByteArrayOutputStream stream100 = new ByteArrayOutputStream(bitmap100.getWidth() * bitmap.getHeight());
-                        ByteArrayOutputStream stream100 = new ByteArrayOutputStream();
-                        bitmap100.compress(Bitmap.CompressFormat.PNG, 0, stream100);
-                        byte[] b100 = stream100.toByteArray();
-                        String image100 = Base64.encodeToString(b100, Base64.DEFAULT);
-                        pictureSmall = image100;
-                        try {
-                            stream100.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        // Enregistrement de bitmap1000 dans pictureLarge
-                        ByteArrayOutputStream stream500 = new ByteArrayOutputStream();
-                        bitmap500.compress(Bitmap.CompressFormat.PNG, 0, stream500);
-                        byte[] b1000 = stream500.toByteArray();
-                        String image500 = Base64.encodeToString(b1000, Base64.DEFAULT);
-                        pictureLarge = image500;
-                        try {
-                            stream500.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
+                        // Récupération des pictureLarge et pictureSmall suivant si une image a été utilisé
+                        String pictureLarge = getPictureLarge();
+                        String pictureSmall = getPictureSmall();
 
                         WineBottle wineBottle = new WineBottle(null, country, region, wineColor, domain, appellation, year, apogee, number, estimate, pictureLarge, pictureSmall, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp);
                         AccesLocal accesLocal = new AccesLocal(AddActivity.this);

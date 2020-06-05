@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,7 +13,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="15dp"
+        app:cardCornerRadius="8dp"
         app:cardBackgroundColor="@color/green_middle_light"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -28,7 +29,7 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginBottom="5dp"
-                android:tint="@color/orange"
+                android:tint="@color/pink_light"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:src="@drawable/popup_takeout_bottle" />
 
@@ -42,8 +43,9 @@
                 android:fontFamily="@font/yanone_kaffeesatz"
                 android:text="Cette bouteille va disparaître de votre cave !"
                 android:textAlignment="center"
-                android:textColor="@color/orange"
-                android:textSize="18dp" />
+                android:textColor="@color/pink_light"
+                android:textSize="18dp"
+                tools:ignore="RtlCompat" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -57,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Il en restera : "
-                    android:textColor="@color/green_very_light"
+                    android:textColor="@color/pink_light"
                     android:fontFamily="@font/yanone_kaffeesatz"
                     android:textSize="15dp" />
 
@@ -67,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="textStart"
                     android:text="nb"
-                    android:textColor="@color/green_very_light"
+                    android:textColor="@color/pink_light"
                     android:fontFamily="@font/yanone_kaffeesatz"
                     android:textSize="15dp" />
 
@@ -237,38 +239,31 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal">
 
-                    <Button
+                    <ImageButton
                         android:id="@+id/btnAccept"
-                        android:layout_width="150dp"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_weight="1"
-                        android:textSize="15dp"
-                        android:background="@drawable/button_popup_bottle_out_round"
-                        android:text="Oui"
-                        android:outlineProvider="none"
-                        android:fontFamily="@font/yanone_kaffeesatz"
-                        android:elevation="0dp"
-                        android:textColor="@color/green_very_light" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginRight="20dp"
+                        android:backgroundTint="@color/transparent"
+                        android:tint="@color/pink_light"
+                        android:scaleType="centerCrop"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:src="@drawable/popup_success" />
 
-                    <Button
+                    <ImageButton
                         android:id="@+id/btnDenie"
-                        android:layout_width="150dp"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="30dp"
-                        android:textSize="15dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/button_popup_bottle_out_round"
-                        android:text="Non"
-                        android:outlineProvider="none"
-                        android:fontFamily="@font/yanone_kaffeesatz"
-                        android:elevation="0dp"
-                        android:textColor="@color/green_very_light" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginLeft="20dp"
+                        android:backgroundTint="@color/transparent"
+                        android:tint="@color/pink_light"
+                        android:scaleType="centerCrop"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:src="@drawable/icone_out_info_window" />
 
                 </LinearLayout>
 

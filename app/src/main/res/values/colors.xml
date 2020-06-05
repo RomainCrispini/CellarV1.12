@@ -27,7 +27,12 @@
     <color name="blue_light">#22C2DD</color>
     <color name="orange">#D57400</color>
     <color name="red">#BF0000</color>
-    <color name="pink">#D0005B</color>
+    <color name="red_light">#D0005B</color>
+
+    <!-- PINK COLORS -->
+    <color name="pink_dark">#B35151</color>
+    <color name="pink">#CF6B6B</color>
+    <color name="pink_light">#FA8072</color>
 
     <!-- CUSTOM COLORS NAVBAR LIGHT MODE -->
 

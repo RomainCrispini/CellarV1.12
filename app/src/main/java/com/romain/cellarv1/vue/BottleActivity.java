@@ -64,7 +64,7 @@ public class BottleActivity extends AppCompatActivity {
     private ToggleButton btnWishlist;
 
     // Déclaration des PopupUpdate et PopupDelete
-    private Dialog popupUpdate, popupDelete, popupSuccess;
+    private Dialog popupUpdate, popupDelete, popupSuccessUpdate, popupSuccessDelete;
 
 
 
@@ -92,20 +92,25 @@ public class BottleActivity extends AppCompatActivity {
         menuBis.setTranslationY(300f);
         menuBis.animate().translationY(0f).setInterpolator(interpolator).setDuration(1500).start();
 
-        popupUpdate = new Dialog(this);
+        popupUpdate = new Dialog(BottleActivity.this);
         popupUpdate.setContentView(R.layout.popup_update_bottle);
         popupUpdate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popupUpdate.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
-        popupDelete = new Dialog(this);
+        popupDelete = new Dialog(BottleActivity.this);
         popupDelete.setContentView(R.layout.popup_take_out_bottle);
         popupDelete.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popupDelete.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
-        popupSuccess = new Dialog(this);
-        popupSuccess.setContentView(R.layout.popup_success_update_bottle);
-        popupSuccess.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        popupSuccess.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        popupSuccessUpdate = new Dialog(BottleActivity.this);
+        popupSuccessUpdate.setContentView(R.layout.popup_success_update_bottle);
+        popupSuccessUpdate.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupSuccessUpdate.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
+        popupSuccessDelete = new Dialog(BottleActivity.this);
+        popupSuccessDelete.setContentView(R.layout.popup_success_delete_bottle);
+        popupSuccessDelete.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupSuccessDelete.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
     }
 
@@ -114,8 +119,8 @@ public class BottleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Button btnAccept = (Button) popupUpdate.findViewById(R.id.btnAccept);
-                Button btnDenie = (Button) popupUpdate.findViewById(R.id.btnDenie);
+                ImageButton btnAccept = (ImageButton) popupUpdate.findViewById(R.id.btnAccept);
+                ImageButton btnDenie = (ImageButton) popupUpdate.findViewById(R.id.btnDenie);
 
                 ImageView imageFavorite = (ImageView) popupUpdate.findViewById(R.id.imageFavorite);
                 ImageView imageWish = (ImageView) popupUpdate.findViewById(R.id.imageWish);
@@ -208,13 +213,13 @@ public class BottleActivity extends AppCompatActivity {
                         accesLocal.updateBottle(intId, strCountry, strRegion, strDomain, strAppellation, intMillesime, intApogee, intNumber, intEstimate, floatRate, strFavorite, strWish);
                         popupUpdate.dismiss();
 
-                        popupSuccess.show();
+                        popupSuccessUpdate.show();
                         // Permet de faire aparaitre le panneau 2 secondes sans interventions
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                if (popupSuccess.isShowing()) {
-                                    popupSuccess.dismiss();
+                                if (popupSuccessUpdate.isShowing()) {
+                                    popupSuccessUpdate.dismiss();
                                 }
                             }
                         }, 1000);
@@ -237,8 +242,8 @@ public class BottleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Button btnAccept = (Button) popupDelete.findViewById(R.id.btnAccept);
-                Button btnDenie = (Button) popupDelete.findViewById(R.id.btnDenie);
+                ImageButton btnAccept = (ImageButton) popupDelete.findViewById(R.id.btnAccept);
+                ImageButton btnDenie = (ImageButton) popupDelete.findViewById(R.id.btnDenie);
 
                 ImageView imageFavorite = (ImageView) popupDelete.findViewById(R.id.imageFavorite);
                 ImageView imageWish = (ImageView) popupDelete.findViewById(R.id.imageWish);
@@ -314,13 +319,13 @@ public class BottleActivity extends AppCompatActivity {
                         startActivity(intent);
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
-                        popupSuccess.show();
+                        popupSuccessDelete.show();
                         // Permet de faire aparaitre le panneau 2 secondes sans interventions
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                if (popupSuccess.isShowing()) {
-                                    popupSuccess.dismiss();
+                                if (popupSuccessDelete.isShowing()) {
+                                    popupSuccessDelete.dismiss();
                                 }
                             }
                         }, 1000);

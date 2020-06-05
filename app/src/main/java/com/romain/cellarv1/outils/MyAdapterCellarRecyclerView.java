@@ -38,7 +38,7 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
 
     private ArrayList<WineBottle> wineBottleArrayList;
     private Context mContext;
-    private Dialog popupDelete, popupSuccess;
+    private Dialog popupDelete, popupSuccessDelete;
 
     // Constructeur
     public MyAdapterCellarRecyclerView(Context mContext, ArrayList<WineBottle> arrayList) {
@@ -46,7 +46,7 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
         wineBottleArrayList = arrayList;
         this.mContext = mContext;
         popupDelete = new Dialog(mContext);
-        popupSuccess = new Dialog(mContext);
+        popupSuccessDelete = new Dialog(mContext);
     }
 
     public static class CellarViewHolder extends RecyclerView.ViewHolder {
@@ -105,7 +105,7 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
         //CellarViewHolder cellarViewHolder = new CellarViewHolder(v);
 
         popupDelete.setContentView(R.layout.popup_take_out_bottle);
-        popupSuccess.setContentView(R.layout.popup_success_update_bottle);
+        popupSuccessDelete.setContentView(R.layout.popup_success_delete_bottle);
 
         return new CellarViewHolder(v);
 
@@ -186,8 +186,8 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
             @Override
             public void onClick(View v) {
 
-                Button btnAccept = (Button) popupDelete.findViewById(R.id.btnAccept);
-                Button btnDenie = (Button) popupDelete.findViewById(R.id.btnDenie);
+                ImageButton btnAccept = (ImageButton) popupDelete.findViewById(R.id.btnAccept);
+                ImageButton btnDenie = (ImageButton) popupDelete.findViewById(R.id.btnDenie);
 
                 ImageView imageFavorite = (ImageView) popupDelete.findViewById(R.id.imageFavorite);
                 ImageView imageWish = (ImageView) popupDelete.findViewById(R.id.imageWish);
@@ -202,8 +202,8 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
 
                 popupDelete.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 popupDelete.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-                popupSuccess.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                popupSuccess.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                popupSuccessDelete.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                popupSuccessDelete.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
                 Tools tools = new Tools();
                 imageBottle.setImageBitmap(tools.stringToBitmap(wineBottle.getPictureSmall()));
@@ -257,13 +257,13 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
 
                         removeCardViewAt(holder.getAdapterPosition());
 
-                        popupSuccess.show();
+                        popupSuccessDelete.show();
                         // Permet de faire aparaitre le panneau 1 seconde sans intervention
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                if (popupSuccess.isShowing()) {
-                                    popupSuccess.dismiss();
+                                if (popupSuccessDelete.isShowing()) {
+                                    popupSuccessDelete.dismiss();
                                 }
                             }
                         }, 1000);
