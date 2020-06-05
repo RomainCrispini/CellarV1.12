@@ -29,9 +29,7 @@ public class WineBottle implements Serializable {
     private Float longitude;
     private String timeStamp;
 
-
-
-    // Constructeur total
+    // Constructeur entier
     public WineBottle(Integer id, String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Float rate, String favorite, String wish, Float latitude, Float longitude, String timeStamp) {
 
         if (id != null ){

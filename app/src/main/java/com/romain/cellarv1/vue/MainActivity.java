@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         // Animation entrante de la cardView
-        ObjectAnimator fadeIn = ObjectAnimator.ofFloat(cardViewInfo, "translationY", -600, 0);
+        ObjectAnimator fadeIn = ObjectAnimator.ofFloat(cardViewInfo, "translationY", -600, 200);
         fadeIn.setDuration(500);
         fadeIn.start();
 
@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnInfoExit.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ObjectAnimator fadeOut = ObjectAnimator.ofFloat(cardViewInfo, "translationY", 0, -600);
+                ObjectAnimator fadeOut = ObjectAnimator.ofFloat(cardViewInfo, "translationY", 200, -600);
                 fadeOut.setDuration(500);
                 fadeOut.start();
                 // TODO FAUT IL FAIRE DISPARAITRE LA CARDVIEW OU SET SA VISIBILITY A GONE / INVISIBLE OU LES DEUX ?

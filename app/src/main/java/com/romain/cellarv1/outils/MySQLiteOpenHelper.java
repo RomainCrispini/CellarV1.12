@@ -8,6 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
     public final String FIELD_ID = "id";
+
+    // Table Bottle
+    public final String TABLE_BOTTLE = "bottle";
+
     public final String FIELD_COUNTRY = "country";
     public final String FIELD_REGION = "region";
     public final String FIELD_WINECOLOR = "winecolor";
@@ -28,11 +32,19 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     public final String FIELD_LONGITUDE = "longitude";
     public final String FIELD_TIMESTAMP = "timestamp";
 
-    public final String TABLE_BOTTLE = "bottle";
+    // Table User
+    public final String TABLE_USER = "user";
 
-    // Propriétés : requête de création de la BDD
+    public final String FIELD_PSEUDO = "pseudo";
+    public final String FIELD_PASSWORD = "password";
+    public final String FIELD_MAIL = "mail";
+    public final String FIELD_AVATAR_LARGE = "avatarlarge";
+    public final String FIELD_AVATAR_SMALL = "avatarsmall";
+
+
+    // Propriétés : requête de création de la table bottle
     // Que 4 types dispos sur SQLite
-    private String creation="create table " + TABLE_BOTTLE + " (" +
+    private String creatBottleTable="create table " + TABLE_BOTTLE + " (" +
             FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"  +
             FIELD_COUNTRY + " TEXT," +
             FIELD_REGION + " TEXT," +
@@ -54,6 +66,17 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
             FIELD_LONGITUDE + " REAL," +
             FIELD_TIMESTAMP + " TEXT);";
 
+    // Propriétés : requête de création de la table bottle
+    // Que 4 types dispos sur SQLite
+    private String creatUserTable="create table " + TABLE_USER + " (" +
+            FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"  +
+            FIELD_PSEUDO + " TEXT," +
+            FIELD_PASSWORD + " TEXT," +
+            FIELD_MAIL + " TEXT," +
+            FIELD_AVATAR_LARGE + " TEXT," +
+            FIELD_TIMESTAMP + " TEXT," +
+            FIELD_AVATAR_SMALL + " TEXT);";
+
 
 
     /**
@@ -73,7 +96,9 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(creation);
+        // Création des tables
+        db.execSQL(creatBottleTable);
+        db.execSQL(creatUserTable);
     }
 
     /**
@@ -84,7 +109,10 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // A l'upgrade, drop des vieilles tables
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_BOTTLE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
+        // Création des nouvelles tables
         onCreate(db);
 
     }

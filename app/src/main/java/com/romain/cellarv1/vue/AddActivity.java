@@ -612,7 +612,6 @@ public class AddActivity extends AppCompatActivity {
         AutoCompleteTextView textRegions = (AutoCompleteTextView) findViewById(R.id.textRegion);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, regionsList);
         textRegions.setAdapter(adapter);
-
     }
 
     private void recoverFABWineColor() {
