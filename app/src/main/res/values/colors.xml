@@ -29,10 +29,18 @@
     <color name="red">#BF0000</color>
     <color name="red_light">#D0005B</color>
 
-    <!-- PINK COLORS -->
+    <!-- CUSTOM PINK COLORS -->
     <color name="pink_dark">#B35151</color>
     <color name="pink">#CF6B6B</color>
     <color name="pink_light">#FA8072</color>
+    
+    <!-- CUSTOM COLORS ARC SEEK BAR -->
+    <array name="gradient">
+        <item>#43545c</item>
+        <item>#4F656F</item>
+        <item>#576F7A</item>
+        <item>#67828f</item>
+    </array>
 
     <!-- CUSTOM COLORS NAVBAR LIGHT MODE -->
 

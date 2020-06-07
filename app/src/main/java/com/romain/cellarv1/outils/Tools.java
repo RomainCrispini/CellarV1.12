@@ -51,7 +51,7 @@ public class Tools {
     }
 
     /**
-     * Permet de récupérer la date formattée
+     * Permet de récupérer la date formattée dd/MM/yyyy
      * @param timeStamp
      * @return
      */

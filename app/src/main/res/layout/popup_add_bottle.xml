@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -43,7 +44,8 @@
                 android:text="Cette bouteille va rejoindre votre cave !"
                 android:textAlignment="center"
                 android:textColor="@color/green_apple"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                tools:ignore="RtlCompat" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -187,39 +189,31 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp"
                     android:orientation="horizontal">
 
-                    <Button
+                    <ImageButton
                         android:id="@+id/btnAccept"
-                        android:layout_width="150dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="15dp"
-                        android:fontFamily="@font/yanone_kaffeesatz"
-                        android:layout_weight="1"
-                        android:background="@drawable/button_popup_bottle_out_round"
-                        android:text="Oui"
-                        android:outlineProvider="none"
-                        android:textSize="15dp"
-                        android:elevation="0dp"
-                        android:textColor="@color/green_very_light" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginRight="20dp"
+                        android:backgroundTint="@color/transparent"
+                        android:tint="@color/green_apple"
+                        android:scaleType="centerCrop"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:src="@drawable/popup_success" />
 
-                    <Button
+                    <ImageButton
                         android:id="@+id/btnDenie"
-                        android:layout_width="150dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="30dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/yanone_kaffeesatz"
-                        android:background="@drawable/button_popup_bottle_out_round"
-                        android:text="Non"
-                        android:outlineProvider="none"
-                        android:textSize="15dp"
-                        android:elevation="0dp"
-                        android:textColor="@color/green_very_light" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginLeft="20dp"
+                        android:backgroundTint="@color/transparent"
+                        android:tint="@color/green_apple"
+                        android:scaleType="centerCrop"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:src="@drawable/icone_out_info_window" />
 
                 </LinearLayout>
 

@@ -44,10 +44,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -68,12 +68,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+import me.tankery.lib.circularseekbar.CircularSeekBar;
 
 
 public class AddActivity extends AppCompatActivity {
@@ -113,9 +116,14 @@ public class AddActivity extends AppCompatActivity {
     // Bouton add
     private FloatingActionButton btnAdd;
 
-    // Popup
+    // PopupInfoLabelBottle
     private Dialog popupInfoLabelBottle;
     private ImageButton btnInfoCamera, btnInfoGallery, btnInfoExit;
+
+    // PopupCircularSeekBar
+    private Dialog popupMillesimeSeekBar;
+    private CircularSeekBar millesimeSeekBar;
+    private TextView txtMillesimeSeekBar;
 
     // Déclaration du contrôleur
     private Controle controle;
@@ -185,6 +193,19 @@ public class AddActivity extends AppCompatActivity {
         btnInfoCamera = (ImageButton) popupInfoLabelBottle.findViewById(R.id.btnInfoCamera);
         btnInfoGallery = (ImageButton) popupInfoLabelBottle.findViewById(R.id.btnInfoGallery);
 
+        // PopupMillesimeSeekBar
+        popupMillesimeSeekBar = new Dialog(AddActivity.this);
+        popupMillesimeSeekBar.setContentView(R.layout.popup_choice_millesime);
+        popupMillesimeSeekBar.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupMillesimeSeekBar.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        popupMillesimeSeekBar.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
+
+
+        millesimeSeekBar = (CircularSeekBar) popupMillesimeSeekBar.findViewById(R.id.millesimeSeekBar);
+        txtMillesimeSeekBar = (TextView) popupMillesimeSeekBar.findViewById(R.id.txtMillesimeSeekBar);
+
+
         // Toggle Buttons
         btnFavorite = (ToggleButton) findViewById(R.id.btnFavorite);
         btnFavorite.setText(null);
@@ -200,13 +221,52 @@ public class AddActivity extends AppCompatActivity {
         menuBis.setTranslationY(300f);
         menuBis.animate().translationY(0f).setInterpolator(interpolator).setDuration(1500).start();
 
+        // PopupInfo
         displayPopupInfo();
+
+        // PopupArcSeekBar
+        displayPopupMillesimeSeekBar();
+
         addWineBottle();
         //recoverWineBottle();
         recoverFABWineColor();
         recoverJsonCountries();
         getRegionsList();
         progressBar();
+
+    }
+
+    private void displayPopupMillesimeSeekBar() {
+
+        popupMillesimeSeekBar.show();
+
+        // Récupère la date actuelle au format yyyy
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
+        String dateString = formatter.format(new Date());
+        final Integer dateInt = Integer.parseInt(dateString);
+
+        millesimeSeekBar.setOnSeekBarChangeListener(new CircularSeekBar.OnCircularSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(CircularSeekBar circularSeekBar, float progress, boolean fromUser) {
+                // Permet de naviguer de l'année actuelle à -70 ans
+                Integer millesime = dateInt - (int) progress;
+                txtMillesimeSeekBar.setText(String.valueOf(millesime));
+
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+        });
+
+
 
     }
 
@@ -521,8 +581,8 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Button btnAccept = (Button) popupAdd.findViewById(R.id.btnAccept);
-                Button btnDenie = (Button) popupAdd.findViewById(R.id.btnDenie);
+                ImageButton btnAccept = (ImageButton) popupAdd.findViewById(R.id.btnAccept);
+                ImageButton btnDenie = (ImageButton) popupAdd.findViewById(R.id.btnDenie);
                 TextView number = (TextView) popupAdd.findViewById(R.id.number);
                 ImageView imageWineColor = (ImageView) popupAdd.findViewById(R.id.imageWineColor);
                 ImageView imageBottle = (ImageView) popupAdd.findViewById(R.id.imageBottle);

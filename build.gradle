@@ -21,6 +21,7 @@ allprojects {
 
         // Créé pour MPAndroidChart
         maven { url 'https://jitpack.io' }
+
         
     }
 }
