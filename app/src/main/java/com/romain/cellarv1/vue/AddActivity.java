@@ -3,11 +3,9 @@ package com.romain.cellarv1.vue;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import android.Manifest;
-import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -15,10 +13,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.Intent;
@@ -32,9 +28,7 @@ import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
-import android.view.animation.Transformation;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -44,13 +38,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.romain.cellarv1.R;
 import com.romain.cellarv1.controleur.Controle;
 import com.romain.cellarv1.modele.AccesLocal;
@@ -66,11 +57,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Blob;
-import java.sql.Timestamp;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -116,19 +103,24 @@ public class AddActivity extends AppCompatActivity {
     // Bouton add
     private FloatingActionButton btnAdd;
 
+    // Boutons SeekBar
+    private ImageButton btnRoundMillesime, btnRoundApogee, btnRoundNumber, btnRoundEstimate;
+
     // PopupInfoLabelBottle
     private Dialog popupInfoLabelBottle;
     private ImageButton btnInfoCamera, btnInfoGallery, btnInfoExit;
 
     // PopupCircularSeekBar
-    private Dialog popupMillesimeSeekBar;
-    private CircularSeekBar millesimeSeekBar;
-    private TextView txtMillesimeSeekBar;
+    private Dialog popupMillesimeSeekBar, popupApogeeSeekBar, popupNumberSeekBar, popupEstimateSeekBar;
+    private CircularSeekBar millesimeSeekBar, apogeeSeekBar, numberSeekBar, estimateSeekBar;
+    private TextView txtMillesimeSeekBar, txtApogeeSeekBar, txtNumberSeekBar, txtEstimateSeekBar;
+    private ImageButton btnMillesimeAccept, btnApogeeAccept, btnNumberAccept, btnEstimateAccept;
+    private ImageButton btnMillesimeDenie, btnApogeeDenie, btnNumberDenie, btnEstimateDenie;
 
     // Déclaration du contrôleur
     private Controle controle;
 
-    // Déclaration de la popup
+    // Déclaration des popups Add et Success
     private Dialog popupAdd, popupSuccess;
 
     // Buttons MenuBis + Interpolator
@@ -195,15 +187,47 @@ public class AddActivity extends AppCompatActivity {
 
         // PopupMillesimeSeekBar
         popupMillesimeSeekBar = new Dialog(AddActivity.this);
-        popupMillesimeSeekBar.setContentView(R.layout.popup_choice_millesime);
+        popupMillesimeSeekBar.setContentView(R.layout.popup_add_millesime);
         popupMillesimeSeekBar.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popupMillesimeSeekBar.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         popupMillesimeSeekBar.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-
-
-
         millesimeSeekBar = (CircularSeekBar) popupMillesimeSeekBar.findViewById(R.id.millesimeSeekBar);
         txtMillesimeSeekBar = (TextView) popupMillesimeSeekBar.findViewById(R.id.txtMillesimeSeekBar);
+        btnMillesimeAccept = (ImageButton) popupMillesimeSeekBar.findViewById(R.id.btnAccept);
+        btnMillesimeDenie = (ImageButton) popupMillesimeSeekBar.findViewById(R.id.btnDenie);
+
+        // PopupApogeeSeekBar
+        popupApogeeSeekBar = new Dialog(AddActivity.this);
+        popupApogeeSeekBar.setContentView(R.layout.popup_add_apogee);
+        popupApogeeSeekBar.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupApogeeSeekBar.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        popupApogeeSeekBar.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        apogeeSeekBar = (CircularSeekBar) popupApogeeSeekBar.findViewById(R.id.apogeeSeekBar);
+        txtApogeeSeekBar = (TextView) popupApogeeSeekBar.findViewById(R.id.txtApogeeSeekBar);
+        btnApogeeAccept = (ImageButton) popupApogeeSeekBar.findViewById(R.id.btnAccept);
+        btnApogeeDenie = (ImageButton) popupApogeeSeekBar.findViewById(R.id.btnDenie);
+
+        // PopupNumberSeekBar
+        popupNumberSeekBar = new Dialog(AddActivity.this);
+        popupNumberSeekBar.setContentView(R.layout.popup_add_number);
+        popupNumberSeekBar.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupNumberSeekBar.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        popupNumberSeekBar.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        numberSeekBar = (CircularSeekBar) popupNumberSeekBar.findViewById(R.id.numberSeekBar);
+        txtNumberSeekBar = (TextView) popupNumberSeekBar.findViewById(R.id.txtNumberSeekBar);
+        btnNumberAccept = (ImageButton) popupNumberSeekBar.findViewById(R.id.btnAccept);
+        btnNumberDenie = (ImageButton) popupNumberSeekBar.findViewById(R.id.btnDenie);
+
+        // PopupEstimateSeekBar
+        popupEstimateSeekBar = new Dialog(AddActivity.this);
+        popupEstimateSeekBar.setContentView(R.layout.popup_add_estimate);
+        popupEstimateSeekBar.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupEstimateSeekBar.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        popupEstimateSeekBar.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        estimateSeekBar = (CircularSeekBar) popupEstimateSeekBar.findViewById(R.id.estimateSeekBar);
+        txtEstimateSeekBar = (TextView) popupEstimateSeekBar.findViewById(R.id.txtEstimateSeekBar);
+        btnEstimateAccept = (ImageButton) popupEstimateSeekBar.findViewById(R.id.btnAccept);
+        btnEstimateDenie = (ImageButton) popupEstimateSeekBar.findViewById(R.id.btnDenie);
 
 
         // Toggle Buttons
@@ -224,8 +248,18 @@ public class AddActivity extends AppCompatActivity {
         // PopupInfo
         displayPopupInfo();
 
-        // PopupArcSeekBar
-        displayPopupMillesimeSeekBar();
+        // Gestion des RoundButtons
+        gestionRoundButtonsSeekBar();
+
+
+
+
+
+
+
+
+
+
 
         addWineBottle();
         //recoverWineBottle();
@@ -234,11 +268,64 @@ public class AddActivity extends AppCompatActivity {
         getRegionsList();
         progressBar();
 
+
+
+
+
+    }
+
+    private void gestionRoundButtonsSeekBar() {
+        btnRoundMillesime = (ImageButton) findViewById(R.id.btnRoundMillesime);
+        btnRoundMillesime.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayPopupMillesimeSeekBar();
+            }
+        });
+
+        btnRoundApogee = (ImageButton) findViewById(R.id.btnRoundApogee);
+        btnRoundApogee.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayPopupApogeeSeekBar();
+            }
+        });
+
+        btnRoundNumber = (ImageButton) findViewById(R.id.btnRoundNumber);
+        btnRoundNumber.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayPopupNumberSeekBar();
+            }
+        });
+
+        btnRoundEstimate = (ImageButton) findViewById(R.id.btnRoundEstimate);
+        btnRoundEstimate.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayPopupEstimateSeekBar();
+            }
+        });
     }
 
     private void displayPopupMillesimeSeekBar() {
 
         popupMillesimeSeekBar.show();
+
+        btnMillesimeAccept.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nbYear.setText(String.valueOf(txtMillesimeSeekBar.getText()));
+                popupMillesimeSeekBar.dismiss();
+            }
+        });
+
+        btnMillesimeDenie.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupMillesimeSeekBar.dismiss();
+            }
+        });
 
         // Récupère la date actuelle au format yyyy
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
@@ -249,10 +336,8 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(CircularSeekBar circularSeekBar, float progress, boolean fromUser) {
                 // Permet de naviguer de l'année actuelle à -70 ans
-                Integer millesime = dateInt - (int) progress;
+                Integer millesime = dateInt - (int)progress;
                 txtMillesimeSeekBar.setText(String.valueOf(millesime));
-
-
             }
 
             @Override
@@ -266,7 +351,130 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
+    }
 
+    private void displayPopupApogeeSeekBar() {
+
+        popupApogeeSeekBar.show();
+
+        btnApogeeAccept.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nbApogee.setText(String.valueOf(txtApogeeSeekBar.getText()));
+                popupApogeeSeekBar.dismiss();
+            }
+        });
+
+        btnApogeeDenie.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupApogeeSeekBar.dismiss();
+            }
+        });
+
+        // Récupère la date actuelle au format yyyy
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
+        String dateString = formatter.format(new Date());
+        final Integer dateInt = Integer.parseInt(dateString);
+
+        apogeeSeekBar.setOnSeekBarChangeListener(new CircularSeekBar.OnCircularSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(CircularSeekBar circularSeekBar, float progress, boolean fromUser) {
+                // Permet de naviguer de l'année actuelle à +70 ans
+                Integer millesime = dateInt + (int)progress;
+                txtApogeeSeekBar.setText(String.valueOf(millesime));
+            }
+
+            @Override
+            public void onStopTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+        });
+
+    }
+
+    private void displayPopupNumberSeekBar() {
+
+        popupNumberSeekBar.show();
+
+        btnNumberAccept.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nbNumber.setText(String.valueOf(txtNumberSeekBar.getText()));
+                popupNumberSeekBar.dismiss();
+            }
+        });
+
+        btnNumberDenie.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupNumberSeekBar.dismiss();
+            }
+        });
+
+        numberSeekBar.setOnSeekBarChangeListener(new CircularSeekBar.OnCircularSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(CircularSeekBar circularSeekBar, float progress, boolean fromUser) {
+                // Permet d'ajouter jusqu'à 66 bouteilles
+                txtNumberSeekBar.setText(String.valueOf((int)progress));
+            }
+
+            @Override
+            public void onStopTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+        });
+
+    }
+
+    private void displayPopupEstimateSeekBar() {
+
+        popupEstimateSeekBar.show();
+
+        btnEstimateAccept.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Permet de retirer les deux derniers caractères : " €" pour ne set qu'un nombre
+                String nbEstimateRaw = String.valueOf(txtEstimateSeekBar.getText());
+                nbEstimate.setText(nbEstimateRaw.substring(0, nbEstimateRaw.length() - 2));
+                popupEstimateSeekBar.dismiss();
+            }
+        });
+
+        btnEstimateDenie.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupEstimateSeekBar.dismiss();
+            }
+        });
+
+        estimateSeekBar.setOnSeekBarChangeListener(new CircularSeekBar.OnCircularSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(CircularSeekBar circularSeekBar, float progress, boolean fromUser) {
+                // Permet d'estimer jusqu'à 150€
+                txtEstimateSeekBar.setText(String.valueOf((int)progress + " €"));
+            }
+
+            @Override
+            public void onStopTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+        });
 
     }
 

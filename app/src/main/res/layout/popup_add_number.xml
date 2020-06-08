@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:layout_gravity="center">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        app:cardBackgroundColor="@color/green_middle_light"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:backgroundTint="@color/transparent"
+                android:tint="@color/green_light"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/icone_menubis_quantite" />
+
+            <RelativeLayout
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:gravity="center"
+                android:layout_gravity="center">
+
+                <me.tankery.lib.circularseekbar.CircularSeekBar
+                    android:id="@+id/numberSeekBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cs_circle_style = "round"
+                    app:cs_progress="0"
+                    app:cs_max = "67"
+                    app:cs_negative_enabled = "false"
+                    app:cs_move_outside_circle = "false"
+                    app:cs_maintain_equal_circle = "true"
+                    app:cs_use_custom_radii = "false"
+                    app:cs_lock_enabled = "false"
+                    app:cs_circle_x_radius = "10dp"
+                    app:cs_circle_y_radius = "10dp"
+                    app:cs_circle_stroke_width = "10dp"
+                    app:cs_disable_pointer = "false"
+                    app:cs_pointer_stroke_width = "20dp"
+                    app:cs_pointer_halo_width = "0dp"
+                    app:cs_pointer_halo_border_width = "20dp"
+                    app:cs_circle_fill = "@color/transparent"
+                    app:cs_circle_color = "@color/green_third_light"
+                    app:cs_circle_progress_color = "@color/green_apple"
+                    app:cs_pointer_color = "@color/green_apple"
+                    app:cs_pointer_halo_color = "@color/white"
+                    app:cs_pointer_halo_color_ontouch = "@color/green_third_light"
+                    app:cs_pointer_alpha_ontouch = "20">
+                </me.tankery.lib.circularseekbar.CircularSeekBar>
+
+                <TextView
+                    android:id="@+id/txtNumberSeekBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="15dp"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/green_apple"
+                    android:textSize="40dp"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btnAccept"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginRight="20dp"
+                    android:backgroundTint="@color/transparent"
+                    android:tint="@color/green_apple"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:src="@drawable/popup_success" />
+
+                <ImageButton
+                    android:id="@+id/btnDenie"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginLeft="20dp"
+                    android:backgroundTint="@color/transparent"
+                    android:tint="@color/green_apple"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:src="@drawable/icone_out_info_window" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

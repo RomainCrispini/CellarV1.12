@@ -10,7 +10,7 @@
 
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         app:cardCornerRadius="8dp"
         app:cardBackgroundColor="@color/green_middle_light"
@@ -27,29 +27,13 @@
             android:layout_margin="10dp">
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:backgroundTint="@color/transparent"
-                android:tint="@color/green_apple"
+                android:tint="@color/green_light"
                 android:scaleType="centerCrop"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/icone_menubis_millesime" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textColor="@color/green_apple"
-                android:textSize="20dp"
-                android:text="Millésime" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@color/green_third_light" />
 
             <RelativeLayout
                 android:layout_width="250dp"
@@ -71,15 +55,15 @@
                     app:cs_lock_enabled = "false"
                     app:cs_circle_x_radius = "10dp"
                     app:cs_circle_y_radius = "10dp"
-                    app:cs_circle_stroke_width = "20dp"
+                    app:cs_circle_stroke_width = "10dp"
                     app:cs_disable_pointer = "false"
-                    app:cs_pointer_stroke_width = "30dp"
+                    app:cs_pointer_stroke_width = "20dp"
                     app:cs_pointer_halo_width = "0dp"
                     app:cs_pointer_halo_border_width = "20dp"
                     app:cs_circle_fill = "@color/transparent"
                     app:cs_circle_color = "@color/green_third_light"
-                    app:cs_circle_progress_color = "@color/green_light"
-                    app:cs_pointer_color = "@color/green_light"
+                    app:cs_circle_progress_color = "@color/green_apple"
+                    app:cs_pointer_color = "@color/green_apple"
                     app:cs_pointer_halo_color = "@color/white"
                     app:cs_pointer_halo_color_ontouch = "@color/green_third_light"
                     app:cs_pointer_alpha_ontouch = "20">

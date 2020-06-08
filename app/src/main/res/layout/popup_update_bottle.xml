@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
@@ -9,7 +10,7 @@
 
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
@@ -32,9 +33,9 @@
                 android:tint="@color/orange" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="5dp"
@@ -42,7 +43,8 @@
                 android:text="Les caractéristiques de cette bouteille vont être modifiées !"
                 android:textAlignment="center"
                 android:textColor="@color/orange"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                tools:ignore="RtlCompat" />
 
             <View
                 android:layout_width="match_parent"
@@ -209,7 +211,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_marginBottom="10dp"
                     android:orientation="horizontal">
 
                     <ImageButton

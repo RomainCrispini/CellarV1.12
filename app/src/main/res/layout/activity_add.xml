@@ -25,10 +25,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="2dp"
-        app:layout_constraintBottom_toTopOf="@id/menuBis"
+        android:layout_marginBottom="110dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/progressBar">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/layoutGlobal"
@@ -50,7 +51,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/progressBar">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layoutPays"
+                    android:id="@+id/layoutCountry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -80,7 +81,7 @@
                         android:maxLines="1"
                         android:textColor="@color/green_apple"
                         android:textCursorDrawable="@color/green_light"
-                        android:textSize="14dp"
+                        android:textSize="18dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -116,7 +117,7 @@
                         android:maxLines="1"
                         android:textColor="@color/green_apple"
                         android:textCursorDrawable="@color/green_light"
-                        android:textSize="14dp"
+                        android:textSize="18dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -204,7 +205,7 @@
                     android:maxLines="1"
                     android:textColor="@color/green_apple"
                     android:textCursorDrawable="@color/green_light"
-                    android:textSize="14dp"
+                    android:textSize="18dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -238,7 +239,7 @@
                     android:maxLines="1"
                     android:textColor="@color/green_apple"
                     android:textCursorDrawable="@color/green_light"
-                    android:textSize="14dp"
+                    android:textSize="18dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -267,12 +268,12 @@
                     android:backgroundTint="@color/transparent"
                     android:fontFamily="@font/yanone_kaffeesatz"
                     android:gravity="center"
-                    android:hint="Adresse du propriétaire"
+                    android:hint="Adresse"
                     android:inputType="text"
                     android:maxLines="1"
                     android:textColor="@color/green_apple"
                     android:textCursorDrawable="@color/green_light"
-                    android:textSize="14dp"
+                    android:textSize="18dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -281,19 +282,41 @@
                 android:id="@+id/layoutYearApogee"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_margin="10dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layoutAppellation">
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:cardBackgroundColor="@color/green_dark"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp">
+
+                    <ImageButton
+                        android:id="@+id/btnRoundMillesime"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:backgroundTint="@color/transparent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/icone_seek_add"
+                        android:tint="@color/green_light" />
+                </androidx.cardview.widget.CardView>
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center"
+                    android:background="@color/green_dark" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/layoutYear"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/fond_textinput"
@@ -318,7 +341,7 @@
                         android:maxLines="1"
                         android:textColor="@color/green_apple"
                         android:textCursorDrawable="@color/green_light"
-                        android:textSize="14dp"
+                        android:textSize="18dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -327,7 +350,7 @@
                     android:id="@+id/layoutApogee"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/fond_textinput"
@@ -354,10 +377,34 @@
                         android:maxLines="1"
                         android:textColor="@color/green_apple"
                         android:textCursorDrawable="@color/green_light"
-                        android:textSize="14dp"
+                        android:textSize="18dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center"
+                    android:background="@color/green_dark" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:cardBackgroundColor="@color/green_dark"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp">
+
+                    <ImageButton
+                        android:id="@+id/btnRoundApogee"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:backgroundTint="@color/transparent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/icone_seek_add"
+                        android:tint="@color/green_light" />
+                </androidx.cardview.widget.CardView>
 
             </LinearLayout>
 
@@ -365,19 +412,41 @@
                 android:id="@+id/layoutNumberEstimate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_margin="10dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layoutYearApogee">
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:cardBackgroundColor="@color/green_dark"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp">
+
+                    <ImageButton
+                        android:id="@+id/btnRoundNumber"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:backgroundTint="@color/transparent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/icone_seek_add"
+                        android:tint="@color/green_light" />
+                </androidx.cardview.widget.CardView>
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center"
+                    android:background="@color/green_dark" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/layoutNumber"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/fond_textinput"
@@ -403,7 +472,7 @@
                         android:maxLines="1"
                         android:textColor="@color/green_apple"
                         android:textCursorDrawable="@color/green_light"
-                        android:textSize="14dp"
+                        android:textSize="18dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -412,7 +481,7 @@
                     android:id="@+id/layoutEstimate"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/fond_textinput"
@@ -434,15 +503,39 @@
                         android:ems="10"
                         android:fontFamily="@font/yanone_kaffeesatz"
                         android:gravity="center"
-                        android:hint="Estimation (€)"
+                        android:hint="Estimation / bouteille"
                         android:inputType="number"
                         android:maxLines="1"
                         android:textColor="@color/green_apple"
                         android:textCursorDrawable="@color/green_light"
-                        android:textSize="14dp"
+                        android:textSize="18dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center"
+                    android:background="@color/green_dark" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:cardBackgroundColor="@color/green_dark"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp">
+
+                    <ImageButton
+                        android:id="@+id/btnRoundEstimate"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:backgroundTint="@color/transparent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/icone_seek_add"
+                        android:tint="@color/green_light" />
+                </androidx.cardview.widget.CardView>
 
             </LinearLayout>
 
@@ -523,10 +616,10 @@
                         android:layout_height="55dp"
                         android:layout_gravity="start"
                         android:backgroundTint="@color/transparent"
+
                         android:onClick="takePicture"
 
                         android:scaleType="centerCrop"
-
                         android:src="@drawable/icon_navbar_scan"
                         android:tint="@color/green_middle_light"
                         app:maxImageSize="33dp" />
@@ -546,10 +639,10 @@
                         android:layout_height="55dp"
                         android:backgroundTint="@color/transparent"
                         android:gravity="end"
+
                         android:onClick="accesGallery"
 
                         android:scaleType="centerCrop"
-
                         android:src="@drawable/scan_gallery"
                         android:tint="@color/green_middle_light"
                         app:maxImageSize="33dp" />
