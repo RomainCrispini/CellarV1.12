@@ -967,7 +967,9 @@ public class AddActivity extends AppCompatActivity {
     private void recoverJsonCountries() {
         getJsonCountries();
         AutoCompleteTextView textCountries = (AutoCompleteTextView) findViewById(R.id.textCountry);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, countryList);
+        // On change la couleur de fond de la liste déroulante
+        textCountries.setDropDownBackgroundDrawable(new ColorDrawable(AddActivity.this.getResources().getColor(R.color.green_dark)));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom_autocomplete, countryList);
         textCountries.setAdapter(adapter);
     }
 
@@ -977,7 +979,9 @@ public class AddActivity extends AppCompatActivity {
                 "Languedoc-Roussillon", "Lorraine", "Lyonnais", "Nord-Pas-De-Calais", "Normandie",
                 "Picardie", "Provence", "Savoie-Bugey", "Sud-Ouest", "Tahiti", "Val de Loire", "Vallée du Rhône");
         AutoCompleteTextView textRegions = (AutoCompleteTextView) findViewById(R.id.textRegion);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, regionsList);
+        // On change la couleur de fond de la liste déroulante
+        textRegions.setDropDownBackgroundDrawable(new ColorDrawable(AddActivity.this.getResources().getColor(R.color.green_dark)));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom_autocomplete, regionsList);
         textRegions.setAdapter(adapter);
     }
 
