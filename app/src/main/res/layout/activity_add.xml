@@ -47,8 +47,8 @@
                     android:id="@+id/imgVignoble"
                     android:layout_width="wrap_content"
                     android:layout_height="230dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/vignoble_alsace" />
+                    android:scaleType="centerCrop"/>
+                    <!-- android:src="@drawable/vignoble_alsace"-->
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"

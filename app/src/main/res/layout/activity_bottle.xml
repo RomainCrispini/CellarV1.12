@@ -41,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/yanone_kaffeesatz"
-                    android:text="Cette bouteille a rejoint votre cave le : "
+                    android:text="Cette bouteille a rejoint votre cave le"
                     android:textColor="@color/green_very_light"
                     android:textSize="18dp" />
 
@@ -371,101 +371,6 @@
                 android:layout_gravity="center"
                 android:orientation="vertical">
 
-                <RatingBar
-                    android:id="@+id/ratingBar"
-                    style="@style/Widget.AppCompat.RatingBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:theme="@style/RatingBar"
-                    android:numStars="5"
-                    android:scaleX="0.7"
-                    android:scaleY="0.7" />
-
-                <LinearLayout
-                    android:layout_width="280dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="30dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btnUpdateBottle"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/button_edit_round"
-                        android:elevation="0dp"
-                        android:fontFamily="@font/yanone_kaffeesatz"
-                        android:outlineProvider="none"
-                        android:text="Modifier"
-                        android:textColor="@color/white"
-                        android:textSize="15dp" />
-
-                    <Button
-                        android:id="@+id/btnDeleteBottle"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/button_delete_round"
-                        android:elevation="0dp"
-                        android:fontFamily="@font/yanone_kaffeesatz"
-                        android:outlineProvider="none"
-                        android:text="Supprimer"
-                        android:textColor="@color/white"
-                        android:textSize="15dp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
-
-    <FrameLayout
-        android:id="@+id/menuBis"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/green_middle_dark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:gravity="top|center_vertical"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-
-
-
-
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
                     <ToggleButton
                         android:id="@+id/btnFavorite"
                         android:layout_width="40dp"
@@ -482,6 +387,99 @@
                         android:layout_marginLeft="15dp"
                         android:layout_gravity="top"
                         android:background="@drawable/button_wish_activity_bottle" />
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    style="@style/Widget.AppCompat.RatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:theme="@style/RatingBar"
+                    android:numStars="5"
+                    android:scaleX="0.7"
+                    android:scaleY="0.7" />
+
+            </LinearLayout>
+
+            <View
+                android:background="@color/green_light"
+                android:layout_width="match_parent"
+                android:layout_marginTop="300dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_height="100dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/menuBis"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:background="@color/green_middle_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="top|center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/yanone_kaffeesatz"
+                    android:text="Modifier"
+                    android:textColor="@color/orange"/>
+
+                <ImageButton
+                    android:id="@+id/btnUpdateBottle"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/popup_update_bottle"
+                    android:backgroundTint="@color/orange" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btnDeleteBottle"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/popup_takeout_bottle"
+                    android:backgroundTint="@color/pink" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/yanone_kaffeesatz"
+                    android:text="Supprimer"
+                    android:textColor="@color/pink"/>
 
             </LinearLayout>
 

@@ -46,6 +46,7 @@ import com.romain.cellarv1.R;
 import com.romain.cellarv1.controleur.Controle;
 import com.romain.cellarv1.modele.AccesLocal;
 import com.romain.cellarv1.modele.WineBottle;
+import com.romain.cellarv1.outils.BlurBitmap;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
 import com.romain.cellarv1.outils.ProgressBarAnimation;
 import com.romain.cellarv1.outils.Tools;
@@ -128,12 +129,17 @@ public class AddActivity extends AppCompatActivity {
     private ToggleButton btnFavorite;
     private ToggleButton btnWishlist;
 
+    // Image Vignoble
+    private ImageView imgVignoble;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
         init();
+
+
 
 
     }
@@ -268,6 +274,58 @@ public class AddActivity extends AppCompatActivity {
         getRegionsList();
         progressBar();
 
+        gestionImageVignoble();
+
+
+
+
+
+    }
+
+
+
+
+
+    private void gestionImageCountry() {
+
+    }
+
+    private void gestionImageVignoble() {
+
+        // L'image par défaut est vignoble_alsace
+        imgVignoble = (ImageView) findViewById(R.id.imgVignoble);
+        imgVignoble.setBackgroundResource(R.drawable.vignoble_alsace);
+        // On floute par défaut cette image
+        Bitmap bitmap = ((BitmapDrawable) imgVignoble.getBackground()).getBitmap();
+        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 20f));
+
+        txtRegion.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                Bitmap bitmap = ((BitmapDrawable) imgVignoble.getBackground()).getBitmap();
+
+                // On switch avec toutes les régions et on retire le flou si une région est sélectionnée
+                switch (txtRegion.getText().toString().trim()) {
+                    case "Alsace":
+                        // On retire le flou de l'image
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    default:
+                        // On remet le flou sur l'image dans tout les autres cas
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 20f));
+                }
+            }
+
+        });
 
 
 
@@ -1056,6 +1114,8 @@ public class AddActivity extends AppCompatActivity {
      * Méthode qui gère la progressBar de AddActivity
      */
     private void progressBar() {
+
+        // TODO CA NE FONCTIONNE PLUS
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setMax(700);

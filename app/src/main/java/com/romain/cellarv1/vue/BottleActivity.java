@@ -54,10 +54,10 @@ public class BottleActivity extends AppCompatActivity {
     RatingBar ratingBar;
 
     // Button Update
-    private Button btnUpdateBottle;
+    private ImageButton btnUpdateBottle;
 
     // Button Delete
-    private Button btnDeleteBottle;
+    private ImageButton btnDeleteBottle;
 
     // Buttons MenuBis
     private ToggleButton btnFavorite;
@@ -85,8 +85,8 @@ public class BottleActivity extends AppCompatActivity {
         getFabWineMenuValue();
         initWineBottle();
 
-        btnUpdateBottle = (Button) findViewById(R.id.btnUpdateBottle);
-        btnDeleteBottle = (Button) findViewById(R.id.btnDeleteBottle);
+        btnUpdateBottle = (ImageButton) findViewById(R.id.btnUpdateBottle);
+        btnDeleteBottle = (ImageButton) findViewById(R.id.btnDeleteBottle);
 
         FrameLayout menuBis = (FrameLayout) findViewById(R.id.menuBis);
         menuBis.setTranslationY(300f);
