@@ -301,13 +301,6 @@ public class AddActivity extends AppCompatActivity {
 
         txtRegion.addTextChangedListener(new TextWatcher() {
 
-            public void afterTextChanged(Editable s) {
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
@@ -316,13 +309,202 @@ public class AddActivity extends AppCompatActivity {
                 // On switch avec toutes les régions et on retire le flou si une région est sélectionnée
                 switch (txtRegion.getText().toString().trim()) {
                     case "Alsace":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_alsace);
                         // On retire le flou de l'image
                         imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
                         break;
+                    case "Beaujolais":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_beaujolais);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Bourgogne":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_bourgogne);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Bretagne":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_bretagne);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Champagne":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_champagne);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Charentes":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_charentes);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Corse":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_corse);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Ile-de-France":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_ile_france);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Jura":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_jura);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Languedoc-Roussillon":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_languedoc);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Lorraine":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_lorraine);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Lyonnais":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_loyonnais);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Nord-Pas-De-Calais":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_npc);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Normandie":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_normandie);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Picardie":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_picardie);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Provence":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_provence);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Savoie-Bugey":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_savoie);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Sud-Ouest":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_sud_ouest);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Tahiti":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_tahiti);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Val de Loire":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_val_loire);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Vallée du Rhône":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_vallee_rhone);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
                     default:
+                        // On remet l'image vignoble_alsace dans tout les autres cas
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_alsace);
                         // On remet le flou sur l'image dans tout les autres cas
                         imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 20f));
                 }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                Bitmap bitmap = ((BitmapDrawable) imgVignoble.getBackground()).getBitmap();
+
+                // On switch avec toutes les régions et on retire le flou si une région est sélectionnée
+                switch (txtRegion.getText().toString().trim()) {
+                    case "Alsace":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_alsace);
+                        // On retire le flou de l'image
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Beaujolais":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_beaujolais);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Bourgogne":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_bourgogne);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Bretagne":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_bretagne);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Champagne":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_champagne);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Charentes":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_charentes);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Corse":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_corse);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Ile-de-France":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_ile_france);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Jura":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_jura);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Languedoc-Roussillon":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_languedoc);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Lorraine":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_lorraine);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Lyonnais":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_loyonnais);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Nord-Pas-De-Calais":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_npc);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Normandie":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_normandie);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Picardie":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_picardie);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Provence":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_provence);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Savoie-Bugey":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_savoie);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Sud-Ouest":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_sud_ouest);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Tahiti":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_tahiti);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Val de Loire":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_val_loire);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    case "Vallée du Rhône":
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_vallee_rhone);
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 0f));
+                        break;
+                    default:
+                        // On remet l'image vignoble_alsace dans tout les autres cas
+                        imgVignoble.setBackgroundResource(R.drawable.vignoble_alsace);
+                        // On remet le flou sur l'image dans tout les autres cas
+                        imgVignoble.setImageBitmap(new BlurBitmap().blur(AddActivity.this, bitmap, 20f));
+                }
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
         });
