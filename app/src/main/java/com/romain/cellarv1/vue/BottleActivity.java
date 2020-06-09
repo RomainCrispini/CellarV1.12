@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,8 +35,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.romain.cellarv1.R;
 import com.romain.cellarv1.modele.AccesLocal;
 import com.romain.cellarv1.modele.WineBottle;
+import com.romain.cellarv1.outils.BlurBitmap;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
 import com.romain.cellarv1.outils.Tools;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import me.tankery.lib.circularseekbar.CircularSeekBar;
 
 public class BottleActivity extends AppCompatActivity {
 
@@ -63,8 +70,19 @@ public class BottleActivity extends AppCompatActivity {
     private ToggleButton btnFavorite;
     private ToggleButton btnWishlist;
 
-    // Déclaration des PopupUpdate et PopupDelete
+    // PopupRateSeekBar
+    private Dialog popupRateSeekBar;
+    private CircularSeekBar rateSeekBar;
+    private ImageButton btnRateAccept, btnRateDenie;
+    private TextView txtRateSeekBar;
+    private ImageButton btnRoundRate;
+    private TextView nbRate;
+
+    // PopupUpdate et PopupDelete
     private Dialog popupUpdate, popupDelete, popupSuccessUpdate, popupSuccessDelete;
+
+    // ImageViewVignoble
+    private ImageView imgVignoble;
 
 
 
@@ -112,7 +130,92 @@ public class BottleActivity extends AppCompatActivity {
         popupSuccessDelete.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popupSuccessDelete.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
+        // PopupRateSeekBar
+        popupRateSeekBar = new Dialog(BottleActivity.this);
+        popupRateSeekBar.setContentView(R.layout.popup_add_rate);
+        popupRateSeekBar.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupRateSeekBar.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        rateSeekBar = (CircularSeekBar) popupRateSeekBar.findViewById(R.id.rateSeekBar);
+        txtRateSeekBar = (TextView) popupRateSeekBar.findViewById(R.id.txtRateSeekBar);
+        btnRateAccept = (ImageButton) popupRateSeekBar.findViewById(R.id.btnAccept);
+        btnRateDenie = (ImageButton) popupRateSeekBar.findViewById(R.id.btnDenie);
+        btnRoundRate = (ImageButton) findViewById(R.id.btnRoundRate);
+        nbRate = (TextView) findViewById(R.id.nbRate);
+
+        imgVignoble = (ImageView) findViewById(R.id.imgVignoble);
+
+
+
+        gestionImageVignoble();
+        gestionRoundButtonSeekBar();
+
+
     }
+
+    private void gestionImageVignoble() {
+        // L'image par défaut est vignoble_alsace
+        imgVignoble = (ImageView) findViewById(R.id.imgVignoble);
+        imgVignoble.setBackgroundResource(R.drawable.vignoble_alsace);
+        // On floute par défaut cette image
+        Bitmap bitmap = ((BitmapDrawable) imgVignoble.getBackground()).getBitmap();
+        imgVignoble.setImageBitmap(new BlurBitmap().blur(BottleActivity.this, bitmap, 20f));
+    }
+
+    private void gestionRoundButtonSeekBar() {
+        btnRoundRate = (ImageButton) findViewById(R.id.btnRoundRate);
+        btnRoundRate.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayPopupRateSeekBar();
+            }
+        });
+    }
+
+    private void displayPopupRateSeekBar() {
+
+        popupRateSeekBar.show();
+
+        btnRateAccept.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nbRate.setText(txtRateSeekBar.getText());
+                popupRateSeekBar.dismiss();
+            }
+        });
+
+        btnRateDenie.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupRateSeekBar.dismiss();
+            }
+        });
+
+        rateSeekBar.setOnSeekBarChangeListener(new CircularSeekBar.OnCircularSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(CircularSeekBar circularSeekBar, float progress, boolean fromUser) {
+                // On formate l'affichage */10
+                txtRateSeekBar.setText((int) progress + "/10");
+            }
+
+            @Override
+            public void onStopTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+        });
+
+    }
+
+
+
+
+
+
+
 
     private void btnUpdateBottle() {
         btnUpdateBottle.setOnClickListener(new Button.OnClickListener() {
