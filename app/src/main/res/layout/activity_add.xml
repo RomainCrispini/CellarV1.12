@@ -808,6 +808,7 @@ app:pulse_startFromScratch="false" /> -->
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1"
-        app:menu="@menu/bottom_nav_menu"></com.romain.cellarv1.outils.CurvedBottomNavigationView>
+        app:menu="@menu/bottom_nav_menu">
+    </com.romain.cellarv1.outils.CurvedBottomNavigationView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
