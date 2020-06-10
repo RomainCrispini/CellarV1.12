@@ -27,13 +27,13 @@
             android:layout_margin="10dp">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
                 android:backgroundTint="@color/transparent"
                 android:tint="@color/green_light"
                 android:scaleType="centerCrop"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/icone_menubis_quantite" />
+                android:src="@drawable/icone_seek_rate" />
 
             <RelativeLayout
                 android:layout_width="250dp"
@@ -75,7 +75,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="15dp"
                     android:gravity="center"
-                    android:text="*/10"
+                    android:text="0"
                     android:textColor="@color/green_apple"
                     android:textSize="40dp"/>
 

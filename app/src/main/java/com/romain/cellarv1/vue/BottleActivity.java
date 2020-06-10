@@ -56,9 +56,7 @@ public class BottleActivity extends AppCompatActivity {
     private EditText countryBottle, regionBottle, domainBottle, appellationBottle;
     private EditText millesimeBottle, apogeeBottle, estimateBottle, numberBottle;
     private ImageView imageBottle, imageWineColor;
-
-    // RatingBar
-    RatingBar ratingBar;
+    private TextView nbRate;
 
     // Button Update
     private ImageButton btnUpdateBottle;
@@ -66,7 +64,7 @@ public class BottleActivity extends AppCompatActivity {
     // Button Delete
     private ImageButton btnDeleteBottle;
 
-    // Buttons MenuBis
+    // Buttons
     private ToggleButton btnFavorite;
     private ToggleButton btnWishlist;
 
@@ -75,11 +73,10 @@ public class BottleActivity extends AppCompatActivity {
     private CircularSeekBar rateSeekBar;
     private ImageButton btnRateAccept, btnRateDenie;
     private TextView txtRateSeekBar;
-    private ImageButton btnRoundRate;
-    private TextView nbRate;
 
     // PopupUpdate et PopupDelete
     private Dialog popupUpdate, popupDelete, popupSuccessUpdate, popupSuccessDelete;
+    private TextView nbRatePopup;
 
     // ImageViewVignoble
     private ImageView imgVignoble;
@@ -139,7 +136,6 @@ public class BottleActivity extends AppCompatActivity {
         txtRateSeekBar = (TextView) popupRateSeekBar.findViewById(R.id.txtRateSeekBar);
         btnRateAccept = (ImageButton) popupRateSeekBar.findViewById(R.id.btnAccept);
         btnRateDenie = (ImageButton) popupRateSeekBar.findViewById(R.id.btnDenie);
-        btnRoundRate = (ImageButton) findViewById(R.id.btnRoundRate);
         nbRate = (TextView) findViewById(R.id.nbRate);
 
         imgVignoble = (ImageView) findViewById(R.id.imgVignoble);
@@ -162,8 +158,8 @@ public class BottleActivity extends AppCompatActivity {
     }
 
     private void gestionRoundButtonSeekBar() {
-        btnRoundRate = (ImageButton) findViewById(R.id.btnRoundRate);
-        btnRoundRate.setOnClickListener(new ImageButton.OnClickListener() {
+
+        nbRate.setOnClickListener(new TextView.OnClickListener() {
             @Override
             public void onClick(View v) {
                 displayPopupRateSeekBar();
@@ -172,6 +168,12 @@ public class BottleActivity extends AppCompatActivity {
     }
 
     private void displayPopupRateSeekBar() {
+
+        // On set la progressBar à l'ouverture
+        int initRate = Integer.parseInt(nbRate.getText().toString());
+        rateSeekBar.setProgress(initRate);
+        // On set le texte central de la popup à l'ouverture avec le texte de l'activité
+        txtRateSeekBar.setText(nbRate.getText().toString());
 
         popupRateSeekBar.show();
 
@@ -193,8 +195,7 @@ public class BottleActivity extends AppCompatActivity {
         rateSeekBar.setOnSeekBarChangeListener(new CircularSeekBar.OnCircularSeekBarChangeListener() {
             @Override
             public void onProgressChanged(CircularSeekBar circularSeekBar, float progress, boolean fromUser) {
-                // On formate l'affichage */10
-                txtRateSeekBar.setText((int) progress + "/10");
+                txtRateSeekBar.setText(String.valueOf((int)progress));
             }
 
             @Override
@@ -209,13 +210,6 @@ public class BottleActivity extends AppCompatActivity {
         });
 
     }
-
-
-
-
-
-
-
 
     private void btnUpdateBottle() {
         btnUpdateBottle.setOnClickListener(new Button.OnClickListener() {
@@ -254,20 +248,21 @@ public class BottleActivity extends AppCompatActivity {
                 Tools tools = new Tools();
                 imageBottle.setImageBitmap(tools.stringToBitmap(image));
 
-                final RatingBar ratingBarPopUp = (RatingBar) popupUpdate.findViewById(R.id.ratingBarPopUp);
-                Float ratePopUp = ratingBar.getRating();
-                ratingBarPopUp.setRating(ratePopUp);
+
+                nbRatePopup = (TextView) popupUpdate.findViewById(R.id.nbRatePopup);
+                String ratePopup = nbRate.getText().toString();
+                nbRatePopup.setText(ratePopup);
 
                 if(btnFavorite.isChecked()) {
-                    imageFavorite.setVisibility(View.VISIBLE);
+                    imageFavorite.setColorFilter(getResources().getColor(R.color.green_apple));
                 } else {
-                    imageFavorite.setVisibility(View.INVISIBLE);
+                    imageFavorite.setColorFilter(getResources().getColor(R.color.green_light));
                 }
 
                 if(btnWishlist.isChecked()) {
-                    imageWish.setVisibility(View.VISIBLE);
+                    imageWish.setColorFilter(getResources().getColor(R.color.green_apple));
                 } else {
-                    imageWish.setVisibility(View.INVISIBLE);
+                    imageWish.setColorFilter(getResources().getColor(R.color.green_light));
                 }
 
                 region.setText(regionBottle.getText());
@@ -295,7 +290,10 @@ public class BottleActivity extends AppCompatActivity {
                         Integer intNumber = Integer.parseInt(numberBottle.getText().toString());
                         Integer intEstimate = Integer.parseInt(estimateBottle.getText().toString());
 
-                        Float floatRate = ratingBar.getRating();
+                        Integer intRate = Integer.parseInt(nbRate.getText().toString());
+
+
+
 
 
                         String strFavorite;
@@ -313,7 +311,7 @@ public class BottleActivity extends AppCompatActivity {
                         }
 
                         AccesLocal accesLocal = new AccesLocal(BottleActivity.this);
-                        accesLocal.updateBottle(intId, strCountry, strRegion, strDomain, strAppellation, intMillesime, intApogee, intNumber, intEstimate, floatRate, strFavorite, strWish);
+                        accesLocal.updateBottle(intId, strCountry, strRegion, strDomain, strAppellation, intMillesime, intApogee, intNumber, intEstimate, intRate, strFavorite, strWish);
                         popupUpdate.dismiss();
 
                         popupSuccessUpdate.show();
@@ -359,6 +357,10 @@ public class BottleActivity extends AppCompatActivity {
                 TextView millesime = (TextView) popupDelete.findViewById(R.id.millesime);
                 TextView number = (TextView) popupDelete.findViewById(R.id.number);
 
+                nbRatePopup = (TextView) popupDelete.findViewById(R.id.nbRatePopup);
+                String ratePopup = nbRate.getText().toString();
+                nbRatePopup.setText(ratePopup);
+
                 switch(getIntent().getStringExtra("wineColor").trim()) {
                     case "Rouge" :
                         imageWineColor.setImageResource(R.drawable.red_wine_listview);
@@ -378,20 +380,17 @@ public class BottleActivity extends AppCompatActivity {
                 Tools tools = new Tools();
                 imageBottle.setImageBitmap(tools.stringToBitmap(image));
 
-                RatingBar ratingBarPopUp = (RatingBar) popupDelete.findViewById(R.id.ratingBarPopUp);
-                Float ratePopUp = ratingBar.getRating();
-                ratingBarPopUp.setRating(ratePopUp);
 
                 if(btnFavorite.isChecked()) {
-                    imageFavorite.setVisibility(View.VISIBLE);
+                    imageFavorite.setColorFilter(getResources().getColor(R.color.green_apple));
                 } else {
-                    imageFavorite.setVisibility(View.INVISIBLE);
+                    imageFavorite.setColorFilter(getResources().getColor(R.color.green_light));
                 }
 
                 if(btnWishlist.isChecked()) {
-                    imageWish.setVisibility(View.VISIBLE);
+                    imageWish.setColorFilter(getResources().getColor(R.color.green_apple));
                 } else {
-                    imageWish.setVisibility(View.INVISIBLE);
+                    imageWish.setColorFilter(getResources().getColor(R.color.green_light));
                 }
 
                 region.setText(regionBottle.getText());
@@ -463,7 +462,8 @@ public class BottleActivity extends AppCompatActivity {
         estimateBottle = (EditText) findViewById(R.id.estimateBottle);
         numberBottle = (EditText) findViewById(R.id.numberBottle);
 
-        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        nbRate = (TextView) findViewById(R.id.nbRate);
+
 
         switch(getIntent().getStringExtra("wineColor").trim()) {
             case "Rouge" :
@@ -493,12 +493,9 @@ public class BottleActivity extends AppCompatActivity {
 
 
 
-
-
-
         String rate = getIntent().getStringExtra("rate");
-        Float floatRate = Float.valueOf(rate);
-        ratingBar.setRating(floatRate);
+        nbRate.setText(rate);
+
 
         btnFavorite.setText(null);
         btnFavorite.setTextOn(null);

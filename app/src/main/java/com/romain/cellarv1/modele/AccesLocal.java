@@ -189,7 +189,7 @@ public class AccesLocal {
     /**
      * Méthode qui permet d'upload les infos d'une bouteille
      */
-    public void updateBottle(Integer id, String country, String region, String domain, String appellation, int year, int apogee, int number, int estimate, Float rate, String favorite, String wish) {
+    public void updateBottle(Integer id, String country, String region, String domain, String appellation, int year, int apogee, int number, int estimate, Integer rate, String favorite, String wish) {
         bd = accesBD.getWritableDatabase();
         ContentValues args = new ContentValues();
         args.put("country", country);
@@ -247,7 +247,7 @@ public class AccesLocal {
             String picturesmall = cursor.getString(11);
             byte[] imagelarge = cursor.getBlob(12);
             byte[] imagesmall = cursor.getBlob(13);
-            Float rate = cursor.getFloat(14);
+            Integer rate = cursor.getInt(14);
             String favorite = cursor.getString(15);
             String wish = cursor.getString(16);
             Float latitude = cursor.getFloat(17);
@@ -549,7 +549,7 @@ public class AccesLocal {
         String picturesmall = cursor.getString(11);
         byte[] imagelarge = cursor.getBlob(12);
         byte[] imagesmall = cursor.getBlob(13);
-        Float rate = cursor.getFloat(14);
+        Integer rate = cursor.getInt(14);
         String favorite = cursor.getString(15);
         String wish = cursor.getString(16);
         Float latitude = cursor.getFloat(17);

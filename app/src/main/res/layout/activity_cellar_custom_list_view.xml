@@ -4,20 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!-- <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="102dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginLeft="19dp"
-        app:cardBackgroundColor="@color/green_dark"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </androidx.cardview.widget.CardView> -->
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
@@ -53,7 +39,7 @@
                     android:fontFamily="@font/yanone_kaffeesatz"
                     android:gravity="center"
                     android:text="Région"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -63,7 +49,7 @@
                     android:fontFamily="@font/yanone_kaffeesatz"
                     android:gravity="center"
                     android:text="Appellation"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/domainListView"
@@ -73,11 +59,13 @@
                     android:fontFamily="@font/yanone_kaffeesatz"
                     android:gravity="center"
                     android:text="Domaine"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_margin="5dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:background="@color/green_third_light" />
@@ -99,13 +87,12 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
                             android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <ImageView
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
                                 android:layout_gravity="center_vertical"
                                 android:backgroundTint="@color/transparent"
                                 android:scaleType="centerCrop"
@@ -125,7 +112,7 @@
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
                                     android:text="Millésime"
-                                    android:textSize="12sp" />
+                                    android:textSize="13sp" />
 
                                 <TextView
                                     android:id="@+id/yearListView"
@@ -136,7 +123,7 @@
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
                                     android:text="Millésime"
-                                    android:textSize="12sp" />
+                                    android:textSize="13sp" />
 
                             </LinearLayout>
 
@@ -145,13 +132,14 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
                             android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <ImageView
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
                                 android:layout_gravity="center_vertical"
                                 android:backgroundTint="@color/transparent"
                                 android:scaleType="centerCrop"
@@ -171,7 +159,7 @@
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
                                     android:text="Apogée"
-                                    android:textSize="12sp" />
+                                    android:textSize="13sp" />
 
                                 <TextView
                                     android:id="@+id/apogeeListView"
@@ -182,7 +170,7 @@
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
                                     android:text="Apogée"
-                                    android:textSize="12sp" />
+                                    android:textSize="13sp" />
 
                             </LinearLayout>
 
@@ -191,13 +179,12 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
                             android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <ImageView
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
                                 android:layout_gravity="center_vertical"
                                 android:backgroundTint="@color/transparent"
                                 android:scaleType="centerCrop"
@@ -217,7 +204,7 @@
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
                                     android:text="Quantité"
-                                    android:textSize="12sp" />
+                                    android:textSize="13sp" />
 
                                 <TextView
                                     android:id="@+id/numberListView"
@@ -228,7 +215,7 @@
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
                                     android:text="Quantité"
-                                    android:textSize="12sp" />
+                                    android:textSize="13sp" />
 
                             </LinearLayout>
 
@@ -237,25 +224,6 @@
                     </LinearLayout>
 
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@color/green_third_light" />
-
-                <RatingBar
-                    android:id="@+id/ratingBarCardView"
-                    style="@style/Widget.AppCompat.RatingBar.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:isIndicator="true"
-                    android:numStars="5"
-                    android:stepSize="0.5"
-                    android:theme="@style/RatingBar" />
 
             </LinearLayout>
 
@@ -309,11 +277,11 @@
 
     </androidx.cardview.widget.CardView>
 
-
     <androidx.cardview.widget.CardView
         android:id="@+id/pastilleImageBottle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
         android:layout_gravity="center"
         android:layout_marginLeft="5dp"
         app:cardBackgroundColor="@color/grey_light"
@@ -356,6 +324,30 @@
                 android:transitionName="imageTransition" />
         </androidx.cardview.widget.CardView>
 
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="35dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        app:cardBackgroundColor="@color/green_dark"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="0dp"
+        app:layout_constraintStart_toStartOf="@id/pastilleImageBottle"
+        app:layout_constraintEnd_toEndOf="@id/pastilleImageBottle"
+        app:layout_constraintTop_toBottomOf="@id/pastilleImageBottle">
+
+        <TextView
+            android:id="@+id/txtRateListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="1dp"
+            android:gravity="center"
+            android:text="*/10"
+            android:textColor="@color/green_apple"
+            android:elevation="0dp"
+            android:transitionName="imageTransition" />
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

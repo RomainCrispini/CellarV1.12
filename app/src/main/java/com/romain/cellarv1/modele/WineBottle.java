@@ -2,7 +2,6 @@ package com.romain.cellarv1.modele;
 
 import java.io.Serializable;
 import java.sql.Blob;
-import java.util.Date;
 
 
 public class WineBottle implements Serializable {
@@ -22,7 +21,7 @@ public class WineBottle implements Serializable {
     private String pictureSmall;
     private byte[] imageLarge;
     private byte[] imageSmall;
-    private Float rate;
+    private Integer rate;
     private String favorite;
     private String wish;
     private Float latitude;
@@ -30,7 +29,7 @@ public class WineBottle implements Serializable {
     private String timeStamp;
 
     // Constructeur entier
-    public WineBottle(Integer id, String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Float rate, String favorite, String wish, Float latitude, Float longitude, String timeStamp) {
+    public WineBottle(Integer id, String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Integer rate, String favorite, String wish, Float latitude, Float longitude, String timeStamp) {
 
         if (id != null ){
             this.id = id;
@@ -180,11 +179,11 @@ public class WineBottle implements Serializable {
         this.imageSmall = imageSmall;
     }
 
-    public Float getRate() {
+    public Integer getRate() {
         return rate;
     }
 
-    public void setRate(Float rate) {
+    public void setRate(Integer rate) {
         this.rate = rate;
     }
 

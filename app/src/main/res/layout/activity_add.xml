@@ -47,7 +47,7 @@
                     android:id="@+id/imgVignoble"
                     android:layout_width="wrap_content"
                     android:layout_height="230dp"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="centerCrop" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"
@@ -171,8 +171,8 @@
                 android:id="@+id/layoutWineColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -588,6 +588,94 @@
 
             </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="Mes appréciations"
+                android:textColor="@color/green_light" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="15dp"
+                android:background="@color/green_light" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="90dp"
+                android:layout_marginRight="90dp"
+                android:layout_marginBottom="200dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutAppellation">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/green_dark"
+                    app:cardCornerRadius="30dp"
+                    app:cardElevation="0dp">
+
+                    <ToggleButton
+                        android:id="@+id/btnFavorite"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/button_like_cardview" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/green_dark"
+                    app:cardCornerRadius="30dp"
+                    app:cardElevation="0dp">
+
+                    <TextView
+                        android:id="@+id/nbRate"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="3dp"
+                        android:backgroundTint="@color/transparent"
+                        android:gravity="center"
+                        android:text="*/10"
+                        android:textColor="@color/green_apple"
+                        android:textSize="22dp" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/green_dark"
+                    app:cardCornerRadius="30dp"
+                    app:cardElevation="0dp">
+
+                    <ToggleButton
+                        android:id="@+id/btnWishlist"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="2dp"
+                        android:background="@drawable/button_wish_activity_bottle" />
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>
@@ -619,38 +707,39 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
                     android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:gravity="center_vertical|right"
+                    android:orientation="horizontal"
+                    tools:ignore="RtlHardcoded">
 
                     <ImageButton
                         android:id="@+id/btnPhoto"
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
-                        android:layout_gravity="start"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginRight="40dp"
                         android:backgroundTint="@color/transparent"
 
                         android:onClick="takePicture"
 
                         android:scaleType="centerCrop"
                         android:src="@drawable/icon_navbar_scan"
-                        android:tint="@color/green_middle_light"
-                        app:maxImageSize="33dp" />
+                        android:tint="@color/green_apple" />
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
                     android:layout_weight="1"
-                    android:gravity="top|center_horizontal"
-                    android:orientation="horizontal">
+                    android:gravity="center_vertical|left"
+                    android:orientation="horizontal"
+                    tools:ignore="RtlHardcoded">
 
                     <ImageButton
                         android:id="@+id/btnGallery"
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="40dp"
                         android:backgroundTint="@color/transparent"
                         android:gravity="end"
 
@@ -658,38 +747,9 @@
 
                         android:scaleType="centerCrop"
                         android:src="@drawable/scan_gallery"
-                        android:tint="@color/green_middle_light"
-                        app:maxImageSize="33dp" />
+                        android:tint="@color/green_apple" />
 
                 </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <ToggleButton
-                    android:id="@+id/btnFavorite"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="top"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="15dp"
-                    android:background="@drawable/button_like_activity_bottle"
-                    android:elevation="0dp" />
-
-                <ToggleButton
-                    android:id="@+id/btnWishlist"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="top"
-                    android:layout_marginLeft="15dp"
-                    android:background="@drawable/button_wish_activity_bottle"
-                    android:elevation="0dp" />
 
             </LinearLayout>
 

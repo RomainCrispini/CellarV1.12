@@ -62,6 +62,8 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
 
         public RatingBar ratingBarCardView;
 
+        public TextView rateListView;
+
         public final ToggleButton favorite;
         public final ImageButton delete;
 
@@ -86,7 +88,7 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
 
             imageBottle = itemView.findViewById(R.id.imageBottle);
 
-            ratingBarCardView = itemView.findViewById(R.id.ratingBarCardView);
+            rateListView = itemView.findViewById(R.id.txtRateListView);
 
             favorite = itemView.findViewById(R.id.favorite);
             delete = itemView.findViewById(R.id.delete);
@@ -327,9 +329,6 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
         //ByteArrayOutputStream stream = new ByteArrayOutputStream(currentItem.getImageLarge());
         holder.image.setImageBitmap(BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length));
 
-
-
-
         holder.region.setText(currentItem.getRegion());
         holder.appellation.setText(currentItem.getAppellation());
         holder.domain.setText(currentItem.getDomain());
@@ -354,7 +353,7 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
         }
 
         // On set la note sur la cardView
-        holder.ratingBarCardView.setRating(currentItem.getRate());
+        holder.rateListView.setText(currentItem.getRate().toString());
 
         // On set la CardView d'un coeur coloré si la bouteille est favorite = 1, rien si favorite = 0
         switch(currentItem.getFavorite()) {

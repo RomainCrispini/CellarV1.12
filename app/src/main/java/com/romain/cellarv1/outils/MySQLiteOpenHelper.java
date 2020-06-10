@@ -59,7 +59,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
             FIELD_PICTURESMALL + " TEXT," +
             FIELD_IMAGELARGE + " BLOB," +
             FIELD_IMAGESMALL + " BLOB," +
-            FIELD_RATE + " REAL," +
+            FIELD_RATE + " INTEGER," +
             FIELD_FAVORITE + " TEXT," +
             FIELD_WISH + " TEXT," +
             FIELD_LATTITUDE + " REAL," +

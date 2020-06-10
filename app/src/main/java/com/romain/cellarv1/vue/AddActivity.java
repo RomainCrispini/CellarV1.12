@@ -1095,7 +1095,7 @@ public class AddActivity extends AppCompatActivity {
                         int estimate = 0;
                         byte[] imageLarge = null;
                         byte[] imageSmall = null;
-                        Float rate = 0f;
+                        Integer rate = 0;
                         String favorite = "0";
                         String wish = "0";
                         Float lattitude = 0f;
