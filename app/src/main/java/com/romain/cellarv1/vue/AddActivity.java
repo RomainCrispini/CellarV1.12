@@ -73,6 +73,8 @@ public class AddActivity extends AppCompatActivity {
      * Propriétés
      */
 
+    private OvershootInterpolator interpolator = new OvershootInterpolator();
+
     // Appareil photo et gallery
     private String photoPath = null;
     private static final int GALLERY_READ_REQUEST_PERMISSION = 100;
@@ -100,6 +102,7 @@ public class AddActivity extends AppCompatActivity {
     private EditText txtDomain, txtAppellation;
     private EditText nbYear, nbApogee, nbNumber, nbEstimate;
     private ImageButton btnRed, btnRose, btnWhite, btnChamp;
+    private TextView nbRate;
 
     // Bouton add
     private FloatingActionButton btnAdd;
@@ -121,11 +124,18 @@ public class AddActivity extends AppCompatActivity {
     // Déclaration du contrôleur
     private Controle controle;
 
-    // Déclaration des popups Add et Success
-    private Dialog popupAdd, popupSuccess;
+    // PopupRateSeekBar
+    private Dialog popupRateSeekBar;
+    private CircularSeekBar rateSeekBar;
+    private ImageButton btnRateAccept, btnRateDenie;
+    private TextView txtRateSeekBar;
 
-    // Buttons MenuBis + Interpolator
-    private OvershootInterpolator interpolator = new OvershootInterpolator();
+    // Popups Add et Success
+    private Dialog popupAdd, popupSuccess;
+    private ImageView imageFavorite, imageWish;
+    private TextView nbRatePopup;
+
+    // Buttons Appreciations
     private ToggleButton btnFavorite;
     private ToggleButton btnWishlist;
 
@@ -235,6 +245,16 @@ public class AddActivity extends AppCompatActivity {
         btnEstimateAccept = (ImageButton) popupEstimateSeekBar.findViewById(R.id.btnAccept);
         btnEstimateDenie = (ImageButton) popupEstimateSeekBar.findViewById(R.id.btnDenie);
 
+        // PopupRateSeekBar
+        popupRateSeekBar = new Dialog(AddActivity.this);
+        popupRateSeekBar.setContentView(R.layout.popup_add_rate);
+        popupRateSeekBar.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupRateSeekBar.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        rateSeekBar = (CircularSeekBar) popupRateSeekBar.findViewById(R.id.rateSeekBar);
+        txtRateSeekBar = (TextView) popupRateSeekBar.findViewById(R.id.txtRateSeekBar);
+        btnRateAccept = (ImageButton) popupRateSeekBar.findViewById(R.id.btnAccept);
+        btnRateDenie = (ImageButton) popupRateSeekBar.findViewById(R.id.btnDenie);
+        nbRate = (TextView) findViewById(R.id.nbRate);
 
         // Toggle Buttons
         btnFavorite = (ToggleButton) findViewById(R.id.btnFavorite);
@@ -257,16 +277,6 @@ public class AddActivity extends AppCompatActivity {
         // Gestion des RoundButtons
         gestionRoundButtonsSeekBar();
 
-
-
-
-
-
-
-
-
-
-
         addWineBottle();
         //recoverWineBottle();
         recoverFABWineColor();
@@ -276,19 +286,11 @@ public class AddActivity extends AppCompatActivity {
 
         gestionImageVignoble();
 
-
-
-
-
     }
 
 
 
 
-
-    private void gestionImageCountry() {
-
-    }
 
     private void gestionImageVignoble() {
 
@@ -515,6 +517,13 @@ public class AddActivity extends AppCompatActivity {
     }
 
     private void gestionRoundButtonsSeekBar() {
+        nbRate.setOnClickListener(new TextView.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayPopupRateSeekBar();
+            }
+        });
+
         btnRoundMillesime = (ImageButton) findViewById(R.id.btnRoundMillesime);
         btnRoundMillesime.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
@@ -547,6 +556,26 @@ public class AddActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+
+
+    private void displayPopupRateSeekBar() {
+
+        popupRateSeekBar.show();
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     private void displayPopupMillesimeSeekBar() {
 

@@ -64,7 +64,7 @@ public class BottleActivity extends AppCompatActivity {
     // Button Delete
     private ImageButton btnDeleteBottle;
 
-    // Buttons
+    // Buttons Appreciation
     private ToggleButton btnFavorite;
     private ToggleButton btnWishlist;
 
