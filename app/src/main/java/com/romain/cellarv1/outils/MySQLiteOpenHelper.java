@@ -17,6 +17,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     public final String FIELD_WINECOLOR = "winecolor";
     public final String FIELD_DOMAIN = "domain";
     public final String FIELD_APPELLATION = "appellation";
+    public final String FIELD_ADDRESS = "address";
     public final String FIELD_YEAR = "year";
     public final String FIELD_APOGEE = "apogee";
     public final String FIELD_NUMBER = "number";
@@ -51,6 +52,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
             FIELD_WINECOLOR + " TEXT," +
             FIELD_DOMAIN + " TEXT," +
             FIELD_APPELLATION + " TEXT," +
+            FIELD_ADDRESS + " TEXT," +
             FIELD_YEAR + " INTEGER," +
             FIELD_APOGEE + " INTEGER," +
             FIELD_NUMBER + " INTEGER," +

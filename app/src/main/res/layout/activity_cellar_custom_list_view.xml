@@ -327,6 +327,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/rateCardView"
         android:layout_width="35dp"
         android:layout_height="25dp"
         android:layout_marginTop="15dp"

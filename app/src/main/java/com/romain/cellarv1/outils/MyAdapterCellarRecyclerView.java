@@ -60,8 +60,7 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
 
         public ImageView imageBottle;
 
-        public RatingBar ratingBarCardView;
-
+        public CardView rateCardView;
         public TextView rateListView;
 
         public final ToggleButton favorite;
@@ -88,6 +87,8 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
 
             imageBottle = itemView.findViewById(R.id.imageBottle);
 
+            // Rate CardView
+            rateCardView = itemView.findViewById(R.id.rateCardView);
             rateListView = itemView.findViewById(R.id.txtRateListView);
 
             favorite = itemView.findViewById(R.id.favorite);
@@ -113,6 +114,7 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
 
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final CellarViewHolder holder, final int position) {
 
@@ -136,6 +138,7 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                 intent.putExtra("region", wineBottle.getRegion());
                 intent.putExtra("domain", wineBottle.getDomain());
                 intent.putExtra("appellation", wineBottle.getAppellation());
+                intent.putExtra("address", wineBottle.getAddress());
                 intent.putExtra("millesime", wineBottle.getYear().toString());
                 intent.putExtra("apogee", wineBottle.getApogee().toString());
                 intent.putExtra("estimate", wineBottle.getEstimate().toString());
@@ -352,8 +355,13 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                 break;
         }
 
-        // On set la note sur la cardView
-        holder.rateListView.setText(currentItem.getRate().toString());
+        // Si la note != 0, on set la note sur la cardView devenue visible
+        if(currentItem.getRate() == 0) {
+            holder.rateCardView.setVisibility(View.GONE);
+        } else {
+            holder.rateCardView.setVisibility(View.VISIBLE);
+            holder.rateListView.setText(currentItem.getRate().toString() + "/10");
+        }
 
         // On set la CardView d'un coeur coloré si la bouteille est favorite = 1, rien si favorite = 0
         switch(currentItem.getFavorite()) {

@@ -261,6 +261,37 @@
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/yanone_kaffeesatz"
+                        android:text="Adresse : "
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/green_light"
+                        android:textSize="16dp" />
+
+                    <EditText
+                        android:id="@+id/addressBottle"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/yanone_kaffeesatz"
+                        android:inputType="textNoSuggestions"
+                        android:maxLines="1"
+                        android:text="Adresse"
+                        android:textColor="@color/green_very_light"
+                        android:textSize="18dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="left"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/yanone_kaffeesatz"
                         android:text="Millésime : "
                         android:textAlignment="textEnd"
                         android:textColor="@color/green_light"

@@ -244,28 +244,24 @@ public class UserActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.cellarMenu:
-                        //Toast.makeText(UserActivity.this, "CELLAR", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(UserActivity.this, CellarActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        //overridePendingTransition(0, 0);
+                        UserActivity.this.finish();
                         return true;
                     case R.id.scanMenu:
-                        //Toast.makeText(UserActivity.this, "SCAN", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(UserActivity.this, ScanActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        //overridePendingTransition(0, 0);
+                        UserActivity.this.finish();
                         return true;
                     case R.id.likeMenu:
-                        //Toast.makeText(UserActivity.this, "LIKE", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(UserActivity.this, LikeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        //overridePendingTransition(0, 0);
+                        UserActivity.this.finish();
                         return true;
                     case R.id.mapMenu:
-                        //Toast.makeText(UserActivity.this, "SEARCH", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(UserActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        //overridePendingTransition(0, 0);
+                        UserActivity.this.finish();
                         return true;
                 }
                 return false;

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -99,7 +100,7 @@ public class AddActivity extends AppCompatActivity {
 
     // Champs texte
     private AutoCompleteTextView txtCountry, txtRegion;
-    private EditText txtDomain, txtAppellation;
+    private EditText txtDomain, txtAppellation, txtAddress;
     private EditText nbYear, nbApogee, nbNumber, nbEstimate;
     private ImageButton btnRed, btnRose, btnWhite, btnChamp;
     private TextView nbRate;
@@ -169,6 +170,7 @@ public class AddActivity extends AppCompatActivity {
         btnChamp = (ImageButton) findViewById(R.id.champWineButton);
         txtDomain = (EditText) findViewById(R.id.textDomain);
         txtAppellation = (EditText) findViewById(R.id.textAppellation);
+        txtAddress = (EditText) findViewById(R.id.textAddress);
         nbYear = (EditText) findViewById(R.id.nbYear);
         nbApogee = (EditText) findViewById(R.id.nbApogee);
         nbNumber = (EditText) findViewById(R.id.nbNumber);
@@ -274,7 +276,7 @@ public class AddActivity extends AppCompatActivity {
         // PopupInfo
         displayPopupInfo();
 
-        // Gestion des RoundButtons
+        // Gestion des RoundButtons et ouverture PopupSeekBar
         gestionRoundButtonsSeekBar();
 
         addWineBottle();
@@ -557,25 +559,60 @@ public class AddActivity extends AppCompatActivity {
         });
     }
 
-
-
-
-
+    @SuppressLint("SetTextI18n")
     private void displayPopupRateSeekBar() {
 
+        if(nbRate.getText().toString().trim().equals("*/10")) {
+            txtRateSeekBar.setText("*/10");
+            txtRateSeekBar.setTextColor(getResources().getColor(R.color.green_light));
+            //Sinon, on récupère la valeur de nbRate, qu'on réaffiche
+        } else {
+            txtRateSeekBar.setText(nbRate.getText().toString().trim());
+        }
+
         popupRateSeekBar.show();
+
+        btnRateAccept.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nbRate.setText(txtRateSeekBar.getText());
+
+                // On gère les couleurs de nbRate suivant la valeur de la note
+                if(!nbRate.getText().toString().trim().equals("*/10")) {
+                    nbRate.setTextColor(getResources().getColor(R.color.green_apple));
+                }
+
+                popupRateSeekBar.dismiss();
+            }
+        });
+
+        btnRateDenie.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                popupRateSeekBar.dismiss();
+            }
+        });
+
+        rateSeekBar.setOnSeekBarChangeListener(new CircularSeekBar.OnCircularSeekBarChangeListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onProgressChanged(CircularSeekBar circularSeekBar, float progress, boolean fromUser) {
+                txtRateSeekBar.setText((int)progress + "/10");
+                txtRateSeekBar.setTextColor(getResources().getColor(R.color.green_apple));
+            }
+
+            @Override
+            public void onStopTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+        });
     }
-
-
-
-
-
-
-
-
-
-
-
 
     private void displayPopupMillesimeSeekBar() {
 
@@ -1051,12 +1088,15 @@ public class AddActivity extends AppCompatActivity {
 
 
     /**
-     * Ajout d'une nouvelle bouteille
+     * Ajout d'une nouvelle bouteille et de toutes ses caractéristiques
      */
     private void addWineBottle() {
         ((FloatingActionButton) findViewById(R.id.btnAdd)).setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                ImageView imageFavorite = (ImageView) popupAdd.findViewById(R.id.imageFavorite);
+                ImageView imageWish = (ImageView) popupAdd.findViewById(R.id.imageWish);
 
                 ImageButton btnAccept = (ImageButton) popupAdd.findViewById(R.id.btnAccept);
                 ImageButton btnDenie = (ImageButton) popupAdd.findViewById(R.id.btnDenie);
@@ -1068,13 +1108,14 @@ public class AddActivity extends AppCompatActivity {
                 TextView appellation = (TextView) popupAdd.findViewById(R.id.appellation);
                 TextView millesime = (TextView) popupAdd.findViewById(R.id.millesime);
 
+                // Récupération de l'étiquette
                 if(scanImageView.getDrawable() != null) {
                     Bitmap bitmapEtiquette = ((BitmapDrawable) scanImageView.getDrawable()).getBitmap();
                     imageBottle.setImageBitmap(bitmapEtiquette);
                 } else {
                 }
 
-
+                // Récupération de la couleur
                 if(btnRed.getAlpha() == 1f) {
                     imageWineColor.setImageResource(R.drawable.red_wine_listview);
                 } else if(btnRose.getAlpha() == 1f) {
@@ -1085,13 +1126,32 @@ public class AddActivity extends AppCompatActivity {
                     imageWineColor.setImageResource(R.drawable.champ_wine_listview);
                 }
 
-                number.setText(nbNumber.getText());
+                // Récupération des appréciations
+                if(btnFavorite.isChecked()) {
+                    imageFavorite.setColorFilter(getResources().getColor(R.color.green_apple));
+                } else {
+                    imageFavorite.setColorFilter(getResources().getColor(R.color.green_light));
+                }
 
+                if(btnWishlist.isChecked()) {
+                    imageWish.setColorFilter(getResources().getColor(R.color.green_apple));
+                } else {
+                    imageWish.setColorFilter(getResources().getColor(R.color.green_light));
+                }
+
+                // Récupération de la note
+                nbRatePopup = (TextView) popupAdd.findViewById(R.id.nbRatePopup);
+                String ratePopup = nbRate.getText().toString();
+                nbRatePopup.setText(ratePopup);
+
+                // Récupération des champs texte
+                number.setText(nbNumber.getText());
                 region.setText(txtRegion.getText());
                 domain.setText(txtDomain.getText());
                 appellation.setText(txtAppellation.getText());
                 millesime.setText(nbYear.getText());
 
+                // Affichage
                 popupAdd.show();
 
 
@@ -1117,6 +1177,7 @@ public class AddActivity extends AppCompatActivity {
                         String region = "";
                         String domain = "";
                         String appellation = "";
+                        String address = "";
                         String wineColor = "";
                         int year = 0;
                         int apogee = 0;
@@ -1124,17 +1185,25 @@ public class AddActivity extends AppCompatActivity {
                         int estimate = 0;
                         byte[] imageLarge = null;
                         byte[] imageSmall = null;
-                        Integer rate = 0;
+                        int rate;
                         String favorite = "0";
                         String wish = "0";
                         Float lattitude = 0f;
                         Float longitude = 0f;
 
-                        // Initialisation du timeStamp
+                        // Update de la date
                         Long timeStampLong = System.currentTimeMillis(); // Résultat en millisecondes
                         String timeStamp = timeStampLong.toString();
 
-                        // Récupération des données saisies
+                        // Update de la note
+                        if(nbRate.getText().toString().trim().equals("*/10")) {
+                            rate = 0;
+                        } else {
+                            // On retire les 3 derniers caractères : "/10"
+                            rate = Integer.parseInt(nbRate.getText().toString().trim().substring(0, nbRate.length() - 3));
+                        }
+
+                        // Update de la couleur, des appréciations et des champs texte
                         try {
                             if(btnRed.getAlpha() == 1f) {
                                 wineColor = "Rouge";
@@ -1162,6 +1231,7 @@ public class AddActivity extends AppCompatActivity {
                             region = txtRegion.getText().toString();
                             domain = txtDomain.getText().toString();
                             appellation = txtAppellation.getText().toString();
+                            address = txtAddress.getText().toString();
                             year = Integer.parseInt(nbYear.getText().toString());
                             apogee = Integer.parseInt(nbApogee.getText().toString());
                             number = Integer.parseInt(nbNumber.getText().toString());
@@ -1170,11 +1240,11 @@ public class AddActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        // Récupération des pictureLarge et pictureSmall suivant si une image a été utilisé
+                        // Update des pictureLarge et pictureSmall suivant si une image a été utilisé
                         String pictureLarge = getPictureLarge();
                         String pictureSmall = getPictureSmall();
 
-                        WineBottle wineBottle = new WineBottle(null, country, region, wineColor, domain, appellation, year, apogee, number, estimate, pictureLarge, pictureSmall, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp);
+                        WineBottle wineBottle = new WineBottle(null, country, region, wineColor, domain, appellation, address, year, apogee, number, estimate, pictureLarge, pictureSmall, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp);
                         AccesLocal accesLocal = new AccesLocal(AddActivity.this);
                         wineBottle.setId(accesLocal.add(wineBottle));
 
@@ -1583,12 +1653,12 @@ public class AddActivity extends AppCompatActivity {
                         case R.id.mapMenu:
                             startActivity(new Intent(getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                            //overridePendingTransition(0, 0);
+                            AddActivity.this.finish();
                             return true;
                         case R.id.cellarMenu:
                             startActivity(new Intent(getApplicationContext(), CellarActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                            //overridePendingTransition(0, 0);
+                            AddActivity.this.finish();
                             return true;
                         case R.id.scanMenu:
                             //startActivity(new Intent(getApplicationContext(), ScanActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
@@ -1597,12 +1667,12 @@ public class AddActivity extends AppCompatActivity {
                         case R.id.likeMenu:
                             startActivity(new Intent(getApplicationContext(), LikeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                            //overridePendingTransition(0, 0);
+                            AddActivity.this.finish();
                             return true;
                         case R.id.userMenu:
                             startActivity(new Intent(getApplicationContext(), UserActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                            //overridePendingTransition(0, 0);
+                            AddActivity.this.finish();
                             return true;
                     }
                     return false;

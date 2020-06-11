@@ -13,6 +13,7 @@ public class WineBottle implements Serializable {
     private String wineColor;
     private String domain;
     private String appellation;
+    private String address;
     private Integer year;
     private Integer apogee;
     private Integer number;
@@ -29,7 +30,7 @@ public class WineBottle implements Serializable {
     private String timeStamp;
 
     // Constructeur entier
-    public WineBottle(Integer id, String country, String region, String wineColor, String domain, String appellation, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Integer rate, String favorite, String wish, Float latitude, Float longitude, String timeStamp) {
+    public WineBottle(Integer id, String country, String region, String wineColor, String domain, String appellation, String address, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Integer rate, String favorite, String wish, Float latitude, Float longitude, String timeStamp) {
 
         if (id != null ){
             this.id = id;
@@ -42,6 +43,7 @@ public class WineBottle implements Serializable {
         this.wineColor = wineColor;
         this.domain = domain;
         this.appellation = appellation;
+        this.address = address;
         this.year = year;
         this.apogee = apogee;
         this.number = number;
@@ -113,6 +115,14 @@ public class WineBottle implements Serializable {
 
     public void setAppellation(String appellation) {
         this.appellation = appellation;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Integer getYear() {

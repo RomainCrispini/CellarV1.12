@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Lifecycle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -516,28 +517,24 @@ public class CellarActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.mapMenu:
-                        //Toast.makeText(UserActivity.this, "USER", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(CellarActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        //overridePendingTransition(0, 0);
+                        CellarActivity.this.finish();
                         return true;
                     case R.id.scanMenu:
-                        //Toast.makeText(UserActivity.this, "SCAN", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(CellarActivity.this, ScanActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        //overridePendingTransition(0, 0);
+                        CellarActivity.this.finish();
                         return true;
                     case R.id.likeMenu:
-                        //Toast.makeText(UserActivity.this, "LIKE", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(CellarActivity.this, LikeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        //overridePendingTransition(0, 0);
+                        CellarActivity.this.finish();
                         return true;
                     case R.id.userMenu:
-                        //Toast.makeText(UserActivity.this, "SEARCH", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(CellarActivity.this, UserActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        //overridePendingTransition(0, 0);
+                        CellarActivity.this.finish();
                         return true;
                 }
                 return false;

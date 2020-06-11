@@ -201,8 +201,4 @@ public class CellarListFragment extends Fragment {
 
     }
 
-
-
-
-
 }

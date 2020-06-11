@@ -27,8 +27,8 @@
             android:layout_margin="10dp">
 
             <ImageView
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:backgroundTint="@color/transparent"
                 android:tint="@color/green_light"
                 android:scaleType="centerCrop"
@@ -75,8 +75,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="15dp"
                     android:gravity="center"
-                    android:text="0"
-                    android:textColor="@color/green_apple"
+                    android:text="0/10"
+                    android:textColor="@color/green_light"
                     android:textSize="40dp"/>
 
             </RelativeLayout>

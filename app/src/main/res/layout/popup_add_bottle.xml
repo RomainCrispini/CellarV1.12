@@ -214,7 +214,7 @@
                             android:layout_width="35dp"
                             android:layout_height="35dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/heart_green_light"
+                            android:src="@drawable/icon_heart_green_light"
                             android:tint="@color/green_third_light"/>
 
                     </androidx.cardview.widget.CardView>

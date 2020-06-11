@@ -259,34 +259,29 @@ public class SearchActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.mapMenu:
-                        //Toast.makeText(UserActivity.this, "SEARCH", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(SearchActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        //overridePendingTransition(0, 0);
+                        SearchActivity.this.finish();
                         return true;
                     case R.id.cellarMenu:
-                        //Toast.makeText(UserActivity.this, "USER", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(SearchActivity.this, CellarActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        //overridePendingTransition(0, 0);
+                        SearchActivity.this.finish();
                         return true;
                     case R.id.userMenu:
-                        //Toast.makeText(UserActivity.this, "USER", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(SearchActivity.this, UserActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        //overridePendingTransition(0, 0);
+                        SearchActivity.this.finish();
                         return true;
                     case R.id.scanMenu:
-                        //Toast.makeText(UserActivity.this, "SCAN", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(SearchActivity.this, ScanActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        //overridePendingTransition(0, 0);
+                        SearchActivity.this.finish();
                         return true;
                     case R.id.likeMenu:
-                        //Toast.makeText(UserActivity.this, "SEARCH", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(SearchActivity.this, LikeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        //overridePendingTransition(0, 0);
+                        SearchActivity.this.finish();
                         return true;
                 }
                 return false;

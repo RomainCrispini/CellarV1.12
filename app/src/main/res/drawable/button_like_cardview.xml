@@ -3,9 +3,9 @@
 
     <item
         android:state_checked="true"
-        android:drawable="@drawable/heart_green_apple" />
+        android:drawable="@drawable/icon_heart_green_apple" />
 
     <item
         android:state_checked="false"
-        android:drawable="@drawable/heart_green_light" />
+        android:drawable="@drawable/icon_heart_green_light" />
 </selector>

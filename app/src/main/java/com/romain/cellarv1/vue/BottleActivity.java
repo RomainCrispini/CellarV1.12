@@ -1,5 +1,6 @@
 package com.romain.cellarv1.vue;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -41,6 +42,7 @@ import com.romain.cellarv1.outils.Tools;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 import me.tankery.lib.circularseekbar.CircularSeekBar;
 
@@ -53,7 +55,7 @@ public class BottleActivity extends AppCompatActivity {
 
     // Déclaration des champs texte et des ImageView
     private TextView dateBottle;
-    private EditText countryBottle, regionBottle, domainBottle, appellationBottle;
+    private EditText countryBottle, regionBottle, domainBottle, appellationBottle, addressBottle;
     private EditText millesimeBottle, apogeeBottle, estimateBottle, numberBottle;
     private ImageView imageBottle, imageWineColor;
     private TextView nbRate;
@@ -167,13 +169,27 @@ public class BottleActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void displayPopupRateSeekBar() {
 
-        // On set la progressBar à l'ouverture
-        int initRate = Integer.parseInt(nbRate.getText().toString());
-        rateSeekBar.setProgress(initRate);
-        // On set le texte central de la popup à l'ouverture avec le texte de l'activité
-        txtRateSeekBar.setText(nbRate.getText().toString());
+        String nbRateRecup = nbRate.getText().toString();
+        if(!nbRateRecup.equals("*/10")) {
+            // On set la progressBar à l'ouverture en retirant le string : "/10" (les 3 derniers caractères)
+            String strNbRate = nbRate.getText().toString().substring(0, nbRate.length() - 3);
+            int initRate = Integer.parseInt(strNbRate);
+            rateSeekBar.setProgress(initRate);
+                // On set le texte central de la popup à l'ouverture avec le texte de l'activité suivant sa valeur
+                if(initRate == 0) {
+                    txtRateSeekBar.setText("*/10");
+                    txtRateSeekBar.setTextColor(getResources().getColor(R.color.green_light));
+                } else {
+                    txtRateSeekBar.setText(nbRate.getText());
+                    txtRateSeekBar.setTextColor(getResources().getColor(R.color.green_apple));
+                }
+        } else {
+            txtRateSeekBar.setText("*/10");
+            rateSeekBar.setProgress(0);
+        }
 
         popupRateSeekBar.show();
 
@@ -195,7 +211,8 @@ public class BottleActivity extends AppCompatActivity {
         rateSeekBar.setOnSeekBarChangeListener(new CircularSeekBar.OnCircularSeekBarChangeListener() {
             @Override
             public void onProgressChanged(CircularSeekBar circularSeekBar, float progress, boolean fromUser) {
-                txtRateSeekBar.setText(String.valueOf((int)progress));
+                txtRateSeekBar.setText((int)progress + "/10");
+                txtRateSeekBar.setTextColor(getResources().getColor(R.color.green_apple));
             }
 
             @Override
@@ -277,7 +294,7 @@ public class BottleActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        // Conversion de l'id à la récupération de l'intent
+                        // Conversion de l'id à la récupération de l'Intent
                         String strId = getIntent().getStringExtra("id");
                         Integer intId = Integer.parseInt(strId);
 
@@ -285,16 +302,20 @@ public class BottleActivity extends AppCompatActivity {
                         String strRegion = regionBottle.getText().toString();
                         String strDomain = domainBottle.getText().toString();
                         String strAppellation = appellationBottle.getText().toString();
+                        String strAddress = addressBottle.getText().toString();
                         Integer intMillesime = Integer.parseInt(millesimeBottle.getText().toString());
                         Integer intApogee = Integer.parseInt(apogeeBottle.getText().toString());
                         Integer intNumber = Integer.parseInt(numberBottle.getText().toString());
                         Integer intEstimate = Integer.parseInt(estimateBottle.getText().toString());
 
-                        Integer intRate = Integer.parseInt(nbRate.getText().toString());
-
-
-
-
+                        // On retire toujours les 3 derniers caractères : "/10" et on remplace "*" par "0", si c'est le cas
+                        Integer intRate;
+                        String strRate = nbRate.getText().toString().trim().substring(0, nbRate.length() - 3);
+                        if(strRate.equals("*")) {
+                            intRate = 0;
+                        } else {
+                            intRate = Integer.parseInt(strRate);
+                        }
 
                         String strFavorite;
                         if(btnFavorite.isChecked()) {
@@ -311,7 +332,7 @@ public class BottleActivity extends AppCompatActivity {
                         }
 
                         AccesLocal accesLocal = new AccesLocal(BottleActivity.this);
-                        accesLocal.updateBottle(intId, strCountry, strRegion, strDomain, strAppellation, intMillesime, intApogee, intNumber, intEstimate, intRate, strFavorite, strWish);
+                        accesLocal.updateBottle(intId, strCountry, strRegion, strDomain, strAppellation, strAddress, intMillesime, intApogee, intNumber, intEstimate, intRate, strFavorite, strWish);
                         popupUpdate.dismiss();
 
                         popupSuccessUpdate.show();
@@ -444,6 +465,7 @@ public class BottleActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void initWineBottle() {
         btnFavorite = (ToggleButton) findViewById(R.id.btnFavorite);
         btnWishlist = (ToggleButton) findViewById(R.id.btnWishlist);
@@ -457,6 +479,7 @@ public class BottleActivity extends AppCompatActivity {
         regionBottle = (EditText) findViewById(R.id.regionBottle);
         domainBottle = (EditText) findViewById(R.id.domainBottle);
         appellationBottle = (EditText) findViewById(R.id.appellationBottle);
+        addressBottle = (EditText) findViewById(R.id.addressBottle);
         millesimeBottle = (EditText) findViewById(R.id.millesimeBottle);
         apogeeBottle = (EditText) findViewById(R.id.apogeeBottle);
         estimateBottle = (EditText) findViewById(R.id.estimateBottle);
@@ -494,13 +517,18 @@ public class BottleActivity extends AppCompatActivity {
 
 
         String rate = getIntent().getStringExtra("rate");
-        nbRate.setText(rate);
+        if(rate.equals("0")) {
+            nbRate.setText("*/10");
+        } else {
+            nbRate.setText(rate + "/10");
+        }
+
 
 
         btnFavorite.setText(null);
         btnFavorite.setTextOn(null);
         btnFavorite.setTextOff(null);
-        switch(getIntent().getStringExtra("favorite")) {
+        switch(Objects.requireNonNull(getIntent().getStringExtra("favorite"))) {
             case "0" :
                 btnFavorite.setChecked(false);
                 break;
@@ -527,6 +555,7 @@ public class BottleActivity extends AppCompatActivity {
         regionBottle.setText(getIntent().getStringExtra("region"));
         domainBottle.setText(getIntent().getStringExtra("domain"));
         appellationBottle.setText(getIntent().getStringExtra("appellation"));
+        addressBottle.setText(getIntent().getStringExtra("address"));
         millesimeBottle.setText(getIntent().getStringExtra("millesime"));
         apogeeBottle.setText(getIntent().getStringExtra("apogee"));
         estimateBottle.setText(getIntent().getStringExtra("estimate"));
@@ -654,34 +683,29 @@ public class BottleActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.mapMenu:
-                        //Toast.makeText(UserActivity.this, "USER", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(BottleActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        //overridePendingTransition(0, 0);
+                        BottleActivity.this.finish();
                         return true;
                     case R.id.cellarMenu:
-                        //Toast.makeText(UserActivity.this, "USER", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(BottleActivity.this, CellarActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        //overridePendingTransition(0, 0);
+                        BottleActivity.this.finish();
                         return true;
                     case R.id.scanMenu:
-                        //Toast.makeText(UserActivity.this, "SCAN", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(BottleActivity.this, ScanActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        //overridePendingTransition(0, 0);
+                        BottleActivity.this.finish();
                         return true;
                     case R.id.likeMenu:
-                        //Toast.makeText(UserActivity.this, "SEARCH", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(BottleActivity.this, LikeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        //overridePendingTransition(0, 0);
+                        BottleActivity.this.finish();
                         return true;
                     case R.id.userMenu:
-                        //Toast.makeText(UserActivity.this, "SEARCH", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(BottleActivity.this, UserActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        //overridePendingTransition(0, 0);
+                        BottleActivity.this.finish();
                         return true;
                 }
                 return false;
