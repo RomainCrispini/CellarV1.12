@@ -1,21 +1,32 @@
 package com.romain.cellarv1.vue;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.OvershootInterpolator;
 import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import androidx.appcompat.widget.SwitchCompat;
 
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import android.widget.ToggleButton;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,21 +39,31 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.romain.cellarv1.R;
+import com.romain.cellarv1.controleur.UserControle;
 import com.romain.cellarv1.modele.AccesLocal;
+import com.romain.cellarv1.modele.WineBottle;
+import com.romain.cellarv1.outils.BlurBitmap;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
 import com.romain.cellarv1.outils.PlaceAutoSuggestAdapter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 
 public class UserActivity extends AppCompatActivity {
 
-    // Initialisation de la Custom FAB et de ses caractéristiques
+    // Déclaration des Popup d'accès
+    private Dialog popupConnectionRegistration, popupConnection, popupRegistration;
+    private EditText txtPseudo, txtPassword, txtMail;
+    private ImageView imgValidPseudo, imgValidPassword, imgValidMail;
+    private ImageButton btnExit, btnConnection, btnRegistration;
+
+    // Déclaration de la Custom FAB et de ses caractéristiques
     private FloatingActionButton fabWineMenu, fabRed, fabRose, fabWhite, fabChamp;
     private OvershootInterpolator interpolator = new OvershootInterpolator();
     private Boolean isFABWineMenuOpen = false;
 
-    // Initialisation du switchDarkMode
+    // Déclaration du switchDarkMode
     private SwitchCompat switchDarkMode = null;
 
     private PlacesClient placesClient;
@@ -52,6 +73,7 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+        initPopup();
         init();
 
         String apikey = getString(R.string.map_key);
@@ -92,13 +114,238 @@ public class UserActivity extends AppCompatActivity {
 
     }
 
-
     private void init() {
 
         initCurvedNavigationView();
         initFabWineMenu();
         getFabWineMenuValue();
         switchDarkMode();
+
+    }
+
+    private void initPopup() {
+
+        // PopupConnectionRegistration
+        popupConnectionRegistration = new Dialog(UserActivity.this);
+        popupConnectionRegistration.setContentView(R.layout.popup_connection_registration);
+        popupConnectionRegistration.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupConnectionRegistration.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        btnExit = (ImageButton) popupConnectionRegistration.findViewById(R.id.btnExit);
+        btnConnection = (ImageButton) popupConnectionRegistration.findViewById(R.id.btnConnection);
+        btnRegistration = (ImageButton) popupConnectionRegistration.findViewById(R.id.btnRegistration);
+
+        // PopupRegistration
+        popupRegistration = new Dialog(UserActivity.this);
+        popupRegistration.setContentView(R.layout.popup_registration);
+        popupRegistration.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupRegistration.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        txtPseudo = (EditText) popupRegistration.findViewById(R.id.txtPseudo);
+        txtPassword = (EditText) popupRegistration.findViewById(R.id.txtPassword);
+        txtMail = (EditText) popupRegistration.findViewById(R.id.txtMail);
+        imgValidPseudo = (ImageView) popupRegistration.findViewById(R.id.imgValidPseudo);
+        imgValidPassword = (ImageView) popupRegistration.findViewById(R.id.imgValidPassword);
+        imgValidMail = (ImageView) popupRegistration.findViewById(R.id.imgValidMail);
+
+        // PopupConnection
+        popupConnection = new Dialog(UserActivity.this);
+        popupConnection.setContentView(R.layout.popup_connection);
+        popupConnection.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupConnection.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
+        displayPopupConnectionRegistration();
+    }
+
+    private void displayPopupConnectionRegistration() {
+
+        popupConnectionRegistration.show();
+
+        btnExit.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                UserActivity.this.finish();
+            }
+        });
+
+
+        btnConnection.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupConnectionRegistration.dismiss();
+                //displayPopupConnection();
+            }
+        });
+
+        btnRegistration.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupConnectionRegistration.dismiss();
+                displayPopupRegistration();
+            }
+        });
+
+
+    }
+
+    private void displayPopupConnection() {
+
+        popupConnection.show();
+
+        /*
+
+        btnExit.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                UserActivity.this.finish();
+            }
+        });
+
+
+        btnConnection.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupConnectionRegistration.dismiss();
+            }
+        });
+
+        btnRegistration.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupConnectionRegistration.dismiss();
+            }
+        });
+
+         */
+
+
+    }
+
+    private void displayPopupRegistration() {
+
+        imgValidPseudo.setVisibility(View.INVISIBLE);
+        imgValidPassword.setVisibility(View.INVISIBLE);
+        imgValidMail.setVisibility(View.INVISIBLE);
+
+        popupRegistration.show();
+
+        final UserControle userControle = new UserControle();
+
+        txtPseudo.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                imgValidPseudo.setVisibility(View.VISIBLE);
+                if (userControle.isValidPseudo(txtPseudo.getText().toString().trim())) {
+                    // is true
+                    imgValidPseudo.setColorFilter(getResources().getColor(R.color.green_apple));
+
+                } else if(!userControle.isValidPseudo(txtPseudo.getText().toString().trim())) {
+                    // is false
+                    imgValidPseudo.setColorFilter(getResources().getColor(R.color.pink));
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+        });
+
+        txtPassword.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                imgValidPassword.setVisibility(View.VISIBLE);
+                if (userControle.isValidPassword(txtPassword.getText().toString().trim())) {
+                    // is true
+                    imgValidPassword.setColorFilter(getResources().getColor(R.color.green_apple));
+
+                } else if(!userControle.isValidPassword(txtPassword.getText().toString().trim())) {
+                    // is false
+                    imgValidPassword.setColorFilter(getResources().getColor(R.color.pink));
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+        });
+
+        txtMail.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                imgValidMail.setVisibility(View.VISIBLE);
+                if (userControle.isValidMail(txtMail.getText().toString().trim())) {
+                    // is true
+                    imgValidMail.setColorFilter(getResources().getColor(R.color.green_apple));
+
+                } else if(!userControle.isValidMail(txtMail.getText().toString().trim())) {
+                    // is false
+                    imgValidMail.setColorFilter(getResources().getColor(R.color.pink));
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+        });
+
+
+
+
+
+
+
+        /*
+
+        btnExit.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                UserActivity.this.finish();
+            }
+        });
+
+
+        btnConnection.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupConnectionRegistration.dismiss();
+            }
+        });
+
+        btnRegistration.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupConnectionRegistration.dismiss();
+            }
+        });
+
+         */
 
 
     }

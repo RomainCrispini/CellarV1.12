@@ -120,7 +120,7 @@
                         android:fontFamily="@font/yanone_kaffeesatz"
                         android:gravity="center"
                         android:hint="Pays"
-                        android:inputType="text"
+                        android:inputType="text|textNoSuggestions"
                         android:maxLines="1"
                         android:textColor="@color/green_apple"
                         android:textCursorDrawable="@color/green_light"
@@ -156,7 +156,7 @@
                         android:fontFamily="@font/yanone_kaffeesatz"
                         android:gravity="center"
                         android:hint="Région"
-                        android:inputType="text"
+                        android:inputType="text|textNoSuggestions"
                         android:maxLines="1"
                         android:textColor="@color/green_apple"
                         android:textCursorDrawable="@color/green_light"
@@ -380,7 +380,7 @@
                     android:fontFamily="@font/yanone_kaffeesatz"
                     android:gravity="center"
                     android:hint="Domaine"
-                    android:inputType="text"
+                    android:inputType="text|textNoSuggestions"
                     android:maxLines="1"
                     android:textColor="@color/green_apple"
                     android:textCursorDrawable="@color/green_light"
@@ -414,7 +414,7 @@
                     android:fontFamily="@font/yanone_kaffeesatz"
                     android:gravity="center"
                     android:hint="Appellation"
-                    android:inputType="text"
+                    android:inputType="text|textNoSuggestions"
                     android:maxLines="1"
                     android:textColor="@color/green_apple"
                     android:textCursorDrawable="@color/green_light"
@@ -448,7 +448,7 @@
                     android:fontFamily="@font/yanone_kaffeesatz"
                     android:gravity="center"
                     android:hint="Adresse"
-                    android:inputType="text"
+                    android:inputType="text|textNoSuggestions"
                     android:maxLines="1"
                     android:textColor="@color/green_apple"
                     android:textCursorDrawable="@color/green_light"
@@ -693,7 +693,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="2dp"
             android:layout_marginBottom="60dp"
             android:gravity="top|center_horizontal"
             android:orientation="horizontal">
@@ -723,7 +723,7 @@
 
                         android:scaleType="centerCrop"
                         android:src="@drawable/icon_navbar_scan"
-                        android:tint="@color/green_apple" />
+                        android:tint="@color/green_light" />
 
                 </LinearLayout>
 
@@ -747,7 +747,7 @@
 
                         android:scaleType="centerCrop"
                         android:src="@drawable/scan_gallery"
-                        android:tint="@color/green_apple" />
+                        android:tint="@color/green_light" />
 
                 </LinearLayout>
 
