@@ -37,7 +37,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="30dp"
                 android:layout_gravity="center_horizontal"
-                android:text="Enregistrement"
+                android:text="Enregistrer un compte"
                 android:textColor="@color/green_apple"
                 android:textSize="18dp" />
 

@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 
 import com.romain.cellarv1.R;
-import com.romain.cellarv1.modele.AccesLocal;
+import com.romain.cellarv1.modele.AccesLocalDbCellar;
 import com.romain.cellarv1.modele.WineBottle;
 import com.romain.cellarv1.outils.MyAdapterCellarRecyclerView;
 
@@ -25,7 +25,7 @@ import java.util.ArrayList;
  */
 public class LikeWishlistFragment extends Fragment {
 
-    private AccesLocal accesLocal;
+    private AccesLocalDbCellar accesLocalDbCellar;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -89,8 +89,8 @@ public class LikeWishlistFragment extends Fragment {
 
     private void loadWishWineBottleInRecycleView() {
 
-        accesLocal = new AccesLocal(getContext());
-        ArrayList<WineBottle> wineBottleArrayList = (ArrayList<WineBottle>) accesLocal.recoverWishWineBottleList();
+        accesLocalDbCellar = new AccesLocalDbCellar(getContext());
+        ArrayList<WineBottle> wineBottleArrayList = (ArrayList<WineBottle>) accesLocalDbCellar.recoverWishWineBottleList();
 
         mRecyclerView.setHasFixedSize(true);
 

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AccesLocal {
+public class AccesLocalDbCellar {
 
     // Propriétés
     private String nomBase = "cellar.sqlite";
@@ -21,7 +21,7 @@ public class AccesLocal {
      * Constructeur, quand on instanciera cette classe (il faudra y envoyer le context)
      * @param context
      */
-    public AccesLocal(Context context) {
+    public AccesLocalDbCellar(Context context) {
         accesBD = new MySQLiteOpenHelper(context, nomBase, null, versionBase);
     }
 

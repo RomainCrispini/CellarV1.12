@@ -293,7 +293,7 @@
                         android:backgroundTint="@color/transparent"
                         android:tint="@color/pink_light"
                         android:scaleType="centerCrop"
-                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:layout_gravity="center"
                         android:src="@drawable/popup_success" />
 
                     <ImageButton
@@ -304,7 +304,7 @@
                         android:backgroundTint="@color/transparent"
                         android:tint="@color/pink_light"
                         android:scaleType="centerCrop"
-                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:layout_gravity="center"
                         android:src="@drawable/icone_out_info_window" />
 
                 </LinearLayout>

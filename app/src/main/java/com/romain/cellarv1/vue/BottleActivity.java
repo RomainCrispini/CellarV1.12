@@ -1,9 +1,7 @@
 package com.romain.cellarv1.vue;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,27 +19,19 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.cardview.widget.CardView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.romain.cellarv1.R;
-import com.romain.cellarv1.modele.AccesLocal;
-import com.romain.cellarv1.modele.WineBottle;
+import com.romain.cellarv1.modele.AccesLocalDbCellar;
 import com.romain.cellarv1.outils.BlurBitmap;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
 import com.romain.cellarv1.outils.Tools;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Objects;
 
 import me.tankery.lib.circularseekbar.CircularSeekBar;
@@ -331,12 +321,12 @@ public class BottleActivity extends AppCompatActivity {
                             strWish = "0";
                         }
 
-                        AccesLocal accesLocal = new AccesLocal(BottleActivity.this);
-                        accesLocal.updateBottle(intId, strCountry, strRegion, strDomain, strAppellation, strAddress, intMillesime, intApogee, intNumber, intEstimate, intRate, strFavorite, strWish);
+                        AccesLocalDbCellar accesLocalDbCellar = new AccesLocalDbCellar(BottleActivity.this);
+                        accesLocalDbCellar.updateBottle(intId, strCountry, strRegion, strDomain, strAppellation, strAddress, intMillesime, intApogee, intNumber, intEstimate, intRate, strFavorite, strWish);
                         popupUpdate.dismiss();
 
                         popupSuccessUpdate.show();
-                        // Permet de faire aparaitre le panneau 2 secondes sans interventions
+                        // Permet de faire aparaitre le panneau 1 seconde sans interventions
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -433,8 +423,8 @@ public class BottleActivity extends AppCompatActivity {
                         String strId = getIntent().getStringExtra("id");
                         Integer intId = Integer.parseInt(strId);
 
-                        AccesLocal accesLocal = new AccesLocal(BottleActivity.this);
-                        accesLocal.takeOutBottle(intId);
+                        AccesLocalDbCellar accesLocalDbCellar = new AccesLocalDbCellar(BottleActivity.this);
+                        accesLocalDbCellar.takeOutBottle(intId);
                         popupDelete.dismiss();
 
                         // Basculement vers CellarActivity à l'effacement d'une bouteille dans le BottleActivity

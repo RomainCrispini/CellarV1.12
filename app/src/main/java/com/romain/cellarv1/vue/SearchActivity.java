@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,11 +18,10 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.romain.cellarv1.R;
-import com.romain.cellarv1.modele.AccesLocal;
+import com.romain.cellarv1.modele.AccesLocalDbCellar;
 import com.romain.cellarv1.modele.WineBottle;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
 import com.romain.cellarv1.outils.MyAdapterCellarRecyclerView;
@@ -42,7 +40,7 @@ public class SearchActivity extends AppCompatActivity {
     private EditText txtSearch;
 
     // Initialisation du RecyclerView
-    private AccesLocal accesLocal;
+    private AccesLocalDbCellar accesLocalDbCellar;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -99,8 +97,8 @@ public class SearchActivity extends AppCompatActivity {
 
         String search = txtSearch.getText().toString();
 
-        accesLocal = new AccesLocal(SearchActivity.this);
-        ArrayList<WineBottle> wineBottleArrayList = (ArrayList<WineBottle>) accesLocal.recoverSearchWineBottleList(search);
+        accesLocalDbCellar = new AccesLocalDbCellar(SearchActivity.this);
+        ArrayList<WineBottle> wineBottleArrayList = (ArrayList<WineBottle>) accesLocalDbCellar.recoverSearchWineBottleList(search);
 
         mRecyclerView.setHasFixedSize(true);
 

@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -18,9 +17,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -28,7 +25,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.romain.cellarv1.R;
-import com.romain.cellarv1.modele.AccesLocal;
+import com.romain.cellarv1.modele.AccesLocalDbCellar;
 import com.romain.cellarv1.modele.WineBottle;
 import com.romain.cellarv1.vue.BottleActivity;
 import java.util.ArrayList;
@@ -175,12 +172,12 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
 
                 // Pour set 1 dans la propriété favorite d'une bottle si elle n'est pas déjà set
                 Integer valueId = wineBottle.getId();
-                AccesLocal accesLocal = new AccesLocal(mContext);
+                AccesLocalDbCellar accesLocalDbCellar = new AccesLocalDbCellar(mContext);
 
                 if (wineBottle.getFavorite().matches("0")) {
-                    accesLocal.addLikeToABottle(String.valueOf(valueId));
+                    accesLocalDbCellar.addLikeToABottle(String.valueOf(valueId));
                 } else if(wineBottle.getFavorite().matches("1")) {
-                    accesLocal.removeLikeToABottle(String.valueOf(valueId));
+                    accesLocalDbCellar.removeLikeToABottle(String.valueOf(valueId));
 
                 }
             }
@@ -256,8 +253,8 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                     @Override
                     public void onClick(View v) {
                         Integer valueId = wineBottle.getId();
-                        AccesLocal accesLocal = new AccesLocal(mContext);
-                        accesLocal.takeOutBottle(valueId);
+                        AccesLocalDbCellar accesLocalDbCellar = new AccesLocalDbCellar(mContext);
+                        accesLocalDbCellar.takeOutBottle(valueId);
                         popupDelete.dismiss();
 
                         removeCardViewAt(holder.getAdapterPosition());

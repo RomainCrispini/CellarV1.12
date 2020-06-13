@@ -1,46 +1,19 @@
 package com.romain.cellarv1.vue;
 
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.github.mikephil.charting.animation.Easing;
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.IValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.romain.cellarv1.R;
-import com.romain.cellarv1.modele.AccesLocal;
-import com.romain.cellarv1.modele.WineBottle;
-import com.romain.cellarv1.outils.MyAdapterCellarListView;
-import com.romain.cellarv1.outils.MyAdapterCellarRecyclerView;
-
-import java.lang.reflect.Array;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
+import com.romain.cellarv1.modele.AccesLocalDbCellar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,7 +22,7 @@ import java.util.ArrayList;
  */
 public class CellarStatsFragment extends Fragment {
 
-    private AccesLocal accesLocal;
+    private AccesLocalDbCellar accesLocalDbCellar;
 
     // Interpolator pour animation des menuBis
     private OvershootInterpolator interpolator = new OvershootInterpolator();

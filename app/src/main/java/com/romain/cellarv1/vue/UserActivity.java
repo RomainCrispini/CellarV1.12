@@ -2,30 +2,23 @@ package com.romain.cellarv1.vue;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.OvershootInterpolator;
 import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import androidx.appcompat.widget.SwitchCompat;
 
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,23 +33,24 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.romain.cellarv1.R;
 import com.romain.cellarv1.controleur.UserControle;
-import com.romain.cellarv1.modele.AccesLocal;
-import com.romain.cellarv1.modele.WineBottle;
-import com.romain.cellarv1.outils.BlurBitmap;
+import com.romain.cellarv1.modele.AccesLocalDbUsers;
+import com.romain.cellarv1.modele.User;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
 import com.romain.cellarv1.outils.PlaceAutoSuggestAdapter;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 
 public class UserActivity extends AppCompatActivity {
 
-    // Déclaration des Popup d'accès
-    private Dialog popupConnectionRegistration, popupConnection, popupRegistration;
+    // Déclaration de PopupRegistration et de ses éléments
+    private ImageButton btnRegistration;
+    private Dialog popupRegistration;
+    private Dialog popupSuccess;
+    private Dialog popupRegistrationDenie;
     private EditText txtPseudo, txtPassword, txtMail;
     private ImageView imgValidPseudo, imgValidPassword, imgValidMail;
-    private ImageButton btnExit, btnConnection, btnRegistration;
+    private ImageButton btnAccept, btnDenie;
 
     // Déclaration de la Custom FAB et de ses caractéristiques
     private FloatingActionButton fabWineMenu, fabRed, fabRose, fabWhite, fabChamp;
@@ -73,8 +67,9 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
-        initPopup();
         init();
+
+        // TODO IL NE PEUT Y AVOIR QU'UN SEUL COMPTE ENREGISTRE
 
         String apikey = getString(R.string.map_key);
 
@@ -116,6 +111,7 @@ public class UserActivity extends AppCompatActivity {
 
     private void init() {
 
+        initPopupRegistration();
         initCurvedNavigationView();
         initFabWineMenu();
         getFabWineMenuValue();
@@ -123,18 +119,18 @@ public class UserActivity extends AppCompatActivity {
 
     }
 
-    private void initPopup() {
+    private void initPopupRegistration() {
 
-        // PopupConnectionRegistration
-        popupConnectionRegistration = new Dialog(UserActivity.this);
-        popupConnectionRegistration.setContentView(R.layout.popup_connection_registration);
-        popupConnectionRegistration.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        popupConnectionRegistration.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        btnExit = (ImageButton) popupConnectionRegistration.findViewById(R.id.btnExit);
-        btnConnection = (ImageButton) popupConnectionRegistration.findViewById(R.id.btnConnection);
-        btnRegistration = (ImageButton) popupConnectionRegistration.findViewById(R.id.btnRegistration);
+        popupSuccess = new Dialog(UserActivity.this);
+        popupSuccess.setContentView(R.layout.popup_success_add_bottle);
+        popupSuccess.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupSuccess.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
-        // PopupRegistration
+        popupRegistrationDenie = new Dialog(UserActivity.this);
+        popupRegistrationDenie.setContentView(R.layout.popup_registration_denie);
+        popupRegistrationDenie.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupRegistrationDenie.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
         popupRegistration = new Dialog(UserActivity.this);
         popupRegistration.setContentView(R.layout.popup_registration);
         popupRegistration.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -145,81 +141,17 @@ public class UserActivity extends AppCompatActivity {
         imgValidPseudo = (ImageView) popupRegistration.findViewById(R.id.imgValidPseudo);
         imgValidPassword = (ImageView) popupRegistration.findViewById(R.id.imgValidPassword);
         imgValidMail = (ImageView) popupRegistration.findViewById(R.id.imgValidMail);
+        btnAccept = (ImageButton) popupRegistration.findViewById(R.id.btnAccept);
+        btnDenie = (ImageButton) popupRegistration.findViewById(R.id.btnDenie);
 
-        // PopupConnection
-        popupConnection = new Dialog(UserActivity.this);
-        popupConnection.setContentView(R.layout.popup_connection);
-        popupConnection.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        popupConnection.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-
-        displayPopupConnectionRegistration();
-    }
-
-    private void displayPopupConnectionRegistration() {
-
-        popupConnectionRegistration.show();
-
-        btnExit.setOnClickListener(new ImageButton.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(UserActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                UserActivity.this.finish();
-            }
-        });
-
-
-        btnConnection.setOnClickListener(new ImageButton.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupConnectionRegistration.dismiss();
-                //displayPopupConnection();
-            }
-        });
+        btnRegistration = (ImageButton) findViewById(R.id.btnRegistration);
 
         btnRegistration.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupConnectionRegistration.dismiss();
                 displayPopupRegistration();
             }
         });
-
-
-    }
-
-    private void displayPopupConnection() {
-
-        popupConnection.show();
-
-        /*
-
-        btnExit.setOnClickListener(new ImageButton.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(UserActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                UserActivity.this.finish();
-            }
-        });
-
-
-        btnConnection.setOnClickListener(new ImageButton.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupConnectionRegistration.dismiss();
-            }
-        });
-
-        btnRegistration.setOnClickListener(new ImageButton.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupConnectionRegistration.dismiss();
-            }
-        });
-
-         */
-
 
     }
 
@@ -228,6 +160,11 @@ public class UserActivity extends AppCompatActivity {
         imgValidPseudo.setVisibility(View.INVISIBLE);
         imgValidPassword.setVisibility(View.INVISIBLE);
         imgValidMail.setVisibility(View.INVISIBLE);
+
+        // Validation des champs texte
+        final boolean[] pseudoOK = {false};
+        final boolean[] passwordOK = {false};
+        final boolean[] mailOK = {false};
 
         popupRegistration.show();
 
@@ -246,6 +183,7 @@ public class UserActivity extends AppCompatActivity {
                 if (userControle.isValidPseudo(txtPseudo.getText().toString().trim())) {
                     // is true
                     imgValidPseudo.setColorFilter(getResources().getColor(R.color.green_apple));
+                    pseudoOK[0] = true;
 
                 } else if(!userControle.isValidPseudo(txtPseudo.getText().toString().trim())) {
                     // is false
@@ -272,6 +210,7 @@ public class UserActivity extends AppCompatActivity {
                 if (userControle.isValidPassword(txtPassword.getText().toString().trim())) {
                     // is true
                     imgValidPassword.setColorFilter(getResources().getColor(R.color.green_apple));
+                    passwordOK[0] = true;
 
                 } else if(!userControle.isValidPassword(txtPassword.getText().toString().trim())) {
                     // is false
@@ -299,6 +238,7 @@ public class UserActivity extends AppCompatActivity {
                 if (userControle.isValidMail(txtMail.getText().toString().trim())) {
                     // is true
                     imgValidMail.setColorFilter(getResources().getColor(R.color.green_apple));
+                    mailOK[0] = true;
 
                 } else if(!userControle.isValidMail(txtMail.getText().toString().trim())) {
                     // is false
@@ -313,40 +253,77 @@ public class UserActivity extends AppCompatActivity {
 
         });
 
-
-
-
-
-
-
-        /*
-
-        btnExit.setOnClickListener(new ImageButton.OnClickListener() {
+        // Gestion des buttons Accept & Denie
+        btnAccept.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(UserActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                UserActivity.this.finish();
+
+                if(pseudoOK[0] == true && passwordOK[0] == true && mailOK[0] == true) {
+                    addUser();
+                    popupRegistration.dismiss();
+                    popupSuccess.show();
+                    // Permet de faire aparaitre le panneau 1 seconde sans interventions
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (popupSuccess.isShowing()) {
+                                popupSuccess.dismiss();
+                            }
+                        }
+                    }, 1000);
+                } else {
+                    popupRegistrationDenie.show();
+                    // Permet de faire aparaitre le panneau 1 seconde sans interventions
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (popupRegistrationDenie.isShowing()) {
+                                popupRegistrationDenie.dismiss();
+                            }
+                        }
+                    }, 1000);
+
+                }
             }
         });
 
 
-        btnConnection.setOnClickListener(new ImageButton.OnClickListener() {
+        btnDenie.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupConnectionRegistration.dismiss();
+
+                popupRegistration.dismiss();
+
             }
         });
 
-        btnRegistration.setOnClickListener(new ImageButton.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupConnectionRegistration.dismiss();
-            }
-        });
+    }
 
-         */
+    private void addUser() {
 
+        txtPseudo = (EditText) popupRegistration.findViewById(R.id.txtPseudo);
+        txtPassword = (EditText) popupRegistration.findViewById(R.id.txtPassword);
+        txtMail = (EditText) popupRegistration.findViewById(R.id.txtMail);
+
+        String pseudo = "";
+        String password = "";
+        String mail = "";
+        String avatarLarge = "";
+        String avatarSmall = "";
+
+        // Update des champs texte
+        try {
+            pseudo = txtPseudo.getText().toString();
+            password = txtPassword.getText().toString();
+            mail = txtMail.getText().toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        User user = new User(null, pseudo, password, mail, avatarLarge, avatarSmall);
+        AccesLocalDbUsers accesLocalDbUsers = new AccesLocalDbUsers(UserActivity.this);
+        user.setId(accesLocalDbUsers.addUser(user));
 
     }
 

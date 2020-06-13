@@ -1,37 +1,25 @@
 package com.romain.cellarv1.vue;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.view.animation.OvershootInterpolator;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.romain.cellarv1.R;
-import com.romain.cellarv1.modele.AccesLocal;
+import com.romain.cellarv1.modele.AccesLocalDbCellar;
 import com.romain.cellarv1.modele.WineBottle;
 import com.romain.cellarv1.outils.MyAdapterCellarRecyclerView;
-import com.romain.cellarv1.outils.MyButtonClickListener;
-import com.romain.cellarv1.outils.MySwipeHelper;
-import com.romain.cellarv1.outils.Tools;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,7 +28,7 @@ import java.util.List;
  */
 public class CellarListFragment extends Fragment {
 
-    private AccesLocal accesLocal;
+    private AccesLocalDbCellar accesLocalDbCellar;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -171,8 +159,8 @@ public class CellarListFragment extends Fragment {
 
         //Context context = mRecyclerView.getContext();
 
-        accesLocal = new AccesLocal(getContext());
-        ArrayList<WineBottle> wineBottleArrayList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleList();
+        accesLocalDbCellar = new AccesLocalDbCellar(getContext());
+        ArrayList<WineBottle> wineBottleArrayList = (ArrayList<WineBottle>) accesLocalDbCellar.recoverWineBottleList();
 
         mRecyclerView.setHasFixedSize(true);
 

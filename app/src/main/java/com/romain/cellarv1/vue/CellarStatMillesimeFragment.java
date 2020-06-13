@@ -5,32 +5,23 @@ import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.StackedValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.romain.cellarv1.R;
-import com.romain.cellarv1.modele.AccesLocal;
+import com.romain.cellarv1.modele.AccesLocalDbCellar;
 import com.romain.cellarv1.modele.WineBottle;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 
 /**
@@ -40,7 +31,7 @@ import java.util.Iterator;
  */
 public class CellarStatMillesimeFragment extends Fragment {
 
-    private AccesLocal accesLocal;
+    private AccesLocalDbCellar accesLocalDbCellar;
 
     private BarChart barChartMillesime;
 
@@ -109,8 +100,8 @@ public class CellarStatMillesimeFragment extends Fragment {
 
     // TODO IL FAUT MULTIPLIER LE NOMBRE DE CHAQUE AVEC L'ESTIMATE
     private void loadTotalEstimate() {
-        accesLocal = new AccesLocal(getContext());
-        Integer nbTotalEstimate = accesLocal.nbTotalEstimate();
+        accesLocalDbCellar = new AccesLocalDbCellar(getContext());
+        Integer nbTotalEstimate = accesLocalDbCellar.nbTotalEstimate();
 
         txtTotalEstimate.setText(nbTotalEstimate.toString() + " €");
 
@@ -219,8 +210,8 @@ public class CellarStatMillesimeFragment extends Fragment {
 
     private ArrayList<BarEntry> values(){
         // Récupération de la liste des bouteilles
-        accesLocal = new AccesLocal(getContext());
-        ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleListNumberGroupByYear();
+        accesLocalDbCellar = new AccesLocalDbCellar(getContext());
+        ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocalDbCellar.recoverWineBottleListNumberGroupByYear();
 
         Iterator iterator = wineBottleList.iterator();
 

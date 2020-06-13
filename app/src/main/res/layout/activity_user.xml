@@ -101,15 +101,16 @@
     </com.romain.cellarv1.outils.CurvedBottomNavigationView>
 
     <LinearLayout
+        android:id="@+id/layoutSwitchMode"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="80dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/curvedBottomNavigationView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
             android:id="@+id/textLightMode"
@@ -146,7 +147,20 @@
             tools:ignore="MissingConstraints" />
     </LinearLayout>
 
-
+    <ImageButton
+        android:id="@+id/btnRegistration"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:backgroundTint="@color/transparent"
+        android:tint="@color/pink_light"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center"
+        android:src="@drawable/popup_success"
+        app:layout_constraintTop_toBottomOf="@id/layoutSwitchMode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <fragment
         android:id="@+id/autocomplete2"

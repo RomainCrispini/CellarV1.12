@@ -1,74 +1,45 @@
 package com.romain.cellarv1.vue;
 
-import android.Manifest;
-import android.animation.ObjectAnimator;
 import android.app.Dialog;
-import android.app.FragmentManager;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
-import android.view.animation.ScaleAnimation;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentActivity;
 
-import com.github.mikephil.charting.data.BarEntry;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.romain.cellarv1.R;
-import com.romain.cellarv1.modele.AccesLocal;
+import com.romain.cellarv1.modele.AccesLocalDbCellar;
 import com.romain.cellarv1.modele.WineBottle;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
 import com.romain.cellarv1.outils.Tools;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -159,10 +130,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         popupInfoMap.show();
 
         // Récupération de la liste de toutes les bouteilles SI ET SEULEMENT SI une BDD existe
-        AccesLocal accesLocal = new AccesLocal(MainActivity.this);
+        AccesLocalDbCellar accesLocalDbCellar = new AccesLocalDbCellar(MainActivity.this);
 
-        if(accesLocal.doesDBExists() == true) {
-            ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleList();
+        if(accesLocalDbCellar.doesDBExists() == true) {
+            ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocalDbCellar.recoverWineBottleList();
             for(int i = 0; i < wineBottleList.size(); i++) {
                 if(wineBottleList.get(i).getLattitude() == null && wineBottleList.get(i).getLongitude() == null
                 && wineBottleList.get(i).getLattitude() == 0f && wineBottleList.get(i).getLongitude() == 0f) {
@@ -414,9 +385,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         int width = 100;
 
         // Récupération de la liste de toutes les bouteilles SI ET SEULEMENT SI une BDD existe
-        AccesLocal accesLocal = new AccesLocal(MainActivity.this);
-        if(accesLocal.doesDBExists() == true) {
-            ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleList();
+        AccesLocalDbCellar accesLocalDbCellar = new AccesLocalDbCellar(MainActivity.this);
+        if(accesLocalDbCellar.doesDBExists() == true) {
+            ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocalDbCellar.recoverWineBottleList();
 
             for(int i = 0; i < wineBottleList.size(); i++) {
                 if(wineBottleList.get(i).getLattitude() != null && wineBottleList.get(i).getLongitude() != null

@@ -1,19 +1,16 @@
 package com.romain.cellarv1.vue;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -22,7 +19,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.romain.cellarv1.R;
-import com.romain.cellarv1.modele.AccesLocal;
+import com.romain.cellarv1.modele.AccesLocalDbCellar;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -34,7 +31,7 @@ import java.util.ArrayList;
  */
 public class CellarStatWineColorFragment extends Fragment {
 
-    private AccesLocal accesLocal;
+    private AccesLocalDbCellar accesLocalDbCellar;
 
     // Interpolator pour animation des menuBis
     private OvershootInterpolator interpolator = new OvershootInterpolator();
@@ -106,8 +103,8 @@ public class CellarStatWineColorFragment extends Fragment {
     }
 
     private void loadTotalNumber() {
-        accesLocal = new AccesLocal(getContext());
-        Integer nbTotalBottle = accesLocal.nbTotal();
+        accesLocalDbCellar = new AccesLocalDbCellar(getContext());
+        Integer nbTotalBottle = accesLocalDbCellar.nbTotal();
 
         txtTotalNumber.setText(nbTotalBottle.toString());
 
@@ -141,13 +138,13 @@ public class CellarStatWineColorFragment extends Fragment {
         pieChartWineColor.setTransparentCircleRadius(0f);
         //pieChart.getLegend().setEnabled(false);
 
-        accesLocal = new AccesLocal(getContext());
+        accesLocalDbCellar = new AccesLocalDbCellar(getContext());
         //ArrayList<WineBottle> wineBottleArrayList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleList();
 
-        Integer nbRed = accesLocal.nbRed();
-        Integer nbRose = accesLocal.nbRose();
-        Integer nbWhite = accesLocal.nbWhite();
-        Integer nbChamp = accesLocal.nbChamp();
+        Integer nbRed = accesLocalDbCellar.nbRed();
+        Integer nbRose = accesLocalDbCellar.nbRose();
+        Integer nbWhite = accesLocalDbCellar.nbWhite();
+        Integer nbChamp = accesLocalDbCellar.nbChamp();
 
         // Modifie le nombre de couleurs du pie suivant celle des bouteilles
         ArrayList<Integer> COLORS = new ArrayList<>();

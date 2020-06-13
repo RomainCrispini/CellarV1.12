@@ -45,7 +45,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.romain.cellarv1.R;
 import com.romain.cellarv1.controleur.Controle;
-import com.romain.cellarv1.modele.AccesLocal;
+import com.romain.cellarv1.modele.AccesLocalDbCellar;
 import com.romain.cellarv1.modele.WineBottle;
 import com.romain.cellarv1.outils.BlurBitmap;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
@@ -789,10 +789,10 @@ public class AddActivity extends AppCompatActivity {
         popupInfoLabelBottle.show();
 
         // Récupération de la liste de toutes les bouteilles SI ET SEULEMENT SI une BDD existe
-        AccesLocal accesLocal = new AccesLocal(AddActivity.this);
+        AccesLocalDbCellar accesLocalDbCellar = new AccesLocalDbCellar(AddActivity.this);
 
-        if(accesLocal.doesDBExists() == true) {
-            ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleList();
+        if(accesLocalDbCellar.doesDBExists() == true) {
+            ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocalDbCellar.recoverWineBottleList();
             for(int i = 0; i < wineBottleList.size(); i++) {
                 if(wineBottleList.get(i).getPictureSmall().equals("")) {
                 } else if(!wineBottleList.get(i).getPictureSmall().equals("")) {
@@ -1245,8 +1245,8 @@ public class AddActivity extends AppCompatActivity {
                         String pictureSmall = getPictureSmall();
 
                         WineBottle wineBottle = new WineBottle(null, country, region, wineColor, domain, appellation, address, year, apogee, number, estimate, pictureLarge, pictureSmall, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp);
-                        AccesLocal accesLocal = new AccesLocal(AddActivity.this);
-                        wineBottle.setId(accesLocal.add(wineBottle));
+                        AccesLocalDbCellar accesLocalDbCellar = new AccesLocalDbCellar(AddActivity.this);
+                        wineBottle.setId(accesLocalDbCellar.add(wineBottle));
 
                         popupAdd.dismiss();
 
