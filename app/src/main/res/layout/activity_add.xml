@@ -51,32 +51,73 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"
-                    android:layout_width="270dp"
-                    android:layout_height="270dp"
+                    android:layout_width="276dp"
+                    android:layout_height="276dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp"
                     android:layout_marginBottom="20dp"
                     app:cardBackgroundColor="@color/transparent"
-                    app:cardCornerRadius="135dp"
+                    app:cardCornerRadius="138dp"
                     app:cardElevation="0dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <ImageView
+                        <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:outlineProvider="none"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/none_listview" />
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            app:cardBackgroundColor="@color/transparent"
+                            app:cardCornerRadius="135dp"
+                            app:cardElevation="0dp">
 
-                        <ImageView
-                            android:id="@+id/scanImageView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:outlineProvider="none"
-                            android:scaleType="centerCrop" />
+                            <ImageView
+                                android:id="@+id/imgWineColor"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:outlineProvider="none"
+                                android:scaleType="centerCrop" />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="270dp"
+                            android:layout_height="270dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            app:cardBackgroundColor="@color/transparent"
+                            app:cardCornerRadius="135dp"
+                            app:cardElevation="0dp">
+
+                            <ImageView
+                                android:layout_width="270dp"
+                                android:layout_height="270dp"
+                                android:outlineProvider="none"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/none_listview" />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="270dp"
+                            android:layout_height="270dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            app:cardBackgroundColor="@color/transparent"
+                            app:cardCornerRadius="135dp"
+                            app:cardElevation="0dp">
+
+                            <ImageView
+                                android:id="@+id/scanImageView"
+                                android:layout_width="270dp"
+                                android:layout_height="270dp"
+                                android:layout_marginTop="5dp"
+                                android:outlineProvider="none"
+                                android:scaleType="centerCrop" />
+
+                        </androidx.cardview.widget.CardView>
 
                     </RelativeLayout>
 
@@ -85,85 +126,122 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:id="@+id/layoutCountryRegion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/progressBar">
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layoutCountry"
+                <ImageView
+                    android:id="@+id/imgValidCountry"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:tint="@color/pink"
+                    android:src="@drawable/icon_check" />
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/fond_textinput"
-                    android:backgroundTint="@color/green_dark"
-                    android:orientation="horizontal"
-                    android:textColorHint="@color/green_light"
-                    app:helperText=""
-                    app:hintTextColor="@color/green_light"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/progressBar">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/textCountry"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:backgroundTint="@color/transparent"
-                        android:fontFamily="@font/yanone_kaffeesatz"
-                        android:gravity="center"
-                        android:hint="Pays"
-                        android:inputType="text|textNoSuggestions"
-                        android:maxLines="1"
-                        android:textColor="@color/green_apple"
-                        android:textCursorDrawable="@color/green_light"
-                        android:textSize="18dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layoutRegion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/fond_textinput"
-                    android:backgroundTint="@color/green_dark"
-                    android:orientation="horizontal"
-                    android:textColorHint="@color/green_light"
-                    app:helperText=""
-                    app:hintTextColor="@color/green_light"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/layoutPays">
+                    app:cardBackgroundColor="@color/green_very_dark"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp">
 
-                    <AutoCompleteTextView
-                        android:id="@+id/textRegion"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:backgroundTint="@color/transparent"
-                        android:fontFamily="@font/yanone_kaffeesatz"
-                        android:gravity="center"
-                        android:hint="Région"
-                        android:inputType="text|textNoSuggestions"
-                        android:maxLines="1"
-                        android:textColor="@color/green_apple"
-                        android:textCursorDrawable="@color/green_light"
-                        android:textSize="18dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Pays"
+                            android:textColor="@color/green_middle_light"
+                            android:textSize="14dp" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/textCountry"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:drawableTint="@color/green_light"
+                            android:ems="10"
+                            android:fontFamily="@font/yanone_kaffeesatz"
+                            android:gravity="center"
+                            android:inputType="text|textNoSuggestions"
+                            android:maxLines="1"
+                            android:textColor="@color/green_light"
+                            android:textCursorDrawable="@color/green_light"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imgValidRegion"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:tint="@color/pink"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/icon_check" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    app:cardBackgroundColor="@color/green_very_dark"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Région"
+                            android:textColor="@color/green_middle_light"
+                            android:textSize="14dp" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/textRegion"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:drawableTint="@color/green_light"
+                            android:ems="10"
+                            android:fontFamily="@font/yanone_kaffeesatz"
+                            android:gravity="center"
+                            android:inputType="text|textNoSuggestions"
+                            android:maxLines="1"
+                            android:textColor="@color/green_light"
+                            android:textCursorDrawable="@color/green_light"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
 
             </LinearLayout>
 
@@ -171,8 +249,9 @@
                 android:id="@+id/layoutWineColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -181,52 +260,51 @@
 
                 <ImageButton
                     android:id="@+id/redWineButton"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_marginRight="10dp"
                     android:backgroundTint="@color/transparent"
-                    android:onClick="wineColorSelector"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/red_wine" />
+                    android:src="@drawable/red_wine_add" />
 
                 <ImageButton
                     android:id="@+id/roseWineButton"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:backgroundTint="@color/transparent"
-                    android:onClick="wineColorSelector"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/rose_wine" />
+                    android:src="@drawable/rose_wine_add" />
 
                 <ImageButton
                     android:id="@+id/whiteWineButton"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:backgroundTint="@color/transparent"
-                    android:onClick="wineColorSelector"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/white_wine" />
+                    android:src="@drawable/white_wine_add" />
 
                 <ImageButton
                     android:id="@+id/champWineButton"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_marginLeft="10dp"
                     android:backgroundTint="@color/transparent"
-                    android:onClick="wineColorSelector"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/champ_wine" />
+                    android:src="@drawable/champ_wine_add" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/layoutYearApogee"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -235,7 +313,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    app:cardBackgroundColor="@color/green_dark"
+                    app:cardBackgroundColor="@color/green_very_dark"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="0dp">
 
@@ -254,88 +332,100 @@
                     android:layout_width="5dp"
                     android:layout_height="2dp"
                     android:layout_gravity="center"
-                    android:background="@color/green_dark" />
+                    android:background="@color/green_very_dark" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layoutYear"
+                <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/fond_textinput"
-                    android:backgroundTint="@color/green_dark"
-                    android:orientation="horizontal"
-                    android:textColorHint="@color/green_light"
-                    app:helperText=""
-                    app:hintTextColor="@color/green_light"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:cardBackgroundColor="@color/green_very_dark"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp">
 
-                    <EditText
-                        android:id="@+id/nbYear"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:backgroundTint="@color/transparent"
-                        android:fontFamily="@font/yanone_kaffeesatz"
-                        android:gravity="center"
-                        android:hint="Millésime"
-                        android:inputType="number"
-                        android:maxLines="1"
-                        android:textColor="@color/green_apple"
-                        android:textCursorDrawable="@color/green_light"
-                        android:textSize="18dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layoutApogee"
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Millésime"
+                            android:textColor="@color/green_middle_light"
+                            android:textSize="14dp" />
+
+                        <EditText
+                            android:id="@+id/nbYear"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:drawableTint="@color/green_light"
+                            android:ems="10"
+                            android:fontFamily="@font/yanone_kaffeesatz"
+                            android:gravity="center"
+                            android:inputType="number|textNoSuggestions"
+                            android:maxLines="1"
+                            android:textColor="@color/green_light"
+                            android:textCursorDrawable="@color/green_light"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/fond_textinput"
-                    android:backgroundTint="@color/green_dark"
-                    android:orientation="horizontal"
-                    android:textColorHint="@color/green_light"
-                    app:helperText=""
-                    app:hintTextColor="@color/green_light"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:cardBackgroundColor="@color/green_very_dark"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp">
 
-                    <EditText
-                        android:id="@+id/nbApogee"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:backgroundTint="@color/transparent"
-                        android:drawableTint="@color/green_light"
-                        android:ems="10"
-                        android:fontFamily="@font/yanone_kaffeesatz"
-                        android:gravity="center"
-                        android:hint="Apogée"
-                        android:inputType="number"
-                        android:maxLines="1"
-                        android:textColor="@color/green_apple"
-                        android:textCursorDrawable="@color/green_light"
-                        android:textSize="18dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Apogée"
+                            android:textColor="@color/green_middle_light"
+                            android:textSize="14dp" />
+
+                        <EditText
+                            android:id="@+id/nbApogee"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:drawableTint="@color/green_light"
+                            android:ems="10"
+                            android:fontFamily="@font/yanone_kaffeesatz"
+                            android:gravity="center"
+                            android:inputType="number|textNoSuggestions"
+                            android:maxLines="1"
+                            android:textColor="@color/green_light"
+                            android:textCursorDrawable="@color/green_light"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
 
                 <View
                     android:layout_width="5dp"
                     android:layout_height="2dp"
                     android:layout_gravity="center"
-                    android:background="@color/green_dark" />
+                    android:background="@color/green_very_dark" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    app:cardBackgroundColor="@color/green_dark"
+                    app:cardBackgroundColor="@color/green_very_dark"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="0dp">
 
@@ -352,116 +442,194 @@
 
             </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutDomain"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/fond_textinput"
-                android:backgroundTint="@color/green_dark"
-                android:orientation="horizontal"
-                android:textColorHint="@color/green_light"
-                app:helperText=""
-                app:hintTextColor="@color/green_light"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layoutWineColor">
+                android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/textDomain"
+                <ImageView
+                    android:id="@+id/imgValidDomain"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:tint="@color/pink"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/icon_check" />
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:backgroundTint="@color/transparent"
-                    android:fontFamily="@font/yanone_kaffeesatz"
-                    android:gravity="center"
-                    android:hint="Domaine"
-                    android:inputType="text|textNoSuggestions"
-                    android:maxLines="1"
-                    android:textColor="@color/green_apple"
-                    android:textCursorDrawable="@color/green_light"
-                    android:textSize="18dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    app:cardBackgroundColor="@color/green_very_dark"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutAppellation"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Domaine"
+                            android:textColor="@color/green_middle_light"
+                            android:textSize="14dp" />
+
+                        <EditText
+                            android:id="@+id/textDomain"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:drawableTint="@color/green_light"
+                            android:ems="10"
+                            android:fontFamily="@font/yanone_kaffeesatz"
+                            android:gravity="center"
+                            android:inputType="text|textNoSuggestions"
+                            android:maxLines="1"
+                            android:textColor="@color/green_light"
+                            android:textCursorDrawable="@color/green_light"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:background="@drawable/fond_textinput"
-                android:backgroundTint="@color/green_dark"
-                android:orientation="horizontal"
-                android:textColorHint="@color/green_light"
-                app:helperText=""
-                app:hintTextColor="@color/green_light"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layoutDomain">
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/textAppellation"
+                <ImageView
+                    android:id="@+id/imgValidAppellation"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:tint="@color/pink"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/icon_check" />
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:backgroundTint="@color/transparent"
-                    android:fontFamily="@font/yanone_kaffeesatz"
-                    android:gravity="center"
-                    android:hint="Appellation"
-                    android:inputType="text|textNoSuggestions"
-                    android:maxLines="1"
-                    android:textColor="@color/green_apple"
-                    android:textCursorDrawable="@color/green_light"
-                    android:textSize="18dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    app:cardBackgroundColor="@color/green_very_dark"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutAddress"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Appellation"
+                            android:textColor="@color/green_middle_light"
+                            android:textSize="14dp" />
+
+                        <EditText
+                            android:id="@+id/textAppellation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:drawableTint="@color/green_light"
+                            android:ems="10"
+                            android:fontFamily="@font/yanone_kaffeesatz"
+                            android:gravity="center"
+                            android:inputType="text|textNoSuggestions"
+                            android:maxLines="1"
+                            android:textColor="@color/green_light"
+                            android:textCursorDrawable="@color/green_light"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:background="@drawable/fond_textinput"
-                android:backgroundTint="@color/green_dark"
-                android:orientation="horizontal"
-                android:textColorHint="@color/green_light"
-                app:helperText=""
-                app:hintTextColor="@color/green_light"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layoutDomain">
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/textAddress"
+                <ImageView
+                    android:id="@+id/imgValidAddress"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:tint="@color/pink"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/icon_check" />
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:backgroundTint="@color/transparent"
-                    android:fontFamily="@font/yanone_kaffeesatz"
-                    android:gravity="center"
-                    android:hint="Adresse"
-                    android:inputType="text|textNoSuggestions"
-                    android:maxLines="1"
-                    android:textColor="@color/green_apple"
-                    android:textCursorDrawable="@color/green_light"
-                    android:textSize="18dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    app:cardBackgroundColor="@color/green_very_dark"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Adresse"
+                            android:textColor="@color/green_middle_light"
+                            android:textSize="14dp" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/textAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:drawableTint="@color/green_light"
+                            android:ems="10"
+                            android:fontFamily="@font/yanone_kaffeesatz"
+                            android:gravity="center"
+                            android:inputType="text|textNoSuggestions"
+                            android:maxLines="1"
+                            android:textColor="@color/green_light"
+                            android:textCursorDrawable="@color/green_light"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/layoutNumberEstimate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -470,7 +638,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    app:cardBackgroundColor="@color/green_dark"
+                    app:cardBackgroundColor="@color/green_very_dark"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="0dp">
 
@@ -489,89 +657,100 @@
                     android:layout_width="5dp"
                     android:layout_height="2dp"
                     android:layout_gravity="center"
-                    android:background="@color/green_dark" />
+                    android:background="@color/green_very_dark" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layoutNumber"
-                    android:layout_width="100dp"
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/fond_textinput"
-                    android:backgroundTint="@color/green_dark"
-                    android:orientation="horizontal"
-                    android:textColorHint="@color/green_light"
-                    app:helperText=""
-                    app:hintTextColor="@color/green_light"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:cardBackgroundColor="@color/green_very_dark"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp">
 
-                    <EditText
-                        android:id="@+id/nbNumber"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:backgroundTint="@color/transparent"
-                        android:drawableTint="@color/green_light"
-                        android:fontFamily="@font/yanone_kaffeesatz"
-                        android:gravity="center"
-                        android:hint="Quantité"
-                        android:inputType="number"
-                        android:maxLines="1"
-                        android:textColor="@color/green_apple"
-                        android:textCursorDrawable="@color/green_light"
-                        android:textSize="18dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layoutEstimate"
-                    android:layout_width="100dp"
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Millésime"
+                            android:textColor="@color/green_middle_light"
+                            android:textSize="14dp" />
+
+                        <EditText
+                            android:id="@+id/nbNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:drawableTint="@color/green_light"
+                            android:ems="10"
+                            android:fontFamily="@font/yanone_kaffeesatz"
+                            android:gravity="center"
+                            android:inputType="number|textNoSuggestions"
+                            android:maxLines="1"
+                            android:textColor="@color/green_light"
+                            android:textCursorDrawable="@color/green_light"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/fond_textinput"
-                    android:backgroundTint="@color/green_dark"
-                    android:orientation="horizontal"
-                    android:textColorHint="@color/green_light"
-                    app:helperText=""
-                    app:hintTextColor="@color/green_light"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:cardBackgroundColor="@color/green_very_dark"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp">
 
-                    <EditText
-                        android:id="@+id/nbEstimate"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:backgroundTint="@color/transparent"
-                        android:drawableTint="@color/green_light"
-                        android:ems="10"
-                        android:fontFamily="@font/yanone_kaffeesatz"
-                        android:gravity="center"
-                        android:hint="Estimation (€)"
-                        android:inputType="number"
-                        android:maxLines="1"
-                        android:textColor="@color/green_apple"
-                        android:textCursorDrawable="@color/green_light"
-                        android:textSize="18dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Apogée"
+                            android:textColor="@color/green_middle_light"
+                            android:textSize="14dp" />
+
+                        <EditText
+                            android:id="@+id/nbEstimate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:drawableTint="@color/green_light"
+                            android:ems="10"
+                            android:fontFamily="@font/yanone_kaffeesatz"
+                            android:gravity="center"
+                            android:inputType="number|textNoSuggestions"
+                            android:maxLines="1"
+                            android:textColor="@color/green_light"
+                            android:textCursorDrawable="@color/green_light"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
 
                 <View
                     android:layout_width="5dp"
                     android:layout_height="2dp"
                     android:layout_gravity="center"
-                    android:background="@color/green_dark" />
+                    android:background="@color/green_very_dark" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    app:cardBackgroundColor="@color/green_dark"
+                    app:cardBackgroundColor="@color/green_very_dark"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="0dp">
 
@@ -620,7 +799,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="@color/green_dark"
+                    app:cardBackgroundColor="@color/green_very_dark"
                     app:cardCornerRadius="30dp"
                     app:cardElevation="0dp">
 
@@ -639,7 +818,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="@color/green_dark"
+                    app:cardBackgroundColor="@color/green_very_dark"
                     app:cardCornerRadius="30dp"
                     app:cardElevation="0dp">
 
@@ -660,7 +839,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="@color/green_dark"
+                    app:cardBackgroundColor="@color/green_very_dark"
                     app:cardCornerRadius="30dp"
                     app:cardElevation="0dp">
 
@@ -684,7 +863,7 @@
         android:id="@+id/menuBis"
         android:layout_width="match_parent"
         android:layout_height="110dp"
-        android:background="@color/green_middle_dark"
+        android:background="@color/green_very_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -779,7 +958,7 @@ app:pulse_startFromScratch="false" /> -->
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/green_very_dark"
+        android:backgroundTint="@color/green_ultra_dark"
         android:src="@drawable/icon_navbar_add"
         android:tint="@color/green_light"
         app:borderWidth="0.5dp"

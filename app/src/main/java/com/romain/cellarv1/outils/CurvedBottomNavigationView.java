@@ -8,6 +8,7 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.util.AttributeSet;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.romain.cellarv1.R;
 
 
 public class CurvedBottomNavigationView extends BottomNavigationView {
@@ -56,7 +57,9 @@ public class CurvedBottomNavigationView extends BottomNavigationView {
         mPath = new Path();
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        mPaint.setColor(Color.rgb(47, 59, 64));
+        // Couleur green_ultra_dark
+        mPaint.setColor(getResources().getColor(R.color.green_ultra_dark));
+        //mPaint.setColor(Color.rgb(35, 45, 48));
         setBackgroundColor(Color.TRANSPARENT);
     }
 

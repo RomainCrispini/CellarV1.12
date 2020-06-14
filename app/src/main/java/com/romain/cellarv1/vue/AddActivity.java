@@ -4,10 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.core.content.res.ResourcesCompat;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -16,6 +20,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.Intent;
@@ -142,6 +147,7 @@ public class AddActivity extends AppCompatActivity {
 
     // Image Vignoble
     private ImageView imgVignoble;
+    private ImageView imgWineColor;
 
 
     @Override
@@ -149,9 +155,6 @@ public class AddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
         init();
-
-
-
 
     }
 
@@ -268,6 +271,8 @@ public class AddActivity extends AppCompatActivity {
         btnWishlist.setTextOn(null);
         btnWishlist.setTextOff(null);
 
+        imgWineColor = (ImageView) findViewById(R.id.imgWineColor);
+
         // Instanciation et animation du menuBis coulissant
         FrameLayout menuBis = (FrameLayout) findViewById(R.id.menuBis);
         menuBis.setTranslationY(300f);
@@ -287,6 +292,7 @@ public class AddActivity extends AppCompatActivity {
         progressBar();
 
         gestionImageVignoble();
+        gestionWineColorSelector();
 
     }
 
@@ -1325,70 +1331,88 @@ public class AddActivity extends AppCompatActivity {
     }
 
     private void recoverFABWineColor() {
-        ImageButton redWineButton = (ImageButton) findViewById(R.id.redWineButton);
-        ImageButton roseWineButton = (ImageButton) findViewById(R.id.roseWineButton);
-        ImageButton whiteWineButton = (ImageButton) findViewById(R.id.whiteWineButton);
-        ImageButton champWineButton = (ImageButton) findViewById(R.id.champWineButton);
+
         Intent intent = getIntent();
         if (intent != null) {
             String str = "";
             if (intent.hasExtra("redWine")) {
-                redWineButton.setAlpha(1f);
-                roseWineButton.setAlpha(0.3f);
-                whiteWineButton.setAlpha(0.3f);
-                champWineButton.setAlpha(0.3f);
+                btnRed.setAlpha(1f);
+                btnRose.setAlpha(0.3f);
+                btnWhite.setAlpha(0.3f);
+                btnChamp.setAlpha(0.3f);
+                imgWineColor.setImageDrawable(ContextCompat.getDrawable(AddActivity.this, R.drawable.red_wine_listview));
             } else if (intent.hasExtra("roseWine")) {
-                redWineButton.setAlpha(0.3f);
-                roseWineButton.setAlpha(1f);
-                whiteWineButton.setAlpha(0.3f);
-                champWineButton.setAlpha(0.3f);
+                btnRed.setAlpha(0.3f);
+                btnRose.setAlpha(1f);
+                btnWhite.setAlpha(0.3f);
+                btnChamp.setAlpha(0.3f);
+                imgWineColor.setImageDrawable(ContextCompat.getDrawable(AddActivity.this, R.drawable.rose_wine_listview));
             } else if (intent.hasExtra("whiteWine")) {
-                redWineButton.setAlpha(0.3f);
-                roseWineButton.setAlpha(0.3f);
-                whiteWineButton.setAlpha(1f);
-                champWineButton.setAlpha(0.3f);
+                btnRed.setAlpha(0.3f);
+                btnRose.setAlpha(0.3f);
+                btnWhite.setAlpha(1f);
+                btnChamp.setAlpha(0.3f);
+                imgWineColor.setImageDrawable(ContextCompat.getDrawable(AddActivity.this, R.drawable.white_wine_listview));
             } else {
-                redWineButton.setAlpha(0.3f);
-                roseWineButton.setAlpha(0.3f);
-                whiteWineButton.setAlpha(0.3f);
-                champWineButton.setAlpha(1f);
+                btnRed.setAlpha(0.3f);
+                btnRose.setAlpha(0.3f);
+                btnWhite.setAlpha(0.3f);
+                btnChamp.setAlpha(1f);
+                imgWineColor.setImageDrawable(ContextCompat.getDrawable(AddActivity.this, R.drawable.champ_wine_listview));
             }
 
         }
     }
 
-    public void wineColorSelector(View view) {
-        ImageButton redWineButton = (ImageButton) findViewById(R.id.redWineButton);
-        ImageButton roseWineButton = (ImageButton) findViewById(R.id.roseWineButton);
-        ImageButton whiteWineButton = (ImageButton) findViewById(R.id.whiteWineButton);
-        ImageButton champWineButton = (ImageButton) findViewById(R.id.champWineButton);
-        int id = view.getId();
-        switch (id) {
-            case R.id.redWineButton:
-                redWineButton.setAlpha(1f);
-                roseWineButton.setAlpha(0.3f);
-                whiteWineButton.setAlpha(0.3f);
-                champWineButton.setAlpha(0.3f);
-                break;
-            case R.id.roseWineButton:
-                redWineButton.setAlpha(0.3f);
-                roseWineButton.setAlpha(1f);
-                whiteWineButton.setAlpha(0.3f);
-                champWineButton.setAlpha(0.3f);
-                break;
-            case R.id.whiteWineButton:
-                redWineButton.setAlpha(0.3f);
-                roseWineButton.setAlpha(0.3f);
-                whiteWineButton.setAlpha(1f);
-                champWineButton.setAlpha(0.3f);
-                break;
-            case R.id.champWineButton:
-                redWineButton.setAlpha(0.3f);
-                roseWineButton.setAlpha(0.3f);
-                whiteWineButton.setAlpha(0.3f);
-                champWineButton.setAlpha(1f);
-                break;
-        }
+    /**
+     * Gestion de l'affichage de la couleur du vin
+     */
+    public void gestionWineColorSelector() {
+
+        btnRed.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnRed.setAlpha(1f);
+                btnRose.setAlpha(0.3f);
+                btnWhite.setAlpha(0.3f);
+                btnChamp.setAlpha(0.3f);
+                imgWineColor.setImageDrawable(ContextCompat.getDrawable(AddActivity.this, R.drawable.red_wine_listview));
+            }
+        });
+
+        btnRose.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnRed.setAlpha(0.3f);
+                btnRose.setAlpha(1f);
+                btnWhite.setAlpha(0.3f);
+                btnChamp.setAlpha(0.3f);
+                imgWineColor.setImageDrawable(ContextCompat.getDrawable(AddActivity.this, R.drawable.rose_wine_listview));
+            }
+        });
+
+        btnWhite.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnRed.setAlpha(0.3f);
+                btnRose.setAlpha(0.3f);
+                btnWhite.setAlpha(1f);
+                btnChamp.setAlpha(0.3f);
+                imgWineColor.setImageDrawable(ContextCompat.getDrawable(AddActivity.this, R.drawable.white_wine_listview));
+            }
+        });
+
+        btnChamp.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnRed.setAlpha(0.3f);
+                btnRose.setAlpha(0.3f);
+                btnWhite.setAlpha(0.3f);
+                btnChamp.setAlpha(1f);
+                imgWineColor.setImageDrawable(ContextCompat.getDrawable(AddActivity.this, R.drawable.champ_wine_listview));
+            }
+        });
+
     }
 
     /**

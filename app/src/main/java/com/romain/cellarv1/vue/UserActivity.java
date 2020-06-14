@@ -33,7 +33,7 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.romain.cellarv1.R;
-import com.romain.cellarv1.controleur.UserControle;
+import com.romain.cellarv1.outils.Validation;
 import com.romain.cellarv1.modele.AccesLocalDbUsers;
 import com.romain.cellarv1.modele.User;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
@@ -177,7 +177,7 @@ public class UserActivity extends AppCompatActivity {
 
         popupRegistration.show();
 
-        final UserControle userControle = new UserControle();
+        final Validation validation = new Validation();
 
         txtPseudo.addTextChangedListener(new TextWatcher() {
 
@@ -189,12 +189,12 @@ public class UserActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 imgValidPseudo.setVisibility(View.VISIBLE);
-                if (userControle.isValidPseudo(txtPseudo.getText().toString().trim())) {
+                if (validation.isValidPseudo(txtPseudo.getText().toString().trim())) {
                     // is true
                     imgValidPseudo.setColorFilter(getResources().getColor(R.color.green_apple));
                     pseudoOK[0] = true;
 
-                } else if(!userControle.isValidPseudo(txtPseudo.getText().toString().trim())) {
+                } else if(!validation.isValidPseudo(txtPseudo.getText().toString().trim())) {
                     // is false
                     imgValidPseudo.setColorFilter(getResources().getColor(R.color.pink));
                 }
@@ -216,12 +216,12 @@ public class UserActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 imgValidPassword.setVisibility(View.VISIBLE);
-                if (userControle.isValidPassword(txtPassword.getText().toString().trim())) {
+                if (validation.isValidPassword(txtPassword.getText().toString().trim())) {
                     // is true
                     imgValidPassword.setColorFilter(getResources().getColor(R.color.green_apple));
                     passwordOK[0] = true;
 
-                } else if(!userControle.isValidPassword(txtPassword.getText().toString().trim())) {
+                } else if(!validation.isValidPassword(txtPassword.getText().toString().trim())) {
                     // is false
                     imgValidPassword.setColorFilter(getResources().getColor(R.color.pink));
                 }
@@ -244,12 +244,12 @@ public class UserActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 imgValidMail.setVisibility(View.VISIBLE);
-                if (userControle.isValidMail(txtMail.getText().toString().trim())) {
+                if (validation.isValidMail(txtMail.getText().toString().trim())) {
                     // is true
                     imgValidMail.setColorFilter(getResources().getColor(R.color.green_apple));
                     mailOK[0] = true;
 
-                } else if(!userControle.isValidMail(txtMail.getText().toString().trim())) {
+                } else if(!validation.isValidMail(txtMail.getText().toString().trim())) {
                     // is false
                     imgValidMail.setColorFilter(getResources().getColor(R.color.pink));
                 }
@@ -385,7 +385,7 @@ public class UserActivity extends AppCompatActivity {
 
         popupRegistration.show();
 
-        final UserControle userControle = new UserControle();
+        final Validation validation = new Validation();
 
         txtPseudo.addTextChangedListener(new TextWatcher() {
 
@@ -397,12 +397,12 @@ public class UserActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 imgValidPseudo.setVisibility(View.VISIBLE);
-                if (userControle.isValidPseudo(txtPseudo.getText().toString().trim())) {
+                if (validation.isValidPseudo(txtPseudo.getText().toString().trim())) {
                     // is true
                     imgValidPseudo.setColorFilter(getResources().getColor(R.color.green_apple));
                     pseudoOK[0] = true;
 
-                } else if(!userControle.isValidPseudo(txtPseudo.getText().toString().trim())) {
+                } else if(!validation.isValidPseudo(txtPseudo.getText().toString().trim())) {
                     // is false
                     imgValidPseudo.setColorFilter(getResources().getColor(R.color.pink));
                 }
@@ -424,12 +424,12 @@ public class UserActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 imgValidPassword.setVisibility(View.VISIBLE);
-                if (userControle.isValidPassword(txtPassword.getText().toString().trim())) {
+                if (validation.isValidPassword(txtPassword.getText().toString().trim())) {
                     // is true
                     imgValidPassword.setColorFilter(getResources().getColor(R.color.green_apple));
                     passwordOK[0] = true;
 
-                } else if(!userControle.isValidPassword(txtPassword.getText().toString().trim())) {
+                } else if(!validation.isValidPassword(txtPassword.getText().toString().trim())) {
                     // is false
                     imgValidPassword.setColorFilter(getResources().getColor(R.color.pink));
                 }
@@ -452,12 +452,12 @@ public class UserActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 imgValidMail.setVisibility(View.VISIBLE);
-                if (userControle.isValidMail(txtMail.getText().toString().trim())) {
+                if (validation.isValidMail(txtMail.getText().toString().trim())) {
                     // is true
                     imgValidMail.setColorFilter(getResources().getColor(R.color.green_apple));
                     mailOK[0] = true;
 
-                } else if(!userControle.isValidMail(txtMail.getText().toString().trim())) {
+                } else if(!validation.isValidMail(txtMail.getText().toString().trim())) {
                     // is false
                     imgValidMail.setColorFilter(getResources().getColor(R.color.pink));
                 }

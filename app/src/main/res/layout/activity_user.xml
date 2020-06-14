@@ -78,7 +78,7 @@
         android:id="@+id/menuBis"
         android:layout_width="match_parent"
         android:layout_height="110dp"
-        android:background="@color/green_middle_dark"
+        android:background="@color/green_very_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -214,7 +214,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/green_very_dark"
+        android:backgroundTint="@color/green_ultra_dark"
         android:src="@drawable/icon_navbar_add"
         android:tint="@color/green_dark"
         app:borderWidth="0.5dp"

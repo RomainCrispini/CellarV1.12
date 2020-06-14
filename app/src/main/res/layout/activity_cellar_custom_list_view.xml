@@ -11,7 +11,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
-        app:cardBackgroundColor="@color/green_light"
+        app:cardBackgroundColor="@color/green_middle_light"
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,7 +68,7 @@
                     android:layout_margin="5dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:background="@color/green_third_light" />
+                    android:background="@color/green_middle_dark" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -97,7 +97,7 @@
                                 android:backgroundTint="@color/transparent"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/icone_menubis_millesime"
-                                android:tint="@color/green_third_light" />
+                                android:tint="@color/green_middle_dark" />
 
                             <LinearLayout
                                 android:layout_width="fill_parent"
@@ -144,7 +144,7 @@
                                 android:backgroundTint="@color/transparent"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/icone_menubis_apogee"
-                                android:tint="@color/green_third_light" />
+                                android:tint="@color/green_middle_dark" />
 
                             <LinearLayout
                                 android:layout_width="fill_parent"
@@ -189,7 +189,7 @@
                                 android:backgroundTint="@color/transparent"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/icone_menubis_quantite"
-                                android:tint="@color/green_third_light" />
+                                android:tint="@color/green_middle_dark" />
 
                             <LinearLayout
                                 android:layout_width="fill_parent"
@@ -238,7 +238,7 @@
                     android:layout_height="46dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    app:cardBackgroundColor="@color/green_third_light"
+                    app:cardBackgroundColor="@color/green_dark"
                     app:cardCornerRadius="23dp"
                     app:cardElevation="0dp">
 
@@ -256,7 +256,7 @@
                     android:layout_height="45dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    app:cardBackgroundColor="@color/green_third_light"
+                    app:cardBackgroundColor="@color/green_dark"
                     app:cardCornerRadius="23dp"
                     app:cardElevation="0dp">
 

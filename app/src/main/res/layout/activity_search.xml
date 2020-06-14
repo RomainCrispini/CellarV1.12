@@ -22,7 +22,7 @@
         android:id="@+id/sortMenu"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@color/green_middle_dark"
+        android:background="@color/green_very_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -35,46 +35,39 @@
             android:layout_marginRight="10dp"
             android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="10dp"
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/fond_textinput"
-                android:backgroundTint="@color/green_dark"
-                android:orientation="horizontal"
-                android:textColorHint="@color/green_light"
-                app:hintTextColor="@color/green_light"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:cardBackgroundColor="@color/green_dark"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp">
 
                 <EditText
                     android:id="@+id/txtSearch"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_marginLeft="20dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    android:paddingLeft="10dp"
                     android:background="@null"
-                    android:backgroundTint="@color/transparent"
+                    android:drawableTint="@color/green_light"
                     android:fontFamily="@font/yanone_kaffeesatz"
                     android:hint="Rechercher..."
-                    android:inputType="text"
+                    android:textColorHint="@color/green_very_light"
+                    android:inputType="text|textNoSuggestions"
                     android:maxLines="1"
-                    android:textColor="@color/green_apple"
+                    android:textColor="@color/green_very_light"
                     android:textCursorDrawable="@color/green_light"
-                    android:textSize="14dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:textSize="18dp" />
+
+            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:layout_width="100dp"
+                android:layout_width="50dp"
                 android:layout_height="30dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@color/green_very_dark"
-                app:cardCornerRadius="15dp"
+                app:cardBackgroundColor="@color/green_ultra_dark"
+                app:cardCornerRadius="8dp"
                 app:cardElevation="0dp">
 
                 <ImageButton
@@ -88,7 +81,6 @@
                     android:tint="@color/green_third_light" />
 
             </androidx.cardview.widget.CardView>
-
 
         </LinearLayout>
 
@@ -154,7 +146,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/green_very_dark"
+        android:backgroundTint="@color/green_ultra_dark"
         android:src="@drawable/icon_navbar_add"
         android:tint="@color/green_dark"
         app:borderWidth="0.5dp"

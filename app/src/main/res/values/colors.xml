@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <color name="colorPrimary">#C8E6C9</color>
-    <color name="colorPrimaryDark">#2F3B40</color>
+    <color name="colorPrimaryDark">#232D30</color>
     <color name="colorPrimaryLight">#FBFFFC</color>
     <color name="colorSecondary">#222A2E</color>
     <color name="colorSecondaryDark">#519657</color>
@@ -13,6 +13,7 @@
     <color name="transparent">#00000000</color>
     <color name="grey_very_light">#ECECEC</color>
     <color name="grey_light">#CDCDCD</color>
+    <color name="green_ultra_dark">#232D30</color>
     <color name="green_very_dark">#2F3B40</color>
     <color name="green_middle_dark">#38474E</color>
     <color name="green_dark">#43545c</color>
