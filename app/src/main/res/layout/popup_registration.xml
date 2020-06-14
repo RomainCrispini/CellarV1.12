@@ -29,7 +29,7 @@
                 android:layout_height="70dp"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_marginBottom="5dp"
-                android:src="@drawable/popup_update_bottle"
+                android:src="@drawable/popup_user_registration"
                 android:tint="@color/green_apple" />
 
             <TextView
