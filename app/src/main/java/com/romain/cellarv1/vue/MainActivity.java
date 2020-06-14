@@ -40,6 +40,10 @@ import com.romain.cellarv1.outils.CurvedBottomNavigationView;
 import com.romain.cellarv1.outils.Tools;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -417,20 +421,20 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
 
-        /*
+
 
 
         Map<String, List<Double>> villes = new HashMap<>();
 
-        List<Double> latlngBordeaux = new ArrayList<Double>();
+        List<Double> latlngBordeaux = new ArrayList<>();
         latlngBordeaux.add(44.833333);
         latlngBordeaux.add(-0.566667);
 
-        List<Double> latlngParis = new ArrayList<Double>();
+        List<Double> latlngParis = new ArrayList<>();
         latlngParis.add(48.856697);
         latlngParis.add(2.351462);
 
-        List<Double> latlngLyon = new ArrayList<Double>();
+        List<Double> latlngLyon = new ArrayList<>();
         latlngLyon.add(45.757814);
         latlngLyon.add(4.832011);
 
@@ -448,10 +452,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             //Double longitude = coordonnees.get(1);
             LatLng ville = new LatLng(coordonnees.get(0), coordonnees.get(1));
             MarkerOptions markerOptions = new MarkerOptions().position(ville).title(nomVille);
-            map.addMarker(markerOptions);
+            googleMap.addMarker(markerOptions);
         }
 
-         */
+
 
 
 

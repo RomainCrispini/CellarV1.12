@@ -16,6 +16,7 @@ import android.widget.CompoundButton;
 import androidx.appcompat.widget.SwitchCompat;
 
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -44,13 +45,16 @@ import java.util.Arrays;
 public class UserActivity extends AppCompatActivity {
 
     // Déclaration de PopupRegistration et de ses éléments
-    private ImageButton btnRegistration;
     private Dialog popupRegistration;
     private Dialog popupSuccess;
     private Dialog popupRegistrationDenie;
     private EditText txtPseudo, txtPassword, txtMail;
     private ImageView imgValidPseudo, imgValidPassword, imgValidMail;
     private ImageButton btnAccept, btnDenie;
+
+    // MenuBis
+    private ImageButton btnUserRegistration, btnUserConnection;
+    private FrameLayout menuBis;
 
     // Déclaration de la Custom FAB et de ses caractéristiques
     private FloatingActionButton fabWineMenu, fabRed, fabRose, fabWhite, fabChamp;
@@ -111,6 +115,11 @@ public class UserActivity extends AppCompatActivity {
 
     private void init() {
 
+        // Animation entrante du menuBis
+        FrameLayout menuBis = (FrameLayout) findViewById(R.id.menuBis);
+        menuBis.setTranslationY(300f);
+        menuBis.animate().translationY(0f).setInterpolator(interpolator).setDuration(1500).start();
+
         initPopupRegistration();
         initCurvedNavigationView();
         initFabWineMenu();
@@ -144,9 +153,9 @@ public class UserActivity extends AppCompatActivity {
         btnAccept = (ImageButton) popupRegistration.findViewById(R.id.btnAccept);
         btnDenie = (ImageButton) popupRegistration.findViewById(R.id.btnDenie);
 
-        btnRegistration = (ImageButton) findViewById(R.id.btnRegistration);
+        btnUserRegistration = (ImageButton) findViewById(R.id.btnUserRegistration);
 
-        btnRegistration.setOnClickListener(new ImageButton.OnClickListener() {
+        btnUserRegistration.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
                 displayPopupRegistration();
@@ -324,6 +333,186 @@ public class UserActivity extends AppCompatActivity {
         User user = new User(null, pseudo, password, mail, avatarLarge, avatarSmall);
         AccesLocalDbUsers accesLocalDbUsers = new AccesLocalDbUsers(UserActivity.this);
         user.setId(accesLocalDbUsers.addUser(user));
+
+    }
+
+    private void initPopupConnection() {
+
+        popupSuccess = new Dialog(UserActivity.this);
+        popupSuccess.setContentView(R.layout.popup_success_add_bottle);
+        popupSuccess.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupSuccess.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
+        popupRegistrationDenie = new Dialog(UserActivity.this);
+        popupRegistrationDenie.setContentView(R.layout.popup_registration_denie);
+        popupRegistrationDenie.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupRegistrationDenie.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
+        popupRegistration = new Dialog(UserActivity.this);
+        popupRegistration.setContentView(R.layout.popup_registration);
+        popupRegistration.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupRegistration.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        txtPseudo = (EditText) popupRegistration.findViewById(R.id.txtPseudo);
+        txtPassword = (EditText) popupRegistration.findViewById(R.id.txtPassword);
+        txtMail = (EditText) popupRegistration.findViewById(R.id.txtMail);
+        imgValidPseudo = (ImageView) popupRegistration.findViewById(R.id.imgValidPseudo);
+        imgValidPassword = (ImageView) popupRegistration.findViewById(R.id.imgValidPassword);
+        imgValidMail = (ImageView) popupRegistration.findViewById(R.id.imgValidMail);
+        btnAccept = (ImageButton) popupRegistration.findViewById(R.id.btnAccept);
+        btnDenie = (ImageButton) popupRegistration.findViewById(R.id.btnDenie);
+
+        btnUserRegistration = (ImageButton) findViewById(R.id.btnUserRegistration);
+
+        btnUserRegistration.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayPopupRegistration();
+            }
+        });
+
+    }
+
+    private void displayPopupConnection() {
+
+        imgValidPseudo.setVisibility(View.INVISIBLE);
+        imgValidPassword.setVisibility(View.INVISIBLE);
+        imgValidMail.setVisibility(View.INVISIBLE);
+
+        // Validation des champs texte
+        final boolean[] pseudoOK = {false};
+        final boolean[] passwordOK = {false};
+        final boolean[] mailOK = {false};
+
+        popupRegistration.show();
+
+        final UserControle userControle = new UserControle();
+
+        txtPseudo.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                imgValidPseudo.setVisibility(View.VISIBLE);
+                if (userControle.isValidPseudo(txtPseudo.getText().toString().trim())) {
+                    // is true
+                    imgValidPseudo.setColorFilter(getResources().getColor(R.color.green_apple));
+                    pseudoOK[0] = true;
+
+                } else if(!userControle.isValidPseudo(txtPseudo.getText().toString().trim())) {
+                    // is false
+                    imgValidPseudo.setColorFilter(getResources().getColor(R.color.pink));
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+        });
+
+        txtPassword.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                imgValidPassword.setVisibility(View.VISIBLE);
+                if (userControle.isValidPassword(txtPassword.getText().toString().trim())) {
+                    // is true
+                    imgValidPassword.setColorFilter(getResources().getColor(R.color.green_apple));
+                    passwordOK[0] = true;
+
+                } else if(!userControle.isValidPassword(txtPassword.getText().toString().trim())) {
+                    // is false
+                    imgValidPassword.setColorFilter(getResources().getColor(R.color.pink));
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+        });
+
+        txtMail.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                imgValidMail.setVisibility(View.VISIBLE);
+                if (userControle.isValidMail(txtMail.getText().toString().trim())) {
+                    // is true
+                    imgValidMail.setColorFilter(getResources().getColor(R.color.green_apple));
+                    mailOK[0] = true;
+
+                } else if(!userControle.isValidMail(txtMail.getText().toString().trim())) {
+                    // is false
+                    imgValidMail.setColorFilter(getResources().getColor(R.color.pink));
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+        });
+
+        // Gestion des buttons Accept & Denie
+        btnAccept.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(pseudoOK[0] == true && passwordOK[0] == true && mailOK[0] == true) {
+                    addUser();
+                    popupRegistration.dismiss();
+                    popupSuccess.show();
+                    // Permet de faire aparaitre le panneau 1 seconde sans interventions
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (popupSuccess.isShowing()) {
+                                popupSuccess.dismiss();
+                            }
+                        }
+                    }, 1000);
+                } else {
+                    popupRegistrationDenie.show();
+                    // Permet de faire aparaitre le panneau 1 seconde sans interventions
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (popupRegistrationDenie.isShowing()) {
+                                popupRegistrationDenie.dismiss();
+                            }
+                        }
+                    }, 1000);
+
+                }
+            }
+        });
+
+
+        btnDenie.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                popupRegistration.dismiss();
+
+            }
+        });
 
     }
 

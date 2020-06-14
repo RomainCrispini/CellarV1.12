@@ -30,7 +30,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:backgroundTint="@color/transparent"
-                android:tint="@color/green_light"
+                android:tint="@color/green_apple"
                 android:scaleType="centerCrop"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/icone_menubis_millesime" />

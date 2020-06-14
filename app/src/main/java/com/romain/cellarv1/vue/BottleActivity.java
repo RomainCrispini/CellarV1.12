@@ -95,6 +95,7 @@ public class BottleActivity extends AppCompatActivity {
         btnUpdateBottle = (ImageButton) findViewById(R.id.btnUpdateBottle);
         btnDeleteBottle = (ImageButton) findViewById(R.id.btnDeleteBottle);
 
+        // Animation entrante du menuBis
         FrameLayout menuBis = (FrameLayout) findViewById(R.id.menuBis);
         menuBis.setTranslationY(300f);
         menuBis.animate().translationY(0f).setInterpolator(interpolator).setDuration(1500).start();

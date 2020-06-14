@@ -8,6 +8,147 @@
     android:background="@drawable/dark_gradient_background"
     tools:context=".vue.UserActivity">
 
+    <LinearLayout
+        android:id="@+id/layoutSwitchMode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="80dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/textLightMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="1dp"
+            android:fontFamily="@font/yanone_kaffeesatz"
+            android:text="Light Mode"
+            android:textColor="@color/green_very_light"
+            android:textSize="15sp" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchDarkMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:checked="true"
+            android:gravity="center"
+            android:textOff="Off"
+            android:textOn="On" />
+
+        <TextView
+            android:id="@+id/textDarkMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="1dp"
+            android:fontFamily="@font/yanone_kaffeesatz"
+            android:text="Dark Mode"
+            android:textSize="15sp"
+            tools:ignore="MissingConstraints" />
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/autocomplete2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/autocomplete"
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment" />
+
+    <AutoCompleteTextView
+        android:id="@+id/autocomplete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/curvedBottomNavigationView" />
+
+    <FrameLayout
+        android:id="@+id/menuBis"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:background="@color/green_middle_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="top|center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center_horizontal|end"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/yanone_kaffeesatz"
+                    android:text="Enregistrement"
+                    android:textColor="@color/green_light"/>
+
+                <ImageButton
+                    android:id="@+id/btnUserRegistration"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="35dp"
+                    android:background="@drawable/popup_user_registration"
+                    android:backgroundTint="@color/green_light" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|start"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btnUserConnection"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="35dp"
+                    android:background="@drawable/popup_user_connection"
+                    android:backgroundTint="@color/green_light" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/yanone_kaffeesatz"
+                    android:text="Mon compte"
+                    android:textColor="@color/green_light"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
@@ -99,99 +240,5 @@
         app:itemIconTint="@drawable/selector_curved_bottom_nav_view"
         app:menu="@menu/bottom_nav_menu">
     </com.romain.cellarv1.outils.CurvedBottomNavigationView>
-
-    <LinearLayout
-        android:id="@+id/layoutSwitchMode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="80dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <TextView
-            android:id="@+id/textLightMode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_marginRight="3dp"
-            android:layout_marginBottom="1dp"
-            android:fontFamily="@font/yanone_kaffeesatz"
-            android:text="Light Mode"
-            android:textColor="@color/green_very_light"
-            android:textSize="15sp" />
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switchDarkMode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:checked="true"
-            android:gravity="center"
-            android:textOff="Off"
-            android:textOn="On" />
-
-        <TextView
-            android:id="@+id/textDarkMode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_marginLeft="8dp"
-            android:layout_marginBottom="1dp"
-            android:fontFamily="@font/yanone_kaffeesatz"
-            android:text="Dark Mode"
-            android:textSize="15sp"
-            tools:ignore="MissingConstraints" />
-    </LinearLayout>
-
-    <ImageButton
-        android:id="@+id/btnRegistration"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center_horizontal"
-        android:backgroundTint="@color/transparent"
-        android:tint="@color/pink_light"
-        android:scaleType="centerCrop"
-        android:layout_gravity="center"
-        android:src="@drawable/popup_success"
-        app:layout_constraintTop_toBottomOf="@id/layoutSwitchMode"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <fragment
-        android:id="@+id/autocomplete2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/autocomplete"
-        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment" />
-
-    <AutoCompleteTextView
-        android:id="@+id/autocomplete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:text=""
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/curvedBottomNavigationView" />
-
-    <!--
-    <ImageView
-        android:id="@+id/imageTest"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:background="@color/green_apple"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/> -->
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

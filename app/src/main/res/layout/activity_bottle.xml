@@ -519,7 +519,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:gravity="center_horizontal"
+                android:gravity="center_horizontal|end"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -536,6 +536,7 @@
                     android:id="@+id/btnUpdateBottle"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_marginRight="35dp"
                     android:background="@drawable/popup_update_bottle"
                     android:backgroundTint="@color/orange" />
 
@@ -544,7 +545,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
+                android:gravity="center_horizontal|start"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
@@ -553,6 +554,7 @@
                     android:id="@+id/btnDeleteBottle"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_marginLeft="35dp"
                     android:background="@drawable/popup_takeout_bottle"
                     android:backgroundTint="@color/pink" />
 
