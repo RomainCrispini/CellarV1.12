@@ -60,13 +60,13 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             app:cardBackgroundColor="@color/grey_light"
-                            app:cardCornerRadius="115dp"
+                            app:cardCornerRadius="116dp"
                             app:cardElevation="0dp">
 
                             <ImageView
                                 android:id="@+id/imageWineColor"
-                                android:layout_width="230dp"
-                                android:layout_height="230dp"
+                                android:layout_width="232dp"
+                                android:layout_height="232dp"
                                 android:layout_gravity="center"
                                 android:elevation="0dp" />
                         </androidx.cardview.widget.CardView>
