@@ -44,13 +44,15 @@ import java.util.Arrays;
 
 public class UserActivity extends AppCompatActivity {
 
-    // Déclaration de PopupRegistration et de ses éléments
-    private Dialog popupRegistration;
+    // Déclaration de PopupRegistration, popupConnection et de ses éléments
+    private Dialog popupRegistration, popupConnection;
     private Dialog popupSuccess;
     private Dialog popupRegistrationDenie;
-    private EditText txtPseudo, txtPassword, txtMail;
-    private ImageView imgValidPseudo, imgValidPassword, imgValidMail;
-    private ImageButton btnAccept, btnDenie;
+    private EditText txtPseudoRegistration, txtPasswordRegistration, txtMailRegistration;
+    private EditText txtPseudoConnection, txtPasswordConnection, txtMailConnection;
+    private ImageView imgValidPseudoRegistration, imgValidPasswordRegistration, imgValidMailRegistration;
+    private ImageView imgValidPseudoConnection, imgValidPasswordConnection, imgValidMailConnection;
+    private ImageButton btnRegistrationAccept, btnRegistrationDenie, btnConnectionAccept, btnConnectionDenie;
 
     // MenuBis
     private ImageButton btnUserRegistration, btnUserConnection;
@@ -121,6 +123,7 @@ public class UserActivity extends AppCompatActivity {
         menuBis.animate().translationY(0f).setInterpolator(interpolator).setDuration(1500).start();
 
         initPopupRegistration();
+        initPopupConnection();
         initCurvedNavigationView();
         initFabWineMenu();
         getFabWineMenuValue();
@@ -136,22 +139,22 @@ public class UserActivity extends AppCompatActivity {
         popupSuccess.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
         popupRegistrationDenie = new Dialog(UserActivity.this);
-        popupRegistrationDenie.setContentView(R.layout.popup_registration_denie);
+        popupRegistrationDenie.setContentView(R.layout.popup_user_registration_denie);
         popupRegistrationDenie.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popupRegistrationDenie.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
         popupRegistration = new Dialog(UserActivity.this);
-        popupRegistration.setContentView(R.layout.popup_registration);
+        popupRegistration.setContentView(R.layout.popup_user_registration);
         popupRegistration.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popupRegistration.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        txtPseudo = (EditText) popupRegistration.findViewById(R.id.txtPseudo);
-        txtPassword = (EditText) popupRegistration.findViewById(R.id.txtPassword);
-        txtMail = (EditText) popupRegistration.findViewById(R.id.txtMail);
-        imgValidPseudo = (ImageView) popupRegistration.findViewById(R.id.imgValidPseudo);
-        imgValidPassword = (ImageView) popupRegistration.findViewById(R.id.imgValidPassword);
-        imgValidMail = (ImageView) popupRegistration.findViewById(R.id.imgValidMail);
-        btnAccept = (ImageButton) popupRegistration.findViewById(R.id.btnAccept);
-        btnDenie = (ImageButton) popupRegistration.findViewById(R.id.btnDenie);
+        txtPseudoRegistration = (EditText) popupRegistration.findViewById(R.id.txtPseudo);
+        txtPasswordRegistration = (EditText) popupRegistration.findViewById(R.id.txtPassword);
+        txtMailRegistration = (EditText) popupRegistration.findViewById(R.id.txtMail);
+        imgValidPseudoRegistration = (ImageView) popupRegistration.findViewById(R.id.imgValidPseudo);
+        imgValidPasswordRegistration = (ImageView) popupRegistration.findViewById(R.id.imgValidPassword);
+        imgValidMailRegistration = (ImageView) popupRegistration.findViewById(R.id.imgValidMail);
+        btnRegistrationAccept = (ImageButton) popupRegistration.findViewById(R.id.btnAccept);
+        btnRegistrationDenie = (ImageButton) popupRegistration.findViewById(R.id.btnDenie);
 
         btnUserRegistration = (ImageButton) findViewById(R.id.btnUserRegistration);
 
@@ -166,20 +169,20 @@ public class UserActivity extends AppCompatActivity {
 
     private void displayPopupRegistration() {
 
-        imgValidPseudo.setVisibility(View.INVISIBLE);
-        imgValidPassword.setVisibility(View.INVISIBLE);
-        imgValidMail.setVisibility(View.INVISIBLE);
+        imgValidPseudoRegistration.setVisibility(View.INVISIBLE);
+        imgValidPasswordRegistration.setVisibility(View.INVISIBLE);
+        imgValidMailRegistration.setVisibility(View.INVISIBLE);
 
-        // Validation des champs texte
-        final boolean[] pseudoOK = {false};
-        final boolean[] passwordOK = {false};
-        final boolean[] mailOK = {false};
+        // Pour check la validation des champs
+        final boolean[] pseudoRegistrationOK = {false};
+        final boolean[] passwordRegistrationOK = {false};
+        final boolean[] mailRegistrationOK = {false};
 
         popupRegistration.show();
 
         final Validation validation = new Validation();
 
-        txtPseudo.addTextChangedListener(new TextWatcher() {
+        txtPseudoRegistration.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -188,15 +191,15 @@ public class UserActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                imgValidPseudo.setVisibility(View.VISIBLE);
-                if (validation.isValidPseudo(txtPseudo.getText().toString().trim())) {
+                imgValidPseudoRegistration.setVisibility(View.VISIBLE);
+                if (validation.isValidPseudo(txtPseudoRegistration.getText().toString().trim())) {
                     // is true
-                    imgValidPseudo.setColorFilter(getResources().getColor(R.color.green_apple));
-                    pseudoOK[0] = true;
+                    imgValidPseudoRegistration.setColorFilter(getResources().getColor(R.color.green_apple));
+                    pseudoRegistrationOK[0] = true;
 
-                } else if(!validation.isValidPseudo(txtPseudo.getText().toString().trim())) {
+                } else if(!validation.isValidPseudo(txtPseudoRegistration.getText().toString().trim())) {
                     // is false
-                    imgValidPseudo.setColorFilter(getResources().getColor(R.color.pink));
+                    imgValidPseudoRegistration.setColorFilter(getResources().getColor(R.color.pink));
                 }
             }
 
@@ -207,7 +210,7 @@ public class UserActivity extends AppCompatActivity {
 
         });
 
-        txtPassword.addTextChangedListener(new TextWatcher() {
+        txtPasswordRegistration.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -215,15 +218,15 @@ public class UserActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                imgValidPassword.setVisibility(View.VISIBLE);
-                if (validation.isValidPassword(txtPassword.getText().toString().trim())) {
+                imgValidPasswordRegistration.setVisibility(View.VISIBLE);
+                if (validation.isValidPassword(txtPasswordRegistration.getText().toString().trim())) {
                     // is true
-                    imgValidPassword.setColorFilter(getResources().getColor(R.color.green_apple));
-                    passwordOK[0] = true;
+                    imgValidPasswordRegistration.setColorFilter(getResources().getColor(R.color.green_apple));
+                    passwordRegistrationOK[0] = true;
 
-                } else if(!validation.isValidPassword(txtPassword.getText().toString().trim())) {
+                } else if(!validation.isValidPassword(txtPasswordRegistration.getText().toString().trim())) {
                     // is false
-                    imgValidPassword.setColorFilter(getResources().getColor(R.color.pink));
+                    imgValidPasswordRegistration.setColorFilter(getResources().getColor(R.color.pink));
                 }
             }
 
@@ -234,7 +237,7 @@ public class UserActivity extends AppCompatActivity {
 
         });
 
-        txtMail.addTextChangedListener(new TextWatcher() {
+        txtMailRegistration.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -243,15 +246,15 @@ public class UserActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                imgValidMail.setVisibility(View.VISIBLE);
-                if (validation.isValidMail(txtMail.getText().toString().trim())) {
+                imgValidMailRegistration.setVisibility(View.VISIBLE);
+                if (validation.isValidMail(txtMailRegistration.getText().toString().trim())) {
                     // is true
-                    imgValidMail.setColorFilter(getResources().getColor(R.color.green_apple));
-                    mailOK[0] = true;
+                    imgValidMailRegistration.setColorFilter(getResources().getColor(R.color.green_apple));
+                    mailRegistrationOK[0] = true;
 
-                } else if(!validation.isValidMail(txtMail.getText().toString().trim())) {
+                } else if(!validation.isValidMail(txtMailRegistration.getText().toString().trim())) {
                     // is false
-                    imgValidMail.setColorFilter(getResources().getColor(R.color.pink));
+                    imgValidMailRegistration.setColorFilter(getResources().getColor(R.color.pink));
                 }
             }
 
@@ -263,11 +266,11 @@ public class UserActivity extends AppCompatActivity {
         });
 
         // Gestion des buttons Accept & Denie
-        btnAccept.setOnClickListener(new ImageButton.OnClickListener() {
+        btnRegistrationAccept.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(pseudoOK[0] == true && passwordOK[0] == true && mailOK[0] == true) {
+                if(pseudoRegistrationOK[0] == true && passwordRegistrationOK[0] == true && mailRegistrationOK[0] == true) {
                     addUser();
                     popupRegistration.dismiss();
                     popupSuccess.show();
@@ -297,7 +300,7 @@ public class UserActivity extends AppCompatActivity {
         });
 
 
-        btnDenie.setOnClickListener(new ImageButton.OnClickListener() {
+        btnRegistrationDenie.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -310,9 +313,9 @@ public class UserActivity extends AppCompatActivity {
 
     private void addUser() {
 
-        txtPseudo = (EditText) popupRegistration.findViewById(R.id.txtPseudo);
-        txtPassword = (EditText) popupRegistration.findViewById(R.id.txtPassword);
-        txtMail = (EditText) popupRegistration.findViewById(R.id.txtMail);
+        txtPseudoRegistration = (EditText) popupRegistration.findViewById(R.id.txtPseudo);
+        txtPasswordRegistration = (EditText) popupRegistration.findViewById(R.id.txtPassword);
+        txtMailRegistration = (EditText) popupRegistration.findViewById(R.id.txtMail);
 
         String pseudo = "";
         String password = "";
@@ -322,9 +325,9 @@ public class UserActivity extends AppCompatActivity {
 
         // Update des champs texte
         try {
-            pseudo = txtPseudo.getText().toString();
-            password = txtPassword.getText().toString();
-            mail = txtMail.getText().toString();
+            pseudo = txtPseudoRegistration.getText().toString();
+            password = txtPasswordRegistration.getText().toString();
+            mail = txtMailRegistration.getText().toString();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -338,35 +341,25 @@ public class UserActivity extends AppCompatActivity {
 
     private void initPopupConnection() {
 
-        popupSuccess = new Dialog(UserActivity.this);
-        popupSuccess.setContentView(R.layout.popup_success_add_bottle);
-        popupSuccess.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        popupSuccess.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        popupConnection = new Dialog(UserActivity.this);
+        popupConnection.setContentView(R.layout.popup_user_connection);
+        popupConnection.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupConnection.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        txtPseudoConnection = (EditText) popupConnection.findViewById(R.id.txtPseudo);
+        txtPasswordConnection = (EditText) popupConnection.findViewById(R.id.txtPassword);
+        txtMailConnection = (EditText) popupConnection.findViewById(R.id.txtMail);
+        imgValidPseudoConnection = (ImageView) popupConnection.findViewById(R.id.imgValidPseudo);
+        imgValidPasswordConnection = (ImageView) popupConnection.findViewById(R.id.imgValidPassword);
+        imgValidMailConnection = (ImageView) popupConnection.findViewById(R.id.imgValidMail);
+        btnConnectionAccept = (ImageButton) popupConnection.findViewById(R.id.btnAccept);
+        btnConnectionDenie = (ImageButton) popupConnection.findViewById(R.id.btnDenie);
 
-        popupRegistrationDenie = new Dialog(UserActivity.this);
-        popupRegistrationDenie.setContentView(R.layout.popup_registration_denie);
-        popupRegistrationDenie.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        popupRegistrationDenie.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        btnUserConnection = (ImageButton) findViewById(R.id.btnUserConnection);
 
-        popupRegistration = new Dialog(UserActivity.this);
-        popupRegistration.setContentView(R.layout.popup_registration);
-        popupRegistration.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        popupRegistration.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        txtPseudo = (EditText) popupRegistration.findViewById(R.id.txtPseudo);
-        txtPassword = (EditText) popupRegistration.findViewById(R.id.txtPassword);
-        txtMail = (EditText) popupRegistration.findViewById(R.id.txtMail);
-        imgValidPseudo = (ImageView) popupRegistration.findViewById(R.id.imgValidPseudo);
-        imgValidPassword = (ImageView) popupRegistration.findViewById(R.id.imgValidPassword);
-        imgValidMail = (ImageView) popupRegistration.findViewById(R.id.imgValidMail);
-        btnAccept = (ImageButton) popupRegistration.findViewById(R.id.btnAccept);
-        btnDenie = (ImageButton) popupRegistration.findViewById(R.id.btnDenie);
-
-        btnUserRegistration = (ImageButton) findViewById(R.id.btnUserRegistration);
-
-        btnUserRegistration.setOnClickListener(new ImageButton.OnClickListener() {
+        btnUserConnection.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayPopupRegistration();
+                displayPopupConnection();
             }
         });
 
@@ -374,20 +367,20 @@ public class UserActivity extends AppCompatActivity {
 
     private void displayPopupConnection() {
 
-        imgValidPseudo.setVisibility(View.INVISIBLE);
-        imgValidPassword.setVisibility(View.INVISIBLE);
-        imgValidMail.setVisibility(View.INVISIBLE);
+        imgValidPseudoConnection.setVisibility(View.INVISIBLE);
+        imgValidPasswordConnection.setVisibility(View.INVISIBLE);
+        imgValidMailConnection.setVisibility(View.INVISIBLE);
 
         // Validation des champs texte
-        final boolean[] pseudoOK = {false};
-        final boolean[] passwordOK = {false};
-        final boolean[] mailOK = {false};
+        final boolean[] pseudoConnectionOK = {false};
+        final boolean[] passwordConnectionOK = {false};
+        final boolean[] mailConnectionOK = {false};
 
-        popupRegistration.show();
+        popupConnection.show();
 
         final Validation validation = new Validation();
 
-        txtPseudo.addTextChangedListener(new TextWatcher() {
+        txtPseudoConnection.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -396,15 +389,15 @@ public class UserActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                imgValidPseudo.setVisibility(View.VISIBLE);
-                if (validation.isValidPseudo(txtPseudo.getText().toString().trim())) {
+                imgValidPseudoConnection.setVisibility(View.VISIBLE);
+                if (validation.isValidPseudo(txtPseudoConnection.getText().toString().trim())) {
                     // is true
-                    imgValidPseudo.setColorFilter(getResources().getColor(R.color.green_apple));
-                    pseudoOK[0] = true;
+                    imgValidPseudoConnection.setColorFilter(getResources().getColor(R.color.green_apple));
+                    pseudoConnectionOK[0] = true;
 
-                } else if(!validation.isValidPseudo(txtPseudo.getText().toString().trim())) {
+                } else if(!validation.isValidPseudo(txtPseudoConnection.getText().toString().trim())) {
                     // is false
-                    imgValidPseudo.setColorFilter(getResources().getColor(R.color.pink));
+                    imgValidPseudoConnection.setColorFilter(getResources().getColor(R.color.pink));
                 }
             }
 
@@ -415,7 +408,7 @@ public class UserActivity extends AppCompatActivity {
 
         });
 
-        txtPassword.addTextChangedListener(new TextWatcher() {
+        txtPasswordConnection.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -423,15 +416,15 @@ public class UserActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                imgValidPassword.setVisibility(View.VISIBLE);
-                if (validation.isValidPassword(txtPassword.getText().toString().trim())) {
+                imgValidPasswordConnection.setVisibility(View.VISIBLE);
+                if (validation.isValidPassword(txtPasswordConnection.getText().toString().trim())) {
                     // is true
-                    imgValidPassword.setColorFilter(getResources().getColor(R.color.green_apple));
-                    passwordOK[0] = true;
+                    imgValidPasswordConnection.setColorFilter(getResources().getColor(R.color.green_apple));
+                    passwordConnectionOK[0] = true;
 
-                } else if(!validation.isValidPassword(txtPassword.getText().toString().trim())) {
+                } else if(!validation.isValidPassword(txtPasswordConnection.getText().toString().trim())) {
                     // is false
-                    imgValidPassword.setColorFilter(getResources().getColor(R.color.pink));
+                    imgValidPasswordConnection.setColorFilter(getResources().getColor(R.color.pink));
                 }
             }
 
@@ -442,7 +435,7 @@ public class UserActivity extends AppCompatActivity {
 
         });
 
-        txtMail.addTextChangedListener(new TextWatcher() {
+        txtMailConnection.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -451,15 +444,15 @@ public class UserActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                imgValidMail.setVisibility(View.VISIBLE);
-                if (validation.isValidMail(txtMail.getText().toString().trim())) {
+                imgValidMailConnection.setVisibility(View.VISIBLE);
+                if (validation.isValidMail(txtMailConnection.getText().toString().trim())) {
                     // is true
-                    imgValidMail.setColorFilter(getResources().getColor(R.color.green_apple));
-                    mailOK[0] = true;
+                    imgValidMailConnection.setColorFilter(getResources().getColor(R.color.green_apple));
+                    mailConnectionOK[0] = true;
 
-                } else if(!validation.isValidMail(txtMail.getText().toString().trim())) {
+                } else if(!validation.isValidMail(txtMailConnection.getText().toString().trim())) {
                     // is false
-                    imgValidMail.setColorFilter(getResources().getColor(R.color.pink));
+                    imgValidMailConnection.setColorFilter(getResources().getColor(R.color.pink));
                 }
             }
 
@@ -471,13 +464,13 @@ public class UserActivity extends AppCompatActivity {
         });
 
         // Gestion des buttons Accept & Denie
-        btnAccept.setOnClickListener(new ImageButton.OnClickListener() {
+        btnConnectionAccept.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(pseudoOK[0] == true && passwordOK[0] == true && mailOK[0] == true) {
+                if(pseudoConnectionOK[0] == true && passwordConnectionOK[0] == true && mailConnectionOK[0] == true) {
                     addUser();
-                    popupRegistration.dismiss();
+                    popupConnection.dismiss();
                     popupSuccess.show();
                     // Permet de faire aparaitre le panneau 1 seconde sans interventions
                     new Handler().postDelayed(new Runnable() {
@@ -505,11 +498,11 @@ public class UserActivity extends AppCompatActivity {
         });
 
 
-        btnDenie.setOnClickListener(new ImageButton.OnClickListener() {
+        btnConnectionDenie.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                popupRegistration.dismiss();
+                popupConnection.dismiss();
 
             }
         });

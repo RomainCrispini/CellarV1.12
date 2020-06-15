@@ -106,7 +106,7 @@
                     android:layout_gravity="center_vertical"
                     android:fontFamily="@font/yanone_kaffeesatz"
                     android:text="Enregistrement"
-                    android:textColor="@color/green_light"/>
+                    android:textColor="@color/green_third_light"/>
 
                 <ImageButton
                     android:id="@+id/btnUserRegistration"
@@ -114,7 +114,7 @@
                     android:layout_height="40dp"
                     android:layout_marginRight="35dp"
                     android:background="@drawable/popup_user_registration"
-                    android:backgroundTint="@color/green_light" />
+                    android:backgroundTint="@color/green_third_light" />
 
             </LinearLayout>
 
@@ -132,7 +132,7 @@
                     android:layout_height="40dp"
                     android:layout_marginLeft="35dp"
                     android:background="@drawable/popup_user_connection"
-                    android:backgroundTint="@color/green_light" />
+                    android:backgroundTint="@color/green_third_light" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -141,7 +141,7 @@
                     android:layout_gravity="center_vertical"
                     android:fontFamily="@font/yanone_kaffeesatz"
                     android:text="Mon compte"
-                    android:textColor="@color/green_light"/>
+                    android:textColor="@color/green_third_light"/>
 
             </LinearLayout>
 

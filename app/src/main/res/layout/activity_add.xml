@@ -677,7 +677,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Millésime"
+                            android:text="Quantité"
                             android:textColor="@color/green_middle_light"
                             android:textSize="14dp" />
 
@@ -718,7 +718,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Apogée"
+                            android:text="Estimation (€)"
                             android:textColor="@color/green_middle_light"
                             android:textSize="14dp" />
 
@@ -902,7 +902,7 @@
 
                         android:scaleType="centerCrop"
                         android:src="@drawable/icon_navbar_scan"
-                        android:tint="@color/green_light" />
+                        android:tint="@color/green_third_light" />
 
                 </LinearLayout>
 
@@ -926,7 +926,7 @@
 
                         android:scaleType="centerCrop"
                         android:src="@drawable/scan_gallery"
-                        android:tint="@color/green_light" />
+                        android:tint="@color/green_third_light" />
 
                 </LinearLayout>
 

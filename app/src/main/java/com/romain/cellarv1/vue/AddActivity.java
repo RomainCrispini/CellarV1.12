@@ -45,6 +45,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -56,6 +57,8 @@ import com.romain.cellarv1.outils.BlurBitmap;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
 import com.romain.cellarv1.outils.ProgressBarAnimation;
 import com.romain.cellarv1.outils.Tools;
+import com.romain.cellarv1.outils.Validation;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -148,6 +151,20 @@ public class AddActivity extends AppCompatActivity {
     // Image Vignoble
     private ImageView imgVignoble;
     private ImageView imgWineColor;
+
+    // Pour check la validation des champs
+    boolean countryOK = false;
+    boolean regionOK = false;
+    boolean millesimeOK = false;
+    boolean apogeeOK = false;
+    boolean domainOK = false;
+    boolean appellationOK = false;
+    boolean addressOK = false;
+    boolean numberOK = false;
+    boolean estimateOK = false;
+
+    // Images des indicateurs de validation
+    private ImageView imgValidCountry, imgValidRegion, imgValidDomain, imgValidAppellation, imgValidAddress;
 
 
     @Override
@@ -273,6 +290,13 @@ public class AddActivity extends AppCompatActivity {
 
         imgWineColor = (ImageView) findViewById(R.id.imgWineColor);
 
+        // ImageView des indicateurs de validation
+        imgValidCountry = (ImageView) findViewById(R.id.imgValidCountry);
+        imgValidRegion = (ImageView) findViewById(R.id.imgValidRegion);
+        imgValidDomain = (ImageView) findViewById(R.id.imgValidDomain);
+        imgValidAppellation = (ImageView) findViewById(R.id.imgValidAppellation);
+        imgValidAddress = (ImageView) findViewById(R.id.imgValidAddress);
+
         // Instanciation et animation du menuBis coulissant
         FrameLayout menuBis = (FrameLayout) findViewById(R.id.menuBis);
         menuBis.setTranslationY(300f);
@@ -289,15 +313,12 @@ public class AddActivity extends AppCompatActivity {
         recoverFABWineColor();
         recoverJsonCountries();
         getRegionsList();
-        progressBar();
+        gestionProgressBarValidation();
 
         gestionImageVignoble();
         gestionWineColorSelector();
 
     }
-
-
-
 
 
     private void gestionImageVignoble() {
@@ -520,8 +541,6 @@ public class AddActivity extends AppCompatActivity {
         });
 
 
-
-
     }
 
     private void gestionRoundButtonsSeekBar() {
@@ -568,7 +587,7 @@ public class AddActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private void displayPopupRateSeekBar() {
 
-        if(nbRate.getText().toString().trim().equals("*/10")) {
+        if (nbRate.getText().toString().trim().equals("*/10")) {
             txtRateSeekBar.setText("*/10");
             txtRateSeekBar.setTextColor(getResources().getColor(R.color.green_light));
             //Sinon, on récupère la valeur de nbRate, qu'on réaffiche
@@ -584,7 +603,7 @@ public class AddActivity extends AppCompatActivity {
                 nbRate.setText(txtRateSeekBar.getText());
 
                 // On gère les couleurs de nbRate suivant la valeur de la note
-                if(!nbRate.getText().toString().trim().equals("*/10")) {
+                if (!nbRate.getText().toString().trim().equals("*/10")) {
                     nbRate.setTextColor(getResources().getColor(R.color.green_apple));
                 }
 
@@ -604,7 +623,7 @@ public class AddActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onProgressChanged(CircularSeekBar circularSeekBar, float progress, boolean fromUser) {
-                txtRateSeekBar.setText((int)progress + "/10");
+                txtRateSeekBar.setText((int) progress + "/10");
                 txtRateSeekBar.setTextColor(getResources().getColor(R.color.green_apple));
             }
 
@@ -648,7 +667,7 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(CircularSeekBar circularSeekBar, float progress, boolean fromUser) {
                 // Permet de naviguer de l'année actuelle à -70 ans
-                Integer millesime = dateInt - (int)progress;
+                Integer millesime = dateInt - (int) progress;
                 txtMillesimeSeekBar.setText(String.valueOf(millesime));
             }
 
@@ -693,7 +712,7 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(CircularSeekBar circularSeekBar, float progress, boolean fromUser) {
                 // Permet de naviguer de l'année actuelle à +70 ans
-                Integer millesime = dateInt + (int)progress;
+                Integer millesime = dateInt + (int) progress;
                 txtApogeeSeekBar.setText(String.valueOf(millesime));
             }
 
@@ -733,7 +752,7 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(CircularSeekBar circularSeekBar, float progress, boolean fromUser) {
                 // Permet d'ajouter jusqu'à 66 bouteilles
-                txtNumberSeekBar.setText(String.valueOf((int)progress));
+                txtNumberSeekBar.setText(String.valueOf((int) progress));
             }
 
             @Override
@@ -774,7 +793,7 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(CircularSeekBar circularSeekBar, float progress, boolean fromUser) {
                 // Permet d'estimer jusqu'à 150€
-                txtEstimateSeekBar.setText(String.valueOf((int)progress + " €"));
+                txtEstimateSeekBar.setText(String.valueOf((int) progress + " €"));
             }
 
             @Override
@@ -797,11 +816,11 @@ public class AddActivity extends AppCompatActivity {
         // Récupération de la liste de toutes les bouteilles SI ET SEULEMENT SI une BDD existe
         AccesLocalDbCellar accesLocalDbCellar = new AccesLocalDbCellar(AddActivity.this);
 
-        if(accesLocalDbCellar.doesDBExists() == true) {
+        if (accesLocalDbCellar.doesDBExists() == true) {
             ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocalDbCellar.recoverWineBottleList();
-            for(int i = 0; i < wineBottleList.size(); i++) {
-                if(wineBottleList.get(i).getPictureSmall().equals("")) {
-                } else if(!wineBottleList.get(i).getPictureSmall().equals("")) {
+            for (int i = 0; i < wineBottleList.size(); i++) {
+                if (wineBottleList.get(i).getPictureSmall().equals("")) {
+                } else if (!wineBottleList.get(i).getPictureSmall().equals("")) {
                     popupInfoLabelBottle.dismiss();
                 }
             }
@@ -842,13 +861,13 @@ public class AddActivity extends AppCompatActivity {
         ImageView scanImageView = (ImageView) findViewById(R.id.scanImageView); // DOIT ETRE DECLAREE ICI !!!!!!!!!!!!!!!!!!!!!!
         // Vérification du bon code de retour et l'état du retour ok
         switch (requestCode) {
-            case CAMERA_REQUEST_CODE :
+            case CAMERA_REQUEST_CODE:
                 // Récupération de l'image
                 Bitmap imageCamera = BitmapFactory.decodeFile(photoPath);
                 // Afficher l'image
                 scanImageView.setImageBitmap(imageCamera);
                 break;
-            case GALLERY_REQUEST_CODE : // Vérifie si une image est récupérée
+            case GALLERY_REQUEST_CODE: // Vérifie si une image est récupérée
                 // Accès à l'image à partir de data
                 Uri selectedImage = data.getData();
                 // Mémorisation du path précis
@@ -874,7 +893,7 @@ public class AddActivity extends AppCompatActivity {
 
     public void accesGallery(View view) {
         // Permission pour accès Gallery
-        if(ActivityCompat.checkSelfPermission(AddActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(AddActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             // Accès à la gallery du tel
             Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
@@ -884,11 +903,11 @@ public class AddActivity extends AppCompatActivity {
     }
 
     public void takePicture(View view) {
-        if(ActivityCompat.checkSelfPermission(AddActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(AddActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             // Crée un intent pour ouvrir une fenêtre pour prendre la photo
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             // Test pour contrôler que l'intent peut être géré
-            if(intent.resolveActivity(getPackageManager()) != null) {
+            if (intent.resolveActivity(getPackageManager()) != null) {
                 // Créer un nom de fichier unique
                 String time = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                 File photoDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
@@ -902,7 +921,7 @@ public class AddActivity extends AppCompatActivity {
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                     // Ouvrir l'activity par rapport à l'intent
                     startActivityForResult(intent, CAMERA_REQUEST_CODE);
-                } catch(IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -916,31 +935,31 @@ public class AddActivity extends AppCompatActivity {
         DisplayMetrics metrics = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(metrics);
         // Taille de l'écran (et affecter les proportions)
-        float screenHeight = metrics.heightPixels*proportion;
-        float screenWidth = metrics.widthPixels*proportion;
+        float screenHeight = metrics.heightPixels * proportion;
+        float screenWidth = metrics.widthPixels * proportion;
         // Taille de l'image
         float bitmapHeight = bitmap.getHeight();
         float bitmapWidth = bitmap.getWidth();
         // Calcul du ratio entre taille image et écran
-        float ratioHeight = screenHeight/bitmapHeight;
-        float ratioWidth = screenWidth/bitmapWidth;
+        float ratioHeight = screenHeight / bitmapHeight;
+        float ratioWidth = screenWidth / bitmapWidth;
         // Récupération du plus petit ratio
         float ratio = Math.min(ratioHeight, ratioWidth);
         // Redimentionnement de l'image par rapport au ratio
-        bitmap = Bitmap.createScaledBitmap(bitmap, (int) (bitmapWidth*ratio), (int) (bitmapHeight*ratio), true);
+        bitmap = Bitmap.createScaledBitmap(bitmap, (int) (bitmapWidth * ratio), (int) (bitmapHeight * ratio), true);
         // envoie la nouvelle image
         return bitmap;
     }
 
     private void galleryRequestPermission() {
-        if(ActivityCompat.shouldShowRequestPermissionRationale(AddActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(AddActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
             new AlertDialog.Builder(AddActivity.this)
                     .setTitle("Permission")
                     .setMessage("Cellar requiert votre permission pour accéder à votre galerie d'images")
                     .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(AddActivity.this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, GALLERY_READ_REQUEST_PERMISSION);
+                            ActivityCompat.requestPermissions(AddActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, GALLERY_READ_REQUEST_PERMISSION);
                         }
                     })
                     .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -952,19 +971,19 @@ public class AddActivity extends AppCompatActivity {
                     .create().show();
 
         } else {
-            ActivityCompat.requestPermissions(AddActivity.this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, GALLERY_READ_REQUEST_PERMISSION);
+            ActivityCompat.requestPermissions(AddActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, GALLERY_READ_REQUEST_PERMISSION);
         }
     }
 
     private void cameraRequestPermission() {
-        if(ActivityCompat.shouldShowRequestPermissionRationale(AddActivity.this, Manifest.permission.CAMERA)) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(AddActivity.this, Manifest.permission.CAMERA)) {
             new AlertDialog.Builder(AddActivity.this)
                     .setTitle("Permission")
                     .setMessage("Cellar requiert votre permission pour accéder à votre appareil photo")
                     .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(AddActivity.this, new String[] {Manifest.permission.CAMERA}, CAMERA_REQUEST_PERMISSION);
+                            ActivityCompat.requestPermissions(AddActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_PERMISSION);
                         }
                     })
                     .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -976,7 +995,7 @@ public class AddActivity extends AppCompatActivity {
                     .create().show();
 
         } else {
-            ActivityCompat.requestPermissions(AddActivity.this, new String[] {Manifest.permission.CAMERA}, CAMERA_REQUEST_PERMISSION);
+            ActivityCompat.requestPermissions(AddActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_PERMISSION);
         }
     }
 
@@ -987,7 +1006,7 @@ public class AddActivity extends AppCompatActivity {
 
         boolean test;
         BitmapDrawable drawable = (BitmapDrawable) scanImageView.getDrawable();
-        if(drawable == null) {
+        if (drawable == null) {
             test = false;
         } else {
             test = true;
@@ -1000,7 +1019,7 @@ public class AddActivity extends AppCompatActivity {
         String pictureSmall = "";
         Tools tools = new Tools();
 
-        if(doesImageLabel()) {
+        if (doesImageLabel()) {
             BitmapDrawable drawable = (BitmapDrawable) scanImageView.getDrawable();
             Bitmap bitmap = drawable.getBitmap();
 
@@ -1017,7 +1036,7 @@ public class AddActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else if (!doesImageLabel()){
+        } else if (!doesImageLabel()) {
             pictureSmall = "";
         }
 
@@ -1029,7 +1048,7 @@ public class AddActivity extends AppCompatActivity {
         String pictureLarge = "";
         Tools tools = new Tools();
 
-        if(doesImageLabel()) {
+        if (doesImageLabel()) {
             BitmapDrawable drawable = (BitmapDrawable) scanImageView.getDrawable();
             Bitmap bitmap = drawable.getBitmap();
 
@@ -1047,7 +1066,7 @@ public class AddActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else if (!doesImageLabel()){
+        } else if (!doesImageLabel()) {
             pictureLarge = "";
         }
 
@@ -1089,10 +1108,6 @@ public class AddActivity extends AppCompatActivity {
      */
 
 
-
-
-
-
     /**
      * Ajout d'une nouvelle bouteille et de toutes ses caractéristiques
      */
@@ -1115,31 +1130,31 @@ public class AddActivity extends AppCompatActivity {
                 TextView millesime = (TextView) popupAdd.findViewById(R.id.millesime);
 
                 // Récupération de l'étiquette
-                if(scanImageView.getDrawable() != null) {
+                if (scanImageView.getDrawable() != null) {
                     Bitmap bitmapEtiquette = ((BitmapDrawable) scanImageView.getDrawable()).getBitmap();
                     imageBottle.setImageBitmap(bitmapEtiquette);
                 } else {
                 }
 
                 // Récupération de la couleur
-                if(btnRed.getAlpha() == 1f) {
+                if (btnRed.getAlpha() == 1f) {
                     imageWineColor.setImageResource(R.drawable.red_wine_listview);
-                } else if(btnRose.getAlpha() == 1f) {
+                } else if (btnRose.getAlpha() == 1f) {
                     imageWineColor.setImageResource(R.drawable.rose_wine_listview);
-                } else if(btnWhite.getAlpha() == 1f) {
+                } else if (btnWhite.getAlpha() == 1f) {
                     imageWineColor.setImageResource(R.drawable.white_wine_listview);
-                } else if(btnChamp.getAlpha() == 1f) {
+                } else if (btnChamp.getAlpha() == 1f) {
                     imageWineColor.setImageResource(R.drawable.champ_wine_listview);
                 }
 
                 // Récupération des appréciations
-                if(btnFavorite.isChecked()) {
+                if (btnFavorite.isChecked()) {
                     imageFavorite.setColorFilter(getResources().getColor(R.color.green_apple));
                 } else {
                     imageFavorite.setColorFilter(getResources().getColor(R.color.green_light));
                 }
 
-                if(btnWishlist.isChecked()) {
+                if (btnWishlist.isChecked()) {
                     imageWish.setColorFilter(getResources().getColor(R.color.green_apple));
                 } else {
                     imageWish.setColorFilter(getResources().getColor(R.color.green_light));
@@ -1202,7 +1217,7 @@ public class AddActivity extends AppCompatActivity {
                         String timeStamp = timeStampLong.toString();
 
                         // Update de la note
-                        if(nbRate.getText().toString().trim().equals("*/10")) {
+                        if (nbRate.getText().toString().trim().equals("*/10")) {
                             rate = 0;
                         } else {
                             // On retire les 3 derniers caractères : "/10"
@@ -1211,23 +1226,23 @@ public class AddActivity extends AppCompatActivity {
 
                         // Update de la couleur, des appréciations et des champs texte
                         try {
-                            if(btnRed.getAlpha() == 1f) {
+                            if (btnRed.getAlpha() == 1f) {
                                 wineColor = "Rouge";
-                            } else if(btnRose.getAlpha() == 1f) {
+                            } else if (btnRose.getAlpha() == 1f) {
                                 wineColor = "Rose";
-                            } else if(btnWhite.getAlpha() == 1f) {
+                            } else if (btnWhite.getAlpha() == 1f) {
                                 wineColor = "Blanc";
-                            } else if(btnChamp.getAlpha() == 1f) {
+                            } else if (btnChamp.getAlpha() == 1f) {
                                 wineColor = "Effervescent";
                             }
 
-                            if(btnFavorite.isChecked()) {
+                            if (btnFavorite.isChecked()) {
                                 favorite = "1";
                             } else {
                                 favorite = "0";
                             }
 
-                            if(btnWishlist.isChecked()) {
+                            if (btnWishlist.isChecked()) {
                                 wish = "1";
                             } else {
                                 wish = "0";
@@ -1416,54 +1431,58 @@ public class AddActivity extends AppCompatActivity {
     }
 
     /**
-     * Méthode qui gère la progressBar de AddActivity
+     * Méthode qui gère la progressBar
      */
-    private void progressBar() {
-
-        // TODO CA NE FONCTIONNE PLUS
+    private void gestionProgressBarValidation() {
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        progressBar.setMax(700);
+        progressBar.setMax(900);
         progressBar.setProgress(0);
+
+        // Animation de la progressBar
         final ProgressBarAnimation progressBarAnimation = new ProgressBarAnimation(progressBar, 1000);
 
-        txtCountry = (AutoCompleteTextView) findViewById(R.id.textCountry);
+        // Instanciation des méthodes de validation
+        final Validation validation = new Validation();
+
         txtCountry.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
-
+            boolean check = true;
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.length() > 0) {
-                    if(check) {
+                if (s.length() > 0) {
+                    if (check) {
                         progressBarAnimation.setProgressOnly(progressBar.getProgress() + 100);
-                        if(progressBar.getProgress() == 700) {
-                            btnAdd.setColorFilter(Color.parseColor("#97C58D"));
-                        } else if(progressBar.getProgress() < 700) {
-                            btnAdd.setColorFilter(Color.parseColor("#67828f"));
-                        }
                         check = false;
                     }
                 } else {
-                    if(progressBar.getProgress() > 0) {
+                    if (progressBar.getProgress() > 0) {
                         progressBarAnimation.setProgressOnly(progressBar.getProgress() - 100);
-                        check = true;
-                    } else {
-                        check = true;
                     }
+                    check = true;
                 }
             }
 
-
-
             @Override
             public void afterTextChanged(Editable s) {
+                imgValidCountry.setVisibility(View.VISIBLE);
+                if (validation.isValidTextField(txtCountry.getText().toString().trim())) {
+                    // is true
+                    imgValidCountry.setColorFilter(getResources().getColor(R.color.green_apple));
+                    countryOK = true;
+
+                } else if (!validation.isValidTextField(txtCountry.getText().toString().trim())) {
+                    // is false
+                    imgValidCountry.setColorFilter(getResources().getColor(R.color.pink));
+                    countryOK = false;
+                }
+                gestionAddButtonColor();
             }
         });
 
-        txtRegion = (AutoCompleteTextView) findViewById(R.id.textRegion);
         txtRegion.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -1472,32 +1491,103 @@ public class AddActivity extends AppCompatActivity {
             boolean check = true;
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.length() > 0) {
-                    if(check) {
+                if (s.length() > 0) {
+                    if (check) {
                         progressBarAnimation.setProgressOnly(progressBar.getProgress() + 100);
-                        if(progressBar.getProgress() == 700) {
-                            btnAdd.setColorFilter(Color.parseColor("#97C58D"));
-                        } else if(progressBar.getProgress() < 700) {
-                            btnAdd.setColorFilter(Color.parseColor("#67828f"));
-                        }
                         check = false;
                     }
                 } else {
-                    if(progressBar.getProgress() > 0) {
+                    if (progressBar.getProgress() > 0) {
                         progressBarAnimation.setProgressOnly(progressBar.getProgress() - 100);
-                        check = true;
-                    } else {
-                        check = true;
                     }
+                    check = true;
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                imgValidRegion.setVisibility(View.VISIBLE);
+                if (validation.isValidTextField(txtRegion.getText().toString().trim())) {
+                    // is true
+                    imgValidRegion.setColorFilter(getResources().getColor(R.color.green_apple));
+                    regionOK = true;
+
+                } else if (!validation.isValidTextField(txtRegion.getText().toString().trim())) {
+                    // is false
+                    imgValidRegion.setColorFilter(getResources().getColor(R.color.pink));
+                    regionOK = false;
+                }
+                gestionAddButtonColor();
             }
         });
 
-        txtDomain = (EditText) findViewById(R.id.textDomain);
+        nbYear.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            boolean check = true;
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0) {
+                    if (check) {
+                        progressBarAnimation.setProgressOnly(progressBar.getProgress() + 100);
+                        check = false;
+                    }
+                } else {
+                    if (progressBar.getProgress() > 0) {
+                        progressBarAnimation.setProgressOnly(progressBar.getProgress() - 100);
+                    }
+                    check = true;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (validation.isValidNumberField(nbYear.getText().toString().trim())) {
+                    millesimeOK = true;
+                } else if (!validation.isValidNumberField(txtDomain.getText().toString().trim())) {
+                    millesimeOK = false;
+                }
+                gestionAddButtonColor();
+            }
+        });
+
+        nbApogee.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            boolean check = true;
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0) {
+                    if (check) {
+                        progressBarAnimation.setProgressOnly(progressBar.getProgress() + 100);
+                        check = false;
+                    }
+                } else {
+                    if (progressBar.getProgress() > 0) {
+                        progressBarAnimation.setProgressOnly(progressBar.getProgress() - 100);
+                    }
+                    check = true;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (validation.isValidNumberField(nbApogee.getText().toString().trim())) {
+                    apogeeOK = true;
+
+                } else if (!validation.isValidNumberField(txtDomain.getText().toString().trim())) {
+                    apogeeOK = false;
+                }
+                gestionAddButtonColor();
+            }
+        });
+
         txtDomain.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -1506,32 +1596,36 @@ public class AddActivity extends AppCompatActivity {
             boolean check = true;
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.length() > 0) {
-                    if(check) {
+                if (s.length() > 0) {
+                    if (check) {
                         progressBarAnimation.setProgressOnly(progressBar.getProgress() + 100);
-                        if(progressBar.getProgress() == 700) {
-                            btnAdd.setColorFilter(Color.parseColor("#97C58D"));
-                        } else if(progressBar.getProgress() < 700) {
-                            btnAdd.setColorFilter(Color.parseColor("#67828f"));
-                        }
                         check = false;
                     }
                 } else {
-                    if(progressBar.getProgress() > 0) {
+                    if (progressBar.getProgress() > 0) {
                         progressBarAnimation.setProgressOnly(progressBar.getProgress() - 100);
-                        check = true;
-                    } else {
-                        check = true;
                     }
+                    check = true;
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                imgValidDomain.setVisibility(View.VISIBLE);
+                if (validation.isValidTextField(txtDomain.getText().toString().trim())) {
+                    // is true
+                    imgValidDomain.setColorFilter(getResources().getColor(R.color.green_apple));
+                    domainOK = true;
+
+                } else if (!validation.isValidTextField(txtDomain.getText().toString().trim())) {
+                    // is false
+                    imgValidDomain.setColorFilter(getResources().getColor(R.color.pink));
+                    domainOK = false;
+                }
+                gestionAddButtonColor();
             }
         });
 
-        txtAppellation = (EditText) findViewById(R.id.textAppellation);
         txtAppellation.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -1540,33 +1634,37 @@ public class AddActivity extends AppCompatActivity {
             boolean check = true;
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.length() > 0) {
-                    if(check) {
+                if (s.length() > 0) {
+                    if (check) {
                         progressBarAnimation.setProgressOnly(progressBar.getProgress() + 100);
-                        if(progressBar.getProgress() == 700) {
-                            btnAdd.setColorFilter(Color.parseColor("#97C58D"));
-                        } else if(progressBar.getProgress() < 700) {
-                            btnAdd.setColorFilter(Color.parseColor("#67828f"));
-                        }
                         check = false;
                     }
                 } else {
-                    if(progressBar.getProgress() > 0) {
+                    if (progressBar.getProgress() > 0) {
                         progressBarAnimation.setProgressOnly(progressBar.getProgress() - 100);
-                        check = true;
-                    } else {
-                        check = true;
                     }
+                    check = true;
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                imgValidAppellation.setVisibility(View.VISIBLE);
+                if (validation.isValidTextField(txtAppellation.getText().toString().trim())) {
+                    // is true
+                    imgValidAppellation.setColorFilter(getResources().getColor(R.color.green_apple));
+                    appellationOK = true;
+
+                } else if (!validation.isValidTextField(txtAppellation.getText().toString().trim())) {
+                    // is false
+                    imgValidAppellation.setColorFilter(getResources().getColor(R.color.pink));
+                    appellationOK = false;
+                }
+                gestionAddButtonColor();
             }
         });
 
-        nbYear = (EditText) findViewById(R.id.nbYear);
-        nbYear.addTextChangedListener(new TextWatcher() {
+        txtAddress.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -1574,32 +1672,36 @@ public class AddActivity extends AppCompatActivity {
             boolean check = true;
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.length() > 0) {
-                    if(check) {
+                if (s.length() > 0) {
+                    if (check) {
                         progressBarAnimation.setProgressOnly(progressBar.getProgress() + 100);
-                        if(progressBar.getProgress() == 700) {
-                            btnAdd.setColorFilter(Color.parseColor("#97C58D"));
-                        } else if(progressBar.getProgress() < 700) {
-                            btnAdd.setColorFilter(Color.parseColor("#67828f"));
-                        }
                         check = false;
                     }
                 } else {
-                    if(progressBar.getProgress() > 0) {
+                    if (progressBar.getProgress() > 0) {
                         progressBarAnimation.setProgressOnly(progressBar.getProgress() - 100);
-                        check = true;
-                    } else {
-                        check = true;
                     }
+                    check = true;
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                imgValidAddress.setVisibility(View.VISIBLE);
+                if (validation.isValidTextField(txtAddress.getText().toString().trim())) {
+                    // is true
+                    imgValidAddress.setColorFilter(getResources().getColor(R.color.green_apple));
+                    addressOK = true;
+
+                } else if (!validation.isValidTextField(txtAddress.getText().toString().trim())) {
+                    // is false
+                    imgValidAddress.setColorFilter(getResources().getColor(R.color.pink));
+                    addressOK = false;
+                }
+                gestionAddButtonColor();
             }
         });
 
-        nbNumber = (EditText) findViewById(R.id.nbNumber);
         nbNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -1608,32 +1710,32 @@ public class AddActivity extends AppCompatActivity {
             boolean check = true;
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.length() > 0) {
-                    if(check) {
+                if (s.length() > 0) {
+                    if (check) {
                         progressBarAnimation.setProgressOnly(progressBar.getProgress() + 100);
-                        if(progressBar.getProgress() == 700) {
-                            btnAdd.setColorFilter(Color.parseColor("#97C58D"));
-                        } else if(progressBar.getProgress() < 700) {
-                            btnAdd.setColorFilter(Color.parseColor("#67828f"));
-                        }
                         check = false;
                     }
                 } else {
-                    if(progressBar.getProgress() > 0) {
+                    if (progressBar.getProgress() > 0) {
                         progressBarAnimation.setProgressOnly(progressBar.getProgress() - 100);
-                        check = true;
-                    } else {
-                        check = true;
                     }
+                    check = true;
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (validation.isValidNumberField(nbNumber.getText().toString().trim())) {
+                    numberOK = true;
+
+                } else if (!validation.isValidNumberField(nbNumber.getText().toString().trim())) {
+                    numberOK = false;
+                }
+                gestionAddButtonColor();
             }
+
         });
 
-        nbEstimate = (EditText) findViewById(R.id.nbEstimate);
         nbEstimate.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -1642,30 +1744,41 @@ public class AddActivity extends AppCompatActivity {
             boolean check = true;
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.length() > 0) {
-                    if(check) {
+                if (s.length() > 0) {
+                    if (check) {
                         progressBarAnimation.setProgressOnly(progressBar.getProgress() + 100);
-                        if(progressBar.getProgress() == 700) {
-                            btnAdd.setColorFilter(Color.parseColor("#97C58D"));
-                        } else if(progressBar.getProgress() < 700) {
-                            btnAdd.setColorFilter(Color.parseColor("#67828f"));
-                        }
                         check = false;
                     }
                 } else {
-                    if(progressBar.getProgress() > 0) {
+                    if (progressBar.getProgress() > 0) {
                         progressBarAnimation.setProgressOnly(progressBar.getProgress() - 100);
-                        check = true;
-                    } else {
-                        check = true;
                     }
+                    check = true;
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (validation.isValidNumberField(nbEstimate.getText().toString().trim())) {
+                    estimateOK = true;
+
+                } else if (!validation.isValidNumberField(nbEstimate.getText().toString().trim())) {
+                    estimateOK = false;
+                }
+                gestionAddButtonColor();
             }
         });
+
+    }
+
+    private void gestionAddButtonColor() {
+
+        if(countryOK == true && regionOK == true && millesimeOK == true && apogeeOK == true && domainOK == true && appellationOK == true && addressOK == true && numberOK == true && estimateOK == true) {
+            btnAdd.setColorFilter(getResources().getColor(R.color.green_apple));
+        }else {
+            btnAdd.setColorFilter(getResources().getColor(R.color.pink));
+        }
+
 
     }
 

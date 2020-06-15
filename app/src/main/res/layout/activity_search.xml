@@ -54,7 +54,7 @@
                     android:drawableTint="@color/green_light"
                     android:fontFamily="@font/yanone_kaffeesatz"
                     android:hint="Rechercher..."
-                    android:textColorHint="@color/green_very_light"
+                    android:textColorHint="@color/green_light"
                     android:inputType="text|textNoSuggestions"
                     android:maxLines="1"
                     android:textColor="@color/green_very_light"
