@@ -7,11 +7,11 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="140dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
-        app:cardBackgroundColor="@color/green_middle_light"
+        app:cardBackgroundColor="@color/green_middle_dark"
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,9 +37,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/yanone_kaffeesatz"
+                    android:textColor="@color/green_light"
                     android:gravity="center"
                     android:text="Région"
-                    android:textSize="13sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -47,9 +48,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/yanone_kaffeesatz"
+                    android:textColor="@color/green_light"
                     android:gravity="center"
                     android:text="Appellation"
-                    android:textSize="13sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/domainListView"
@@ -57,9 +59,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="3dp"
                     android:fontFamily="@font/yanone_kaffeesatz"
+                    android:textColor="@color/green_light"
                     android:gravity="center"
                     android:text="Domaine"
-                    android:textSize="13sp" />
+                    android:textSize="16sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -68,7 +71,7 @@
                     android:layout_margin="5dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:background="@color/green_middle_dark" />
+                    android:background="@color/green_light" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -97,7 +100,7 @@
                                 android:backgroundTint="@color/transparent"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/icone_menubis_millesime"
-                                android:tint="@color/green_middle_dark" />
+                                android:tint="@color/green_light" />
 
                             <LinearLayout
                                 android:layout_width="fill_parent"
@@ -109,10 +112,11 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
                                     android:layout_weight="1"
+                                    android:textColor="@color/green_light"
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
                                     android:text="Millésime"
-                                    android:textSize="13sp" />
+                                    android:textSize="16sp" />
 
                                 <TextView
                                     android:id="@+id/yearListView"
@@ -120,10 +124,11 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
                                     android:layout_weight="1"
+                                    android:textColor="@color/green_light"
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
                                     android:text="Millésime"
-                                    android:textSize="13sp" />
+                                    android:textSize="16sp" />
 
                             </LinearLayout>
 
@@ -144,7 +149,7 @@
                                 android:backgroundTint="@color/transparent"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/icone_menubis_apogee"
-                                android:tint="@color/green_middle_dark" />
+                                android:tint="@color/green_light" />
 
                             <LinearLayout
                                 android:layout_width="fill_parent"
@@ -158,8 +163,9 @@
                                     android:layout_weight="1"
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
+                                    android:textColor="@color/green_light"
                                     android:text="Apogée"
-                                    android:textSize="13sp" />
+                                    android:textSize="16sp" />
 
                                 <TextView
                                     android:id="@+id/apogeeListView"
@@ -167,10 +173,11 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
                                     android:layout_weight="1"
+                                    android:textColor="@color/green_light"
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
                                     android:text="Apogée"
-                                    android:textSize="13sp" />
+                                    android:textSize="16sp" />
 
                             </LinearLayout>
 
@@ -189,7 +196,7 @@
                                 android:backgroundTint="@color/transparent"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/icone_menubis_quantite"
-                                android:tint="@color/green_middle_dark" />
+                                android:tint="@color/green_light" />
 
                             <LinearLayout
                                 android:layout_width="fill_parent"
@@ -201,10 +208,11 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
                                     android:layout_weight="1"
+                                    android:textColor="@color/green_light"
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
                                     android:text="Quantité"
-                                    android:textSize="13sp" />
+                                    android:textSize="16sp" />
 
                                 <TextView
                                     android:id="@+id/numberListView"
@@ -212,10 +220,11 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
                                     android:layout_weight="1"
+                                    android:textColor="@color/green_light"
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
                                     android:text="Quantité"
-                                    android:textSize="13sp" />
+                                    android:textSize="16sp" />
 
                             </LinearLayout>
 
@@ -238,7 +247,7 @@
                     android:layout_height="46dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    app:cardBackgroundColor="@color/green_dark"
+                    app:cardBackgroundColor="@color/green_very_dark"
                     app:cardCornerRadius="23dp"
                     app:cardElevation="0dp">
 
@@ -256,7 +265,7 @@
                     android:layout_height="45dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    app:cardBackgroundColor="@color/green_dark"
+                    app:cardBackgroundColor="@color/green_very_dark"
                     app:cardCornerRadius="23dp"
                     app:cardElevation="0dp">
 
@@ -268,7 +277,7 @@
                         android:backgroundTint="@color/transparent"
                         android:scaleType="centerCrop"
                         android:src="@drawable/icone_out_cardview"
-                        android:tint="@color/green_light" />
+                        android:tint="@color/green_middle_light" />
                 </androidx.cardview.widget.CardView>
 
             </LinearLayout>
@@ -332,7 +341,7 @@
         android:layout_height="25dp"
         android:layout_marginTop="15dp"
         android:layout_gravity="center"
-        app:cardBackgroundColor="@color/green_dark"
+        app:cardBackgroundColor="@color/green_very_dark"
         app:cardCornerRadius="5dp"
         app:cardElevation="0dp"
         app:layout_constraintStart_toStartOf="@id/pastilleImageBottle"

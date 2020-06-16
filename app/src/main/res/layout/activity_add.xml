@@ -811,7 +811,7 @@
                         android:backgroundTint="@color/transparent"
                         android:gravity="center"
                         android:text="*/10"
-                        android:textColor="@color/green_light"
+                        android:textColor="@color/green_middle_light"
                         android:textSize="22dp" />
                 </androidx.cardview.widget.CardView>
 

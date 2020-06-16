@@ -7,5 +7,5 @@
 
     <item
         android:state_checked="false"
-        android:drawable="@drawable/icon_heart_green_light" />
+        android:drawable="@drawable/icon_heart_green_middle_light" />
 </selector>

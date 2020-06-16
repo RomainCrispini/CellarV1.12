@@ -7,5 +7,5 @@
 
     <item
         android:state_checked="false"
-        android:drawable="@drawable/wish_green_light" />
+        android:drawable="@drawable/wish_green_middle_light" />
 </selector>
