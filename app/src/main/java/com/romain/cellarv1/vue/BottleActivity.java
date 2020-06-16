@@ -602,7 +602,19 @@ public class BottleActivity extends AppCompatActivity {
         btnRateAccept.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nbRate.setText(txtRateSeekBar.getText());
+
+                // On gère la couleur de nbRate suivant la valeur de la note
+                if (txtRateSeekBar.getText().toString().trim().equals("*/10")) {
+                    nbRate.setTextColor(getResources().getColor(R.color.green_middle_light));
+                    nbRate.setText("*/10");
+                } else if(txtRateSeekBar.getText().toString().trim().equals("0/10")) {
+                    nbRate.setTextColor(getResources().getColor(R.color.green_middle_light));
+                    nbRate.setText("*/10");
+                } else {
+                    nbRate.setTextColor(getResources().getColor(R.color.green_apple));
+                    nbRate.setText(txtRateSeekBar.getText().toString().trim());
+                }
+
                 popupRateSeekBar.dismiss();
             }
         });
@@ -916,20 +928,28 @@ public class BottleActivity extends AppCompatActivity {
                 imageBottle.setImageBitmap(tools.stringToBitmap(image));
 
 
+                // On gère la couleur de la note sur la popupUpdate suivant sa valeur
                 nbRatePopup = (TextView) popupUpdate.findViewById(R.id.nbRatePopup);
                 String ratePopup = nbRate.getText().toString();
-                nbRatePopup.setText(ratePopup);
+                if (ratePopup.trim().equals("*/10")) {
+                    nbRatePopup.setText("*/10");
+                    nbRatePopup.setTextColor(getResources().getColor(R.color.green_middle_light));
+                } else {
+                    nbRatePopup.setText(ratePopup);
+                    nbRatePopup.setTextColor(getResources().getColor(R.color.green_apple));
+                }
+
 
                 if(btnFavorite.isChecked()) {
                     imageFavorite.setColorFilter(getResources().getColor(R.color.green_apple));
                 } else {
-                    imageFavorite.setColorFilter(getResources().getColor(R.color.green_light));
+                    imageFavorite.setColorFilter(getResources().getColor(R.color.green_middle_light));
                 }
 
                 if(btnWishlist.isChecked()) {
                     imageWish.setColorFilter(getResources().getColor(R.color.green_apple));
                 } else {
-                    imageWish.setColorFilter(getResources().getColor(R.color.green_light));
+                    imageWish.setColorFilter(getResources().getColor(R.color.green_middle_light));
                 }
 
                 region.setText(regionBottle.getText());
@@ -1040,23 +1060,26 @@ public class BottleActivity extends AppCompatActivity {
                 TextView millesime = (TextView) popupDelete.findViewById(R.id.millesime);
                 TextView number = (TextView) popupDelete.findViewById(R.id.number);
 
+                // On gère la couleur de la note sur la popupDelete suivant sa valeur
                 nbRatePopup = (TextView) popupDelete.findViewById(R.id.nbRatePopup);
                 String ratePopup = nbRate.getText().toString();
-                nbRatePopup.setText(ratePopup);
+                if (ratePopup.trim().equals("*/10")) {
+                    nbRatePopup.setText("*/10");
+                    nbRatePopup.setTextColor(getResources().getColor(R.color.green_middle_light));
+                } else {
+                    nbRatePopup.setText(ratePopup);
+                    nbRatePopup.setTextColor(getResources().getColor(R.color.green_apple));
+                }
 
-                switch(getIntent().getStringExtra("wineColor").trim()) {
-                    case "Rouge" :
-                        imageWineColor.setImageResource(R.drawable.red_wine_listview);
-                        break;
-                    case "Rose" :
-                        imageWineColor.setImageResource(R.drawable.rose_wine_listview);
-                        break;
-                    case "Blanc" :
-                        imageWineColor.setImageResource(R.drawable.white_wine_listview);
-                        break;
-                    case "Effervescent" :
-                        imageWineColor.setImageResource(R.drawable.champ_wine_listview);
-                        break;
+                // Récupération de la couleur du vin avec l'alpha des boutons btnWineColor
+                if(btnRed.getAlpha() == 1f) {
+                    imageWineColor.setImageResource(R.drawable.red_wine_listview);
+                } else if(btnRose.getAlpha() == 1f) {
+                    imageWineColor.setImageResource(R.drawable.rose_wine_listview);
+                } else if(btnWhite.getAlpha() == 1f) {
+                    imageWineColor.setImageResource(R.drawable.white_wine_listview);
+                } else if(btnChamp.getAlpha() == 1f) {
+                    imageWineColor.setImageResource(R.drawable.champ_wine_listview);
                 }
 
                 String image = getIntent().getStringExtra("imageBottleSmall");
@@ -1067,13 +1090,13 @@ public class BottleActivity extends AppCompatActivity {
                 if(btnFavorite.isChecked()) {
                     imageFavorite.setColorFilter(getResources().getColor(R.color.green_apple));
                 } else {
-                    imageFavorite.setColorFilter(getResources().getColor(R.color.green_light));
+                    imageFavorite.setColorFilter(getResources().getColor(R.color.green_middle_light));
                 }
 
                 if(btnWishlist.isChecked()) {
                     imageWish.setColorFilter(getResources().getColor(R.color.green_apple));
                 } else {
-                    imageWish.setColorFilter(getResources().getColor(R.color.green_light));
+                    imageWish.setColorFilter(getResources().getColor(R.color.green_middle_light));
                 }
 
                 region.setText(regionBottle.getText());
@@ -1197,14 +1220,12 @@ public class BottleActivity extends AppCompatActivity {
         imageBottle.setImageBitmap(BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length));
 
 
-
         String rate = getIntent().getStringExtra("rate");
         if(rate.equals("0")) {
             nbRate.setText("*/10");
         } else {
             nbRate.setText(rate + "/10");
         }
-
 
 
         btnFavorite.setText(null);
@@ -1222,7 +1243,7 @@ public class BottleActivity extends AppCompatActivity {
         btnWishlist.setText(null);
         btnWishlist.setTextOn(null);
         btnWishlist.setTextOff(null);
-        switch(getIntent().getStringExtra("wish")) {
+        switch(Objects.requireNonNull(getIntent().getStringExtra("wish"))) {
             case "0" :
                 btnWishlist.setChecked(false);
                 break;

@@ -42,6 +42,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -597,11 +598,17 @@ public class AddActivity extends AppCompatActivity {
         btnRateAccept.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nbRate.setText(txtRateSeekBar.getText());
 
-                // On gère les couleurs de nbRate suivant la valeur de la note
-                if (!nbRate.getText().toString().trim().equals("*/10")) {
+                // On gère la couleur de nbRate suivant la valeur de la note
+                if (txtRateSeekBar.getText().toString().trim().equals("*/10")) {
+                    nbRate.setTextColor(getResources().getColor(R.color.green_middle_light));
+                    nbRate.setText("*/10");
+                } else if(txtRateSeekBar.getText().toString().trim().equals("0/10")) {
+                    nbRate.setTextColor(getResources().getColor(R.color.green_middle_light));
+                    nbRate.setText("*/10");
+                } else {
                     nbRate.setTextColor(getResources().getColor(R.color.green_apple));
+                    nbRate.setText(txtRateSeekBar.getText().toString().trim());
                 }
 
                 popupRateSeekBar.dismiss();
@@ -1157,10 +1164,16 @@ public class AddActivity extends AppCompatActivity {
                     imageWish.setColorFilter(getResources().getColor(R.color.green_light));
                 }
 
-                // Récupération de la note
+                // On gère la couleur de la note sur la popupUpdate suivant sa valeur
                 nbRatePopup = (TextView) popupAdd.findViewById(R.id.nbRatePopup);
                 String ratePopup = nbRate.getText().toString();
-                nbRatePopup.setText(ratePopup);
+                if (ratePopup.trim().equals("*/10")) {
+                    nbRatePopup.setText("*/10");
+                    nbRatePopup.setTextColor(getResources().getColor(R.color.green_middle_light));
+                } else {
+                    nbRatePopup.setText(ratePopup);
+                    nbRatePopup.setTextColor(getResources().getColor(R.color.green_apple));
+                }
 
                 // Récupération des champs texte
                 number.setText(nbNumber.getText());

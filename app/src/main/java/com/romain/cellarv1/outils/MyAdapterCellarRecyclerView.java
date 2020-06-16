@@ -18,12 +18,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.common.internal.Objects;
 import com.romain.cellarv1.R;
 import com.romain.cellarv1.modele.AccesLocalCellar;
 import com.romain.cellarv1.modele.WineBottle;
@@ -202,6 +204,7 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                 TextView millesime = (TextView) popupDelete.findViewById(R.id.millesime);
                 TextView number = (TextView) popupDelete.findViewById(R.id.number);
 
+
                 popupDelete.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 popupDelete.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
                 popupSuccessDelete.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -225,18 +228,34 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                         break;
                 }
 
+                // On gère la couleur "favorite"
                 if(wineBottle.getFavorite().matches("1")) {
-                    imageFavorite.setVisibility(View.VISIBLE);
-                } else {
-                    imageFavorite.setVisibility(View.INVISIBLE);
+                    imageFavorite.setColorFilter(mContext.getColor(R.color.green_apple));
+                } else if(wineBottle.getFavorite().matches("0")){
+                    imageFavorite.setColorFilter(mContext.getColor(R.color.green_middle_light));
                 }
 
+                // On gère la couleur "wishlist"
                 if(wineBottle.getWish().matches("1")) {
-                    imageWish.setVisibility(View.VISIBLE);
-                } else {
-                    imageWish.setVisibility(View.INVISIBLE);
+                    imageWish.setColorFilter(mContext.getColor(R.color.green_apple));
+                } else if(wineBottle.getFavorite().matches("0")){
+                    imageWish.setColorFilter(mContext.getColor(R.color.green_middle_light));
                 }
 
+
+                // On gère la couleur de la note sur la popupDelete suivant sa valeur
+                TextView nbRatePopup = (TextView) popupDelete.findViewById(R.id.nbRatePopup);
+                Integer ratePopup = wineBottle.getRate();
+                if (ratePopup == 0) {
+                    nbRatePopup.setText("*/10");
+                    nbRatePopup.setTextColor(mContext.getColor(R.color.green_middle_light));
+                } else {
+                    nbRatePopup.setText(ratePopup.toString() + "/10");
+                    nbRatePopup.setTextColor(mContext.getColor(R.color.green_apple));
+                }
+
+
+                // TODO NE MARCHE PAS QUAND ON ARRIVE A ZERO
                 // On retire 1 au nombre de bouteilles
                 String bottleNumber = String.valueOf(wineBottle.getNumber() - 1);
                 number.setText(bottleNumber);
