@@ -10,28 +10,48 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.OvershootInterpolator;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.romain.cellarv1.R;
-import com.romain.cellarv1.modele.AccesLocalDbCellar;
+import com.romain.cellarv1.modele.AccesLocalCellar;
 import com.romain.cellarv1.outils.BlurBitmap;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
+import com.romain.cellarv1.outils.ProgressBarAnimation;
 import com.romain.cellarv1.outils.Tools;
+import com.romain.cellarv1.outils.Validation;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import me.tankery.lib.circularseekbar.CircularSeekBar;
@@ -45,10 +65,27 @@ public class BottleActivity extends AppCompatActivity {
 
     // Déclaration des champs texte et des ImageView
     private TextView dateBottle;
-    private EditText countryBottle, regionBottle, domainBottle, appellationBottle, addressBottle;
+    private AutoCompleteTextView countryBottle, regionBottle;
+    private EditText domainBottle, appellationBottle, addressBottle;
     private EditText millesimeBottle, apogeeBottle, estimateBottle, numberBottle;
-    private ImageView imageBottle, imageWineColor;
+    private ImageView imageBottle;
     private TextView nbRate;
+
+    // Boutons SeekBar
+    private ImageButton btnRoundMillesime, btnRoundApogee, btnRoundNumber, btnRoundEstimate;
+
+    // PopupCircularSeekBar
+    private Dialog popupMillesimeSeekBar, popupApogeeSeekBar, popupNumberSeekBar, popupEstimateSeekBar;
+    private CircularSeekBar millesimeSeekBar, apogeeSeekBar, numberSeekBar, estimateSeekBar;
+    private TextView txtMillesimeSeekBar, txtApogeeSeekBar, txtNumberSeekBar, txtEstimateSeekBar;
+    private ImageButton btnMillesimeAccept, btnApogeeAccept, btnNumberAccept, btnEstimateAccept;
+    private ImageButton btnMillesimeDenie, btnApogeeDenie, btnNumberDenie, btnEstimateDenie;
+
+    // Buttons WineColor
+    private ImageButton btnRed, btnRose, btnWhite, btnChamp;
+
+    // Liste Pays
+    private ArrayList<String> countryList = new ArrayList<>();
 
     // Button Update
     private ImageButton btnUpdateBottle;
@@ -70,8 +107,23 @@ public class BottleActivity extends AppCompatActivity {
     private Dialog popupUpdate, popupDelete, popupSuccessUpdate, popupSuccessDelete;
     private TextView nbRatePopup;
 
-    // ImageViewVignoble
+    // Images des indicateurs de validation
+    private ImageView imgValidCountry, imgValidRegion, imgValidDomain, imgValidAppellation, imgValidAddress;
+
+    // Pour check la validation des champs
+    boolean countryOK = false;
+    boolean regionOK = false;
+    boolean millesimeOK = false;
+    boolean apogeeOK = false;
+    boolean domainOK = false;
+    boolean appellationOK = false;
+    boolean addressOK = false;
+    boolean numberOK = false;
+    boolean estimateOK = false;
+
+    // ImageViewVignoble & WineColor
     private ImageView imgVignoble;
+    private ImageView imageWineColor;
 
 
 
@@ -120,6 +172,50 @@ public class BottleActivity extends AppCompatActivity {
         popupSuccessDelete.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popupSuccessDelete.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
+        // PopupMillesimeSeekBar
+        popupMillesimeSeekBar = new Dialog(BottleActivity.this);
+        popupMillesimeSeekBar.setContentView(R.layout.popup_add_millesime);
+        popupMillesimeSeekBar.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupMillesimeSeekBar.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        popupMillesimeSeekBar.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        millesimeSeekBar = (CircularSeekBar) popupMillesimeSeekBar.findViewById(R.id.millesimeSeekBar);
+        txtMillesimeSeekBar = (TextView) popupMillesimeSeekBar.findViewById(R.id.txtMillesimeSeekBar);
+        btnMillesimeAccept = (ImageButton) popupMillesimeSeekBar.findViewById(R.id.btnAccept);
+        btnMillesimeDenie = (ImageButton) popupMillesimeSeekBar.findViewById(R.id.btnDenie);
+
+        // PopupApogeeSeekBar
+        popupApogeeSeekBar = new Dialog(BottleActivity.this);
+        popupApogeeSeekBar.setContentView(R.layout.popup_add_apogee);
+        popupApogeeSeekBar.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupApogeeSeekBar.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        popupApogeeSeekBar.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        apogeeSeekBar = (CircularSeekBar) popupApogeeSeekBar.findViewById(R.id.apogeeSeekBar);
+        txtApogeeSeekBar = (TextView) popupApogeeSeekBar.findViewById(R.id.txtApogeeSeekBar);
+        btnApogeeAccept = (ImageButton) popupApogeeSeekBar.findViewById(R.id.btnAccept);
+        btnApogeeDenie = (ImageButton) popupApogeeSeekBar.findViewById(R.id.btnDenie);
+
+        // PopupNumberSeekBar
+        popupNumberSeekBar = new Dialog(BottleActivity.this);
+        popupNumberSeekBar.setContentView(R.layout.popup_add_number);
+        popupNumberSeekBar.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupNumberSeekBar.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        popupNumberSeekBar.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        numberSeekBar = (CircularSeekBar) popupNumberSeekBar.findViewById(R.id.numberSeekBar);
+        txtNumberSeekBar = (TextView) popupNumberSeekBar.findViewById(R.id.txtNumberSeekBar);
+        btnNumberAccept = (ImageButton) popupNumberSeekBar.findViewById(R.id.btnAccept);
+        btnNumberDenie = (ImageButton) popupNumberSeekBar.findViewById(R.id.btnDenie);
+
+        // PopupEstimateSeekBar
+        popupEstimateSeekBar = new Dialog(BottleActivity.this);
+        popupEstimateSeekBar.setContentView(R.layout.popup_add_estimate);
+        popupEstimateSeekBar.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupEstimateSeekBar.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        popupEstimateSeekBar.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        estimateSeekBar = (CircularSeekBar) popupEstimateSeekBar.findViewById(R.id.estimateSeekBar);
+        txtEstimateSeekBar = (TextView) popupEstimateSeekBar.findViewById(R.id.txtEstimateSeekBar);
+        btnEstimateAccept = (ImageButton) popupEstimateSeekBar.findViewById(R.id.btnAccept);
+        btnEstimateDenie = (ImageButton) popupEstimateSeekBar.findViewById(R.id.btnDenie);
+
         // PopupRateSeekBar
         popupRateSeekBar = new Dialog(BottleActivity.this);
         popupRateSeekBar.setContentView(R.layout.popup_add_rate);
@@ -131,10 +227,28 @@ public class BottleActivity extends AppCompatActivity {
         btnRateDenie = (ImageButton) popupRateSeekBar.findViewById(R.id.btnDenie);
         nbRate = (TextView) findViewById(R.id.nbRate);
 
+        // Buttons WineColor
+        btnRed = (ImageButton) findViewById(R.id.redWineButton);
+        btnRose = (ImageButton) findViewById(R.id.roseWineButton);
+        btnWhite = (ImageButton) findViewById(R.id.whiteWineButton);
+        btnChamp = (ImageButton) findViewById(R.id.champWineButton);
+
+        // ImageView des indicateurs de validation
+        imgValidCountry = (ImageView) findViewById(R.id.imgValidCountry);
+        imgValidRegion = (ImageView) findViewById(R.id.imgValidRegion);
+        imgValidDomain = (ImageView) findViewById(R.id.imgValidDomain);
+        imgValidAppellation = (ImageView) findViewById(R.id.imgValidAppellation);
+        imgValidAddress = (ImageView) findViewById(R.id.imgValidAddress);
+
         imgVignoble = (ImageView) findViewById(R.id.imgVignoble);
 
+        gestionWineColorSelector();
 
+        getRegionsList();
+        getJsonCountries();
+        recoverJsonCountries();
 
+        gestionValidation();
         gestionImageVignoble();
         gestionRoundButtonSeekBar();
 
@@ -150,6 +264,105 @@ public class BottleActivity extends AppCompatActivity {
         imgVignoble.setImageBitmap(new BlurBitmap().blur(BottleActivity.this, bitmap, 20f));
     }
 
+    /**
+     * Gestion de l'affichage de la couleur du vin
+     */
+    public void gestionWineColorSelector() {
+
+        btnRed.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnRed.setAlpha(1f);
+                btnRose.setAlpha(0.3f);
+                btnWhite.setAlpha(0.3f);
+                btnChamp.setAlpha(0.3f);
+                imageWineColor.setImageDrawable(ContextCompat.getDrawable(BottleActivity.this, R.drawable.red_wine_listview));
+            }
+        });
+
+        btnRose.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnRed.setAlpha(0.3f);
+                btnRose.setAlpha(1f);
+                btnWhite.setAlpha(0.3f);
+                btnChamp.setAlpha(0.3f);
+                imageWineColor.setImageDrawable(ContextCompat.getDrawable(BottleActivity.this, R.drawable.rose_wine_listview));
+            }
+        });
+
+        btnWhite.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnRed.setAlpha(0.3f);
+                btnRose.setAlpha(0.3f);
+                btnWhite.setAlpha(1f);
+                btnChamp.setAlpha(0.3f);
+                imageWineColor.setImageDrawable(ContextCompat.getDrawable(BottleActivity.this, R.drawable.white_wine_listview));
+            }
+        });
+
+        btnChamp.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnRed.setAlpha(0.3f);
+                btnRose.setAlpha(0.3f);
+                btnWhite.setAlpha(0.3f);
+                btnChamp.setAlpha(1f);
+                imageWineColor.setImageDrawable(ContextCompat.getDrawable(BottleActivity.this, R.drawable.champ_wine_listview));
+            }
+        });
+
+    }
+
+    /**
+     * Chargement et récupération des infos du fichier JSon pour le nom des pays
+     */
+    public void getJsonCountries() {
+
+        String json;
+        try {
+            // Load File
+            InputStream is = getResources().openRawResource(R.raw.countries);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+            JSONArray jsonArray = new JSONArray(json);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                countryList.add(jsonObject.getString("name"));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //Toast.makeText(getApplicationContext(),countrylist.toString(),Toast.LENGTH_LONG).show();
+    }
+
+    private void recoverJsonCountries() {
+        getJsonCountries();
+        countryBottle = (AutoCompleteTextView) findViewById(R.id.countryBottle);
+        // On change la couleur de fond de la liste déroulante
+        countryBottle.setDropDownBackgroundDrawable(new ColorDrawable(BottleActivity.this.getResources().getColor(R.color.green_very_dark)));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom_autocomplete, countryList);
+        countryBottle.setAdapter(adapter);
+    }
+
+    private void getRegionsList() {
+        List<String> regionsList = Arrays.asList("Alsace", "Beaujolais", "Bordelais", "Bourgogne",
+                "Bretagne", "Champagne", "Charentes", "Corse", "Ile-de-France", "Jura",
+                "Languedoc-Roussillon", "Lorraine", "Lyonnais", "Nord-Pas-De-Calais", "Normandie",
+                "Picardie", "Provence", "Savoie-Bugey", "Sud-Ouest", "Tahiti", "Val de Loire", "Vallée du Rhône");
+        regionBottle = (AutoCompleteTextView) findViewById(R.id.regionBottle);
+        // On change la couleur de fond de la liste déroulante
+        regionBottle.setDropDownBackgroundDrawable(new ColorDrawable(BottleActivity.this.getResources().getColor(R.color.green_very_dark)));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom_autocomplete, regionsList);
+        regionBottle.setAdapter(adapter);
+    }
+
     private void gestionRoundButtonSeekBar() {
 
         nbRate.setOnClickListener(new TextView.OnClickListener() {
@@ -158,6 +371,208 @@ public class BottleActivity extends AppCompatActivity {
                 displayPopupRateSeekBar();
             }
         });
+
+        btnRoundMillesime = (ImageButton) findViewById(R.id.btnRoundMillesime);
+        btnRoundMillesime.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayPopupMillesimeSeekBar();
+            }
+        });
+
+        btnRoundApogee = (ImageButton) findViewById(R.id.btnRoundApogee);
+        btnRoundApogee.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayPopupApogeeSeekBar();
+            }
+        });
+
+        btnRoundNumber = (ImageButton) findViewById(R.id.btnRoundNumber);
+        btnRoundNumber.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayPopupNumberSeekBar();
+            }
+        });
+
+        btnRoundEstimate = (ImageButton) findViewById(R.id.btnRoundEstimate);
+        btnRoundEstimate.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayPopupEstimateSeekBar();
+            }
+        });
+    }
+
+    private void displayPopupMillesimeSeekBar() {
+
+        popupMillesimeSeekBar.show();
+
+        btnMillesimeAccept.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                millesimeBottle.setText(String.valueOf(txtMillesimeSeekBar.getText()));
+                popupMillesimeSeekBar.dismiss();
+            }
+        });
+
+        btnMillesimeDenie.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupMillesimeSeekBar.dismiss();
+            }
+        });
+
+        // Récupère la date actuelle au format yyyy
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
+        String dateString = formatter.format(new Date());
+        final Integer dateInt = Integer.parseInt(dateString);
+
+        millesimeSeekBar.setOnSeekBarChangeListener(new CircularSeekBar.OnCircularSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(CircularSeekBar circularSeekBar, float progress, boolean fromUser) {
+                // Permet de naviguer de l'année actuelle à -70 ans
+                Integer millesime = dateInt - (int) progress;
+                txtMillesimeSeekBar.setText(String.valueOf(millesime));
+            }
+
+            @Override
+            public void onStopTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+        });
+
+    }
+
+    private void displayPopupApogeeSeekBar() {
+
+        popupApogeeSeekBar.show();
+
+        btnApogeeAccept.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                apogeeBottle.setText(String.valueOf(txtApogeeSeekBar.getText()));
+                popupApogeeSeekBar.dismiss();
+            }
+        });
+
+        btnApogeeDenie.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupApogeeSeekBar.dismiss();
+            }
+        });
+
+        // Récupère la date actuelle au format yyyy
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
+        String dateString = formatter.format(new Date());
+        final Integer dateInt = Integer.parseInt(dateString);
+
+        apogeeSeekBar.setOnSeekBarChangeListener(new CircularSeekBar.OnCircularSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(CircularSeekBar circularSeekBar, float progress, boolean fromUser) {
+                // Permet de naviguer de l'année actuelle à +70 ans
+                Integer millesime = dateInt + (int) progress;
+                txtApogeeSeekBar.setText(String.valueOf(millesime));
+            }
+
+            @Override
+            public void onStopTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+        });
+
+    }
+
+    private void displayPopupNumberSeekBar() {
+
+        popupNumberSeekBar.show();
+
+        btnNumberAccept.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                numberBottle.setText(String.valueOf(txtNumberSeekBar.getText()));
+                popupNumberSeekBar.dismiss();
+            }
+        });
+
+        btnNumberDenie.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupNumberSeekBar.dismiss();
+            }
+        });
+
+        numberSeekBar.setOnSeekBarChangeListener(new CircularSeekBar.OnCircularSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(CircularSeekBar circularSeekBar, float progress, boolean fromUser) {
+                // Permet d'ajouter jusqu'à 66 bouteilles
+                txtNumberSeekBar.setText(String.valueOf((int) progress));
+            }
+
+            @Override
+            public void onStopTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+        });
+
+    }
+
+    private void displayPopupEstimateSeekBar() {
+
+        popupEstimateSeekBar.show();
+
+        btnEstimateAccept.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Permet de retirer les deux derniers caractères : " €" pour ne set qu'un nombre
+                String nbEstimateRaw = String.valueOf(txtEstimateSeekBar.getText());
+                estimateBottle.setText(nbEstimateRaw.substring(0, nbEstimateRaw.length() - 2));
+                popupEstimateSeekBar.dismiss();
+            }
+        });
+
+        btnEstimateDenie.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupEstimateSeekBar.dismiss();
+            }
+        });
+
+        estimateSeekBar.setOnSeekBarChangeListener(new CircularSeekBar.OnCircularSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(CircularSeekBar circularSeekBar, float progress, boolean fromUser) {
+                // Permet d'estimer jusqu'à 150€
+                txtEstimateSeekBar.setText(String.valueOf((int) progress + " €"));
+            }
+
+            @Override
+            public void onStopTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(CircularSeekBar seekBar) {
+
+            }
+        });
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -219,6 +634,253 @@ public class BottleActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Méthode qui gère la progressBar et les validations de champs
+     */
+    private void gestionValidation() {
+
+        // Initialisation des indicateurs de validation à INVISIBLE
+        imgValidCountry.setVisibility(View.INVISIBLE);
+        imgValidRegion.setVisibility(View.INVISIBLE);
+        imgValidDomain.setVisibility(View.INVISIBLE);
+        imgValidAppellation.setVisibility(View.INVISIBLE);
+        imgValidAddress.setVisibility(View.INVISIBLE);
+
+        // Instanciation des méthodes de validation
+        final Validation validation = new Validation();
+
+        countryBottle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                imgValidCountry.setVisibility(View.VISIBLE);
+                if (validation.isValidTextField(countryBottle.getText().toString().trim())) {
+                    // is true
+                    imgValidCountry.setColorFilter(getResources().getColor(R.color.green_apple));
+                    countryOK = true;
+
+                } else if (!validation.isValidTextField(countryBottle.getText().toString().trim())) {
+                    // is false
+                    imgValidCountry.setColorFilter(getResources().getColor(R.color.pink));
+                    countryOK = false;
+                }
+                gestionUpdateButtonColor();
+            }
+        });
+
+        regionBottle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                imgValidRegion.setVisibility(View.VISIBLE);
+                if (validation.isValidTextField(regionBottle.getText().toString().trim())) {
+                    // is true
+                    imgValidRegion.setColorFilter(getResources().getColor(R.color.green_apple));
+                    regionOK = true;
+
+                } else if (!validation.isValidTextField(regionBottle.getText().toString().trim())) {
+                    // is false
+                    imgValidRegion.setColorFilter(getResources().getColor(R.color.pink));
+                    regionOK = false;
+                }
+                gestionUpdateButtonColor();
+            }
+        });
+
+        millesimeBottle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (validation.isValidNumberField(millesimeBottle.getText().toString().trim())) {
+                    millesimeOK = true;
+                } else if (!validation.isValidNumberField(millesimeBottle.getText().toString().trim())) {
+                    millesimeOK = false;
+                }
+                gestionUpdateButtonColor();
+            }
+        });
+
+        apogeeBottle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (validation.isValidNumberField(apogeeBottle.getText().toString().trim())) {
+                    apogeeOK = true;
+
+                } else if (!validation.isValidNumberField(apogeeBottle.getText().toString().trim())) {
+                    apogeeOK = false;
+                }
+                gestionUpdateButtonColor();
+            }
+        });
+
+        domainBottle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                imgValidDomain.setVisibility(View.VISIBLE);
+                if (validation.isValidTextField(domainBottle.getText().toString().trim())) {
+                    // is true
+                    imgValidDomain.setColorFilter(getResources().getColor(R.color.green_apple));
+                    domainOK = true;
+
+                } else if (!validation.isValidTextField(domainBottle.getText().toString().trim())) {
+                    // is false
+                    imgValidDomain.setColorFilter(getResources().getColor(R.color.pink));
+                    domainOK = false;
+                }
+                gestionUpdateButtonColor();
+            }
+        });
+
+        appellationBottle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                imgValidAppellation.setVisibility(View.VISIBLE);
+                if (validation.isValidTextField(appellationBottle.getText().toString().trim())) {
+                    // is true
+                    imgValidAppellation.setColorFilter(getResources().getColor(R.color.green_apple));
+                    appellationOK = true;
+
+                } else if (!validation.isValidTextField(appellationBottle.getText().toString().trim())) {
+                    // is false
+                    imgValidAppellation.setColorFilter(getResources().getColor(R.color.pink));
+                    appellationOK = false;
+                }
+                gestionUpdateButtonColor();
+            }
+        });
+
+        addressBottle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                imgValidAddress.setVisibility(View.VISIBLE);
+                if (validation.isValidTextField(addressBottle.getText().toString().trim())) {
+                    // is true
+                    imgValidAddress.setColorFilter(getResources().getColor(R.color.green_apple));
+                    addressOK = true;
+
+                } else if (!validation.isValidTextField(addressBottle.getText().toString().trim())) {
+                    // is false
+                    imgValidAddress.setColorFilter(getResources().getColor(R.color.pink));
+                    addressOK = false;
+                }
+                gestionUpdateButtonColor();
+            }
+        });
+
+        numberBottle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (validation.isValidNumberField(numberBottle.getText().toString().trim())) {
+                    numberOK = true;
+
+                } else if (!validation.isValidNumberField(numberBottle.getText().toString().trim())) {
+                    numberOK = false;
+                }
+                gestionUpdateButtonColor();
+            }
+
+        });
+
+        estimateBottle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (validation.isValidNumberField(estimateBottle.getText().toString().trim())) {
+                    estimateOK = true;
+
+                } else if (!validation.isValidNumberField(estimateBottle.getText().toString().trim())) {
+                    estimateOK = false;
+                }
+                gestionUpdateButtonColor();
+            }
+        });
+
+    }
+
+    private void gestionUpdateButtonColor() {
+
+        // TODO POUR L'INSTANT, ON NE GERE PAS L'APPARENCE DU BOUTON UPDATE
+        /*
+        if(countryOK == true && regionOK == true && millesimeOK == true && apogeeOK == true && domainOK == true && appellationOK == true && addressOK == true && numberOK == true && estimateOK == true) {
+            btnUpdateBottle.setColorFilter(getResources().getColor(R.color.green_apple));
+        }else {
+            btnUpdateBottle.setColorFilter(getResources().getColor(R.color.pink));
+        }
+        */
+
+
+    }
+
     private void btnUpdateBottle() {
         btnUpdateBottle.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -237,20 +899,17 @@ public class BottleActivity extends AppCompatActivity {
                 TextView appellation = (TextView) popupUpdate.findViewById(R.id.appellation);
                 TextView millesime = (TextView) popupUpdate.findViewById(R.id.millesime);
 
-                switch(getIntent().getStringExtra("wineColor").trim()) {
-                    case "Rouge" :
-                        imageWineColor.setImageResource(R.drawable.red_wine_listview);
-                        break;
-                    case "Rose" :
-                        imageWineColor.setImageResource(R.drawable.rose_wine_listview);
-                        break;
-                    case "Blanc" :
-                        imageWineColor.setImageResource(R.drawable.white_wine_listview);
-                        break;
-                    case "Effervescent" :
-                        imageWineColor.setImageResource(R.drawable.champ_wine_listview);
-                        break;
+                // Récupération de la couleur du vin avec l'alpha des boutons btnWineColor
+                if(btnRed.getAlpha() == 1f) {
+                    imageWineColor.setImageResource(R.drawable.red_wine_listview);
+                } else if(btnRose.getAlpha() == 1f) {
+                    imageWineColor.setImageResource(R.drawable.rose_wine_listview);
+                } else if(btnWhite.getAlpha() == 1f) {
+                    imageWineColor.setImageResource(R.drawable.white_wine_listview);
+                } else if(btnChamp.getAlpha() == 1f) {
+                    imageWineColor.setImageResource(R.drawable.champ_wine_listview);
                 }
+
 
                 String image = getIntent().getStringExtra("imageBottleSmall");
                 Tools tools = new Tools();
@@ -299,6 +958,18 @@ public class BottleActivity extends AppCompatActivity {
                         Integer intNumber = Integer.parseInt(numberBottle.getText().toString());
                         Integer intEstimate = Integer.parseInt(estimateBottle.getText().toString());
 
+                        // On set la couleur du vin suivant l'alpha du bouton
+                        String strWineColor = "";
+                        if(btnRed.getAlpha() == 1f) {
+                            strWineColor = "Rouge";
+                        } else if(btnRose.getAlpha() == 1f) {
+                            strWineColor = "Rose";
+                        } else if(btnWhite.getAlpha() == 1f) {
+                            strWineColor = "Blanc";
+                        } else if(btnChamp.getAlpha() == 1f) {
+                            strWineColor = "Effervescent";
+                        }
+
                         // On retire toujours les 3 derniers caractères : "/10" et on remplace "*" par "0", si c'est le cas
                         Integer intRate;
                         String strRate = nbRate.getText().toString().trim().substring(0, nbRate.length() - 3);
@@ -322,8 +993,8 @@ public class BottleActivity extends AppCompatActivity {
                             strWish = "0";
                         }
 
-                        AccesLocalDbCellar accesLocalDbCellar = new AccesLocalDbCellar(BottleActivity.this);
-                        accesLocalDbCellar.updateBottle(intId, strCountry, strRegion, strDomain, strAppellation, strAddress, intMillesime, intApogee, intNumber, intEstimate, intRate, strFavorite, strWish);
+                        AccesLocalCellar accesLocalCellar = new AccesLocalCellar(BottleActivity.this);
+                        accesLocalCellar.updateBottle(intId, strCountry, strRegion, strWineColor, strDomain, strAppellation, strAddress, intMillesime, intApogee, intNumber, intEstimate, intRate, strFavorite, strWish);
                         popupUpdate.dismiss();
 
                         popupSuccessUpdate.show();
@@ -424,8 +1095,8 @@ public class BottleActivity extends AppCompatActivity {
                         String strId = getIntent().getStringExtra("id");
                         Integer intId = Integer.parseInt(strId);
 
-                        AccesLocalDbCellar accesLocalDbCellar = new AccesLocalDbCellar(BottleActivity.this);
-                        accesLocalDbCellar.takeOutBottle(intId);
+                        AccesLocalCellar accesLocalCellar = new AccesLocalCellar(BottleActivity.this);
+                        accesLocalCellar.takeOutBottle(intId);
                         popupDelete.dismiss();
 
                         // Basculement vers CellarActivity à l'effacement d'une bouteille dans le BottleActivity
@@ -466,8 +1137,8 @@ public class BottleActivity extends AppCompatActivity {
 
         dateBottle = (TextView) findViewById(R.id.date);
 
-        countryBottle = (EditText) findViewById(R.id.countryBottle);
-        regionBottle = (EditText) findViewById(R.id.regionBottle);
+        countryBottle = (AutoCompleteTextView) findViewById(R.id.countryBottle);
+        regionBottle = (AutoCompleteTextView) findViewById(R.id.regionBottle);
         domainBottle = (EditText) findViewById(R.id.domainBottle);
         appellationBottle = (EditText) findViewById(R.id.appellationBottle);
         addressBottle = (EditText) findViewById(R.id.addressBottle);
@@ -478,18 +1149,38 @@ public class BottleActivity extends AppCompatActivity {
 
         nbRate = (TextView) findViewById(R.id.nbRate);
 
+        btnRed = (ImageButton) findViewById(R.id.redWineButton);
+        btnRose = (ImageButton) findViewById(R.id.roseWineButton);
+        btnWhite = (ImageButton) findViewById(R.id.whiteWineButton);
+        btnChamp = (ImageButton) findViewById(R.id.champWineButton);
 
         switch(getIntent().getStringExtra("wineColor").trim()) {
             case "Rouge" :
+                btnRed.setAlpha(1f);
+                btnRose.setAlpha(0.3f);
+                btnWhite.setAlpha(0.3f);
+                btnChamp.setAlpha(0.3f);
                 imageWineColor.setImageResource(R.drawable.red_wine_listview);
                 break;
             case "Rose" :
+                btnRed.setAlpha(0.3f);
+                btnRose.setAlpha(1f);
+                btnWhite.setAlpha(0.3f);
+                btnChamp.setAlpha(0.3f);
                 imageWineColor.setImageResource(R.drawable.rose_wine_listview);
                 break;
             case "Blanc" :
+                btnRed.setAlpha(0.3f);
+                btnRose.setAlpha(0.3f);
+                btnWhite.setAlpha(1f);
+                btnChamp.setAlpha(0.3f);
                 imageWineColor.setImageResource(R.drawable.white_wine_listview);
                 break;
             case "Effervescent" :
+                btnRed.setAlpha(0.3f);
+                btnRose.setAlpha(0.3f);
+                btnWhite.setAlpha(0.3f);
+                btnChamp.setAlpha(1f);
                 imageWineColor.setImageResource(R.drawable.champ_wine_listview);
                 break;
         }

@@ -2,7 +2,7 @@ package com.romain.cellarv1.controleur;
 
 import android.content.Context;
 
-import com.romain.cellarv1.modele.AccesLocalDbCellar;
+import com.romain.cellarv1.modele.AccesLocalCellar;
 import com.romain.cellarv1.modele.WineBottle;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class Controle {
 
     private static WineBottle wineBottle;
     //private static String serializableFile = "saveWineBottle";
-    private static AccesLocalDbCellar accesLocalDbCellar; // Permet d'accéder à la classe AccesLocal
+    private static AccesLocalCellar accesLocalCellar; // Permet d'accéder à la classe AccesLocal
     private static ArrayList<WineBottle> wineBottleList;
 
     /**
@@ -35,7 +35,7 @@ public class Controle {
         if(Controle.instance == null) {
             Controle.instance = new Controle();
             //recoverSerialize(context);
-            accesLocalDbCellar = new AccesLocalDbCellar(context);
+            accesLocalCellar = new AccesLocalCellar(context);
             //wineBottle = accesLocal.getLastWineBottle();
         }
         return Controle.instance;
@@ -60,6 +60,6 @@ public class Controle {
      */
     public void createWineBottle(Integer id, String country, String region, String wineColor, String domain, String appellation, String address, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Integer rate, String favorite, String wish, Float lattitude, Float longitude, String timeStamp, Context context) {
         wineBottle = new WineBottle(id, country, region, wineColor, domain, appellation, address, year, apogee, number, estimate, pictureLarge, pictureSmall, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp);
-        accesLocalDbCellar.add(wineBottle);
+        accesLocalCellar.add(wineBottle);
     }
 }

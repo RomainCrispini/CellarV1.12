@@ -17,7 +17,7 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.romain.cellarv1.R;
-import com.romain.cellarv1.modele.AccesLocalDbCellar;
+import com.romain.cellarv1.modele.AccesLocalCellar;
 import com.romain.cellarv1.modele.WineBottle;
 
 import java.text.DecimalFormat;
@@ -31,7 +31,7 @@ import java.util.Iterator;
  */
 public class CellarStatMillesimeFragment extends Fragment {
 
-    private AccesLocalDbCellar accesLocalDbCellar;
+    private AccesLocalCellar accesLocalCellar;
 
     private BarChart barChartMillesime;
 
@@ -100,8 +100,8 @@ public class CellarStatMillesimeFragment extends Fragment {
 
     // TODO IL FAUT MULTIPLIER LE NOMBRE DE CHAQUE AVEC L'ESTIMATE
     private void loadTotalEstimate() {
-        accesLocalDbCellar = new AccesLocalDbCellar(getContext());
-        Integer nbTotalEstimate = accesLocalDbCellar.nbTotalEstimate();
+        accesLocalCellar = new AccesLocalCellar(getContext());
+        Integer nbTotalEstimate = accesLocalCellar.nbTotalEstimate();
 
         txtTotalEstimate.setText(nbTotalEstimate.toString() + " €");
 
@@ -210,8 +210,8 @@ public class CellarStatMillesimeFragment extends Fragment {
 
     private ArrayList<BarEntry> values(){
         // Récupération de la liste des bouteilles
-        accesLocalDbCellar = new AccesLocalDbCellar(getContext());
-        ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocalDbCellar.recoverWineBottleListNumberGroupByYear();
+        accesLocalCellar = new AccesLocalCellar(getContext());
+        ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocalCellar.recoverWineBottleListNumberGroupByYear();
 
         Iterator iterator = wineBottleList.iterator();
 

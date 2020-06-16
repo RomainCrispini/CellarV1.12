@@ -19,7 +19,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.romain.cellarv1.R;
-import com.romain.cellarv1.modele.AccesLocalDbCellar;
+import com.romain.cellarv1.modele.AccesLocalCellar;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
  */
 public class CellarStatWineColorFragment extends Fragment {
 
-    private AccesLocalDbCellar accesLocalDbCellar;
+    private AccesLocalCellar accesLocalCellar;
 
     // Interpolator pour animation des menuBis
     private OvershootInterpolator interpolator = new OvershootInterpolator();
@@ -103,8 +103,8 @@ public class CellarStatWineColorFragment extends Fragment {
     }
 
     private void loadTotalNumber() {
-        accesLocalDbCellar = new AccesLocalDbCellar(getContext());
-        Integer nbTotalBottle = accesLocalDbCellar.nbTotal();
+        accesLocalCellar = new AccesLocalCellar(getContext());
+        Integer nbTotalBottle = accesLocalCellar.nbTotal();
 
         txtTotalNumber.setText(nbTotalBottle.toString());
 
@@ -138,13 +138,13 @@ public class CellarStatWineColorFragment extends Fragment {
         pieChartWineColor.setTransparentCircleRadius(0f);
         //pieChart.getLegend().setEnabled(false);
 
-        accesLocalDbCellar = new AccesLocalDbCellar(getContext());
+        accesLocalCellar = new AccesLocalCellar(getContext());
         //ArrayList<WineBottle> wineBottleArrayList = (ArrayList<WineBottle>) accesLocal.recoverWineBottleList();
 
-        Integer nbRed = accesLocalDbCellar.nbRed();
-        Integer nbRose = accesLocalDbCellar.nbRose();
-        Integer nbWhite = accesLocalDbCellar.nbWhite();
-        Integer nbChamp = accesLocalDbCellar.nbChamp();
+        Integer nbRed = accesLocalCellar.nbRed();
+        Integer nbRose = accesLocalCellar.nbRose();
+        Integer nbWhite = accesLocalCellar.nbWhite();
+        Integer nbChamp = accesLocalCellar.nbChamp();
 
         // Modifie le nombre de couleurs du pie suivant celle des bouteilles
         ArrayList<Integer> COLORS = new ArrayList<>();

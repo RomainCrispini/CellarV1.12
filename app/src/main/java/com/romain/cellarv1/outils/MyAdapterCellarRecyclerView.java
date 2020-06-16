@@ -25,7 +25,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.romain.cellarv1.R;
-import com.romain.cellarv1.modele.AccesLocalDbCellar;
+import com.romain.cellarv1.modele.AccesLocalCellar;
 import com.romain.cellarv1.modele.WineBottle;
 import com.romain.cellarv1.vue.BottleActivity;
 import java.util.ArrayList;
@@ -172,12 +172,12 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
 
                 // Pour set 1 dans la propriété favorite d'une bottle si elle n'est pas déjà set
                 Integer valueId = wineBottle.getId();
-                AccesLocalDbCellar accesLocalDbCellar = new AccesLocalDbCellar(mContext);
+                AccesLocalCellar accesLocalCellar = new AccesLocalCellar(mContext);
 
                 if (wineBottle.getFavorite().matches("0")) {
-                    accesLocalDbCellar.addLikeToABottle(String.valueOf(valueId));
+                    accesLocalCellar.addLikeToABottle(String.valueOf(valueId));
                 } else if(wineBottle.getFavorite().matches("1")) {
-                    accesLocalDbCellar.removeLikeToABottle(String.valueOf(valueId));
+                    accesLocalCellar.removeLikeToABottle(String.valueOf(valueId));
 
                 }
             }
@@ -253,8 +253,8 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                     @Override
                     public void onClick(View v) {
                         Integer valueId = wineBottle.getId();
-                        AccesLocalDbCellar accesLocalDbCellar = new AccesLocalDbCellar(mContext);
-                        accesLocalDbCellar.takeOutBottle(valueId);
+                        AccesLocalCellar accesLocalCellar = new AccesLocalCellar(mContext);
+                        accesLocalCellar.takeOutBottle(valueId);
                         popupDelete.dismiss();
 
                         removeCardViewAt(holder.getAdapterPosition());

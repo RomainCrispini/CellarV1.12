@@ -6,12 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
-import androidx.core.content.res.ResourcesCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -20,7 +18,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.Intent;
@@ -45,13 +42,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.romain.cellarv1.R;
 import com.romain.cellarv1.controleur.Controle;
-import com.romain.cellarv1.modele.AccesLocalDbCellar;
+import com.romain.cellarv1.modele.AccesLocalCellar;
 import com.romain.cellarv1.modele.WineBottle;
 import com.romain.cellarv1.outils.BlurBitmap;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
@@ -104,14 +100,15 @@ public class AddActivity extends AppCompatActivity {
 
     // ProgessBar
     private ProgressBar progressBar;
-    private boolean check = true;
 
     // Champs texte
     private AutoCompleteTextView txtCountry, txtRegion;
     private EditText txtDomain, txtAppellation, txtAddress;
     private EditText nbYear, nbApogee, nbNumber, nbEstimate;
-    private ImageButton btnRed, btnRose, btnWhite, btnChamp;
     private TextView nbRate;
+
+    // Boutons WineColor
+    private ImageButton btnRed, btnRose, btnWhite, btnChamp;
 
     // Bouton add
     private FloatingActionButton btnAdd;
@@ -148,7 +145,7 @@ public class AddActivity extends AppCompatActivity {
     private ToggleButton btnFavorite;
     private ToggleButton btnWishlist;
 
-    // Image Vignoble
+    // Image Vignoble & WineColor
     private ImageView imgVignoble;
     private ImageView imgWineColor;
 
@@ -814,10 +811,10 @@ public class AddActivity extends AppCompatActivity {
         popupInfoLabelBottle.show();
 
         // Récupération de la liste de toutes les bouteilles SI ET SEULEMENT SI une BDD existe
-        AccesLocalDbCellar accesLocalDbCellar = new AccesLocalDbCellar(AddActivity.this);
+        AccesLocalCellar accesLocalCellar = new AccesLocalCellar(AddActivity.this);
 
-        if (accesLocalDbCellar.doesDBExists() == true) {
-            ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocalDbCellar.recoverWineBottleList();
+        if (accesLocalCellar.doesDBExists() == true) {
+            ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocalCellar.recoverWineBottleList();
             for (int i = 0; i < wineBottleList.size(); i++) {
                 if (wineBottleList.get(i).getPictureSmall().equals("")) {
                 } else if (!wineBottleList.get(i).getPictureSmall().equals("")) {
@@ -1266,8 +1263,8 @@ public class AddActivity extends AppCompatActivity {
                         String pictureSmall = getPictureSmall();
 
                         WineBottle wineBottle = new WineBottle(null, country, region, wineColor, domain, appellation, address, year, apogee, number, estimate, pictureLarge, pictureSmall, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp);
-                        AccesLocalDbCellar accesLocalDbCellar = new AccesLocalDbCellar(AddActivity.this);
-                        wineBottle.setId(accesLocalDbCellar.add(wineBottle));
+                        AccesLocalCellar accesLocalCellar = new AccesLocalCellar(AddActivity.this);
+                        wineBottle.setId(accesLocalCellar.add(wineBottle));
 
                         popupAdd.dismiss();
 
@@ -1328,7 +1325,7 @@ public class AddActivity extends AppCompatActivity {
         getJsonCountries();
         AutoCompleteTextView textCountries = (AutoCompleteTextView) findViewById(R.id.textCountry);
         // On change la couleur de fond de la liste déroulante
-        textCountries.setDropDownBackgroundDrawable(new ColorDrawable(AddActivity.this.getResources().getColor(R.color.green_dark)));
+        textCountries.setDropDownBackgroundDrawable(new ColorDrawable(AddActivity.this.getResources().getColor(R.color.green_very_dark)));
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom_autocomplete, countryList);
         textCountries.setAdapter(adapter);
     }
@@ -1340,7 +1337,7 @@ public class AddActivity extends AppCompatActivity {
                 "Picardie", "Provence", "Savoie-Bugey", "Sud-Ouest", "Tahiti", "Val de Loire", "Vallée du Rhône");
         AutoCompleteTextView textRegions = (AutoCompleteTextView) findViewById(R.id.textRegion);
         // On change la couleur de fond de la liste déroulante
-        textRegions.setDropDownBackgroundDrawable(new ColorDrawable(AddActivity.this.getResources().getColor(R.color.green_dark)));
+        textRegions.setDropDownBackgroundDrawable(new ColorDrawable(AddActivity.this.getResources().getColor(R.color.green_very_dark)));
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom_autocomplete, regionsList);
         textRegions.setAdapter(adapter);
     }
@@ -1431,7 +1428,7 @@ public class AddActivity extends AppCompatActivity {
     }
 
     /**
-     * Méthode qui gère la progressBar
+     * Méthode qui gère la progressBar et les validations de champs
      */
     private void gestionProgressBarValidation() {
 
@@ -1547,7 +1544,7 @@ public class AddActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if (validation.isValidNumberField(nbYear.getText().toString().trim())) {
                     millesimeOK = true;
-                } else if (!validation.isValidNumberField(txtDomain.getText().toString().trim())) {
+                } else if (!validation.isValidNumberField(nbYear.getText().toString().trim())) {
                     millesimeOK = false;
                 }
                 gestionAddButtonColor();
@@ -1581,7 +1578,7 @@ public class AddActivity extends AppCompatActivity {
                 if (validation.isValidNumberField(nbApogee.getText().toString().trim())) {
                     apogeeOK = true;
 
-                } else if (!validation.isValidNumberField(txtDomain.getText().toString().trim())) {
+                } else if (!validation.isValidNumberField(nbApogee.getText().toString().trim())) {
                     apogeeOK = false;
                 }
                 gestionAddButtonColor();

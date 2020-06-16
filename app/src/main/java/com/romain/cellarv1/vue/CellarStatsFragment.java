@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.romain.cellarv1.R;
-import com.romain.cellarv1.modele.AccesLocalDbCellar;
+import com.romain.cellarv1.modele.AccesLocalCellar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,7 +22,7 @@ import com.romain.cellarv1.modele.AccesLocalDbCellar;
  */
 public class CellarStatsFragment extends Fragment {
 
-    private AccesLocalDbCellar accesLocalDbCellar;
+    private AccesLocalCellar accesLocalCellar;
 
     // Interpolator pour animation des menuBis
     private OvershootInterpolator interpolator = new OvershootInterpolator();

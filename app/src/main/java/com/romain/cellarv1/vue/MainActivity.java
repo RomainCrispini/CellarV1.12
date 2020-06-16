@@ -34,7 +34,7 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.romain.cellarv1.R;
-import com.romain.cellarv1.modele.AccesLocalDbCellar;
+import com.romain.cellarv1.modele.AccesLocalCellar;
 import com.romain.cellarv1.modele.WineBottle;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
 import com.romain.cellarv1.outils.Tools;
@@ -134,10 +134,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         popupInfoMap.show();
 
         // Récupération de la liste de toutes les bouteilles SI ET SEULEMENT SI une BDD existe
-        AccesLocalDbCellar accesLocalDbCellar = new AccesLocalDbCellar(MainActivity.this);
+        AccesLocalCellar accesLocalCellar = new AccesLocalCellar(MainActivity.this);
 
-        if(accesLocalDbCellar.doesDBExists() == true) {
-            ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocalDbCellar.recoverWineBottleList();
+        if(accesLocalCellar.doesDBExists() == true) {
+            ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocalCellar.recoverWineBottleList();
             for(int i = 0; i < wineBottleList.size(); i++) {
                 if(wineBottleList.get(i).getLattitude() == null && wineBottleList.get(i).getLongitude() == null
                 && wineBottleList.get(i).getLattitude() == 0f && wineBottleList.get(i).getLongitude() == 0f) {
@@ -389,9 +389,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         int width = 100;
 
         // Récupération de la liste de toutes les bouteilles SI ET SEULEMENT SI une BDD existe
-        AccesLocalDbCellar accesLocalDbCellar = new AccesLocalDbCellar(MainActivity.this);
-        if(accesLocalDbCellar.doesDBExists() == true) {
-            ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocalDbCellar.recoverWineBottleList();
+        AccesLocalCellar accesLocalCellar = new AccesLocalCellar(MainActivity.this);
+        if(accesLocalCellar.doesDBExists() == true) {
+            ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocalCellar.recoverWineBottleList();
 
             for(int i = 0; i < wineBottleList.size(); i++) {
                 if(wineBottleList.get(i).getLattitude() != null && wineBottleList.get(i).getLongitude() != null

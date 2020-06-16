@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AccesLocalDbCellar {
+public class AccesLocalCellar {
 
     // Propriétés
     private String nomBase = "cellar.sqlite";
@@ -21,7 +21,7 @@ public class AccesLocalDbCellar {
      * Constructeur, quand on instanciera cette classe (il faudra y envoyer le context)
      * @param context
      */
-    public AccesLocalDbCellar(Context context) {
+    public AccesLocalCellar(Context context) {
         accesBD = new MySQLiteOpenHelper(context, nomBase, null, versionBase);
     }
 
@@ -190,11 +190,12 @@ public class AccesLocalDbCellar {
     /**
      * Méthode qui permet d'upload les infos d'une bouteille
      */
-    public void updateBottle(Integer id, String country, String region, String domain, String appellation, String address, int year, int apogee, int number, int estimate, Integer rate, String favorite, String wish) {
+    public void updateBottle(Integer id, String country, String region, String winecolor, String domain, String appellation, String address, int year, int apogee, int number, int estimate, Integer rate, String favorite, String wish) {
         bd = accesBD.getWritableDatabase();
         ContentValues args = new ContentValues();
         args.put("country", country);
         args.put("region", region);
+        args.put("winecolor", winecolor);
         args.put("domain", domain);
         args.put("appellation", appellation);
         args.put("address", address);

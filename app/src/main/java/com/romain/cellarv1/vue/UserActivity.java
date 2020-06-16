@@ -34,7 +34,7 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.romain.cellarv1.R;
 import com.romain.cellarv1.outils.Validation;
-import com.romain.cellarv1.modele.AccesLocalDbUsers;
+import com.romain.cellarv1.modele.AccesLocalUsers;
 import com.romain.cellarv1.modele.User;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
 import com.romain.cellarv1.outils.PlaceAutoSuggestAdapter;
@@ -334,8 +334,8 @@ public class UserActivity extends AppCompatActivity {
 
 
         User user = new User(null, pseudo, password, mail, avatarLarge, avatarSmall);
-        AccesLocalDbUsers accesLocalDbUsers = new AccesLocalDbUsers(UserActivity.this);
-        user.setId(accesLocalDbUsers.addUser(user));
+        AccesLocalUsers accesLocalUsers = new AccesLocalUsers(UserActivity.this);
+        user.setId(accesLocalUsers.addUser(user));
 
     }
 

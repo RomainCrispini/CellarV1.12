@@ -7,7 +7,7 @@ public class Validation {
 
     private String RegExPseudo = "^[^\\s]+,?(\\s[^\\s]+)*$";
     //private String RegExPassword = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
-    private String RegExPassword = "^[^\\s]+,?(\\s[^\\s]+)*$";
+    private String RegExPassword = "^[^\\s]+,?(\\s[^\\s]+)*$"; // Pour l'instant, même RegEx que Pseudo
     private String RegExMail = "^(.+)@(.+)$";
     private String RegExTextField = "^[^\\s]+,?(\\s[^\\s]+)*$"; // Pour l'instant, même RegEx que Pseudo
     private String RegExNumberField = "^[^\\s]+,?(\\s[^\\s]+)*$"; // Pour l'instant, même RegEx que Pseudo
@@ -19,7 +19,6 @@ public class Validation {
 
     public boolean isValidPassword(String target) {
         return Pattern.compile(RegExPassword).matcher(target).matches();
-
     }
 
     public boolean isValidMail(String target) {

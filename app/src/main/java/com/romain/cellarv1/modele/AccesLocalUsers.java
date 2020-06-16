@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.romain.cellarv1.outils.MySQLiteOpenHelper;
 
-public class AccesLocalDbUsers {
+public class AccesLocalUsers {
 
     // Propriétés
     private String nomBase = "cellar.sqlite";
@@ -19,7 +19,7 @@ public class AccesLocalDbUsers {
      * Constructeur, quand on instanciera cette classe (il faudra y envoyer le context)
      * @param context
      */
-    public AccesLocalDbUsers(Context context) {
+    public AccesLocalUsers(Context context) {
         accesBD = new MySQLiteOpenHelper(context, nomBase, null, versionBase);
     }
 
