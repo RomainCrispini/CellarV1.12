@@ -315,6 +315,7 @@ public class BottleActivity extends AppCompatActivity {
 
     }
 
+    // TODO PROBLEME DE DOUBLONS DES VILLES DANS LA LISTBOX
     /**
      * Chargement et récupération des infos du fichier JSon pour le nom des pays
      */
