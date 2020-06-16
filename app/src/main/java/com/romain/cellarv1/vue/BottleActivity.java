@@ -1152,6 +1152,7 @@ public class BottleActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void initWineBottle() {
+
         btnFavorite = (ToggleButton) findViewById(R.id.btnFavorite);
         btnWishlist = (ToggleButton) findViewById(R.id.btnWishlist);
 
@@ -1223,8 +1224,10 @@ public class BottleActivity extends AppCompatActivity {
         String rate = getIntent().getStringExtra("rate");
         if(rate.equals("0")) {
             nbRate.setText("*/10");
+            nbRate.setTextColor(getResources().getColor(R.color.green_middle_light));
         } else {
             nbRate.setText(rate + "/10");
+            nbRate.setTextColor(getResources().getColor(R.color.green_apple));
         }
 
 
