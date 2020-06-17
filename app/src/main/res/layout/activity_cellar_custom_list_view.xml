@@ -71,7 +71,7 @@
                     android:layout_margin="5dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:background="@color/green_very_dark" />
+                    android:background="@color/green_dark" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -94,13 +94,13 @@
                             android:orientation="horizontal">
 
                             <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
                                 android:layout_gravity="center_vertical"
                                 android:backgroundTint="@color/transparent"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/icone_menubis_millesime"
-                                android:tint="@color/green_very_dark" />
+                                android:tint="@color/green_dark" />
 
                             <LinearLayout
                                 android:layout_width="fill_parent"
@@ -110,8 +110,9 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
+                                    android:layout_gravity="start"
                                     android:layout_weight="1"
+                                    android:layout_marginLeft="3dp"
                                     android:textColor="@color/green_very_dark"
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
@@ -122,8 +123,9 @@
                                     android:id="@+id/yearListView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
+                                    android:layout_gravity="start"
                                     android:layout_weight="1"
+                                    android:layout_marginLeft="3dp"
                                     android:textColor="@color/green_very_dark"
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
@@ -143,13 +145,13 @@
                             android:orientation="horizontal">
 
                             <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
                                 android:layout_gravity="center_vertical"
                                 android:backgroundTint="@color/transparent"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/icone_menubis_apogee"
-                                android:tint="@color/green_very_dark" />
+                                android:tint="@color/green_dark" />
 
                             <LinearLayout
                                 android:layout_width="fill_parent"
@@ -159,8 +161,9 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
+                                    android:layout_gravity="start"
                                     android:layout_weight="1"
+                                    android:layout_marginLeft="3dp"
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
                                     android:textColor="@color/green_very_dark"
@@ -171,8 +174,9 @@
                                     android:id="@+id/apogeeListView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
+                                    android:layout_gravity="start"
                                     android:layout_weight="1"
+                                    android:layout_marginLeft="3dp"
                                     android:textColor="@color/green_very_dark"
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
@@ -190,13 +194,13 @@
                             android:orientation="horizontal">
 
                             <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
                                 android:layout_gravity="center_vertical"
                                 android:backgroundTint="@color/transparent"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/icone_menubis_quantite"
-                                android:tint="@color/green_very_dark" />
+                                android:tint="@color/green_dark" />
 
                             <LinearLayout
                                 android:layout_width="fill_parent"
@@ -206,8 +210,9 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
+                                    android:layout_gravity="start"
                                     android:layout_weight="1"
+                                    android:layout_marginLeft="3dp"
                                     android:textColor="@color/green_very_dark"
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
@@ -218,8 +223,9 @@
                                     android:id="@+id/numberListView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal"
+                                    android:layout_gravity="start"
                                     android:layout_weight="1"
+                                    android:layout_marginLeft="3dp"
                                     android:textColor="@color/green_very_dark"
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
