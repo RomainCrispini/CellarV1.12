@@ -245,7 +245,6 @@ public class BottleActivity extends AppCompatActivity {
         gestionWineColorSelector();
 
         getRegionsList();
-        getJsonCountries();
         recoverJsonCountries();
 
         gestionValidation();
@@ -315,7 +314,6 @@ public class BottleActivity extends AppCompatActivity {
 
     }
 
-    // TODO PROBLEME DE DOUBLONS DES VILLES DANS LA LISTBOX
     /**
      * Chargement et récupération des infos du fichier JSon pour le nom des pays
      */
@@ -340,7 +338,7 @@ public class BottleActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //Toast.makeText(getApplicationContext(),countrylist.toString(),Toast.LENGTH_LONG).show();
+
     }
 
     private void recoverJsonCountries() {
@@ -1151,7 +1149,6 @@ public class BottleActivity extends AppCompatActivity {
         });
     }
 
-    @SuppressLint("SetTextI18n")
     private void initWineBottle() {
 
         btnFavorite = (ToggleButton) findViewById(R.id.btnFavorite);
@@ -1179,6 +1176,7 @@ public class BottleActivity extends AppCompatActivity {
         btnWhite = (ImageButton) findViewById(R.id.whiteWineButton);
         btnChamp = (ImageButton) findViewById(R.id.champWineButton);
 
+        // On récupère de l'intent la couleur de la bouteille et on la set sur l'alpha des boutons
         switch(getIntent().getStringExtra("wineColor").trim()) {
             case "Rouge" :
                 btnRed.setAlpha(1f);
