@@ -11,7 +11,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
-        app:cardBackgroundColor="@color/green_middle_dark"
+        app:cardBackgroundColor="@color/green_middle_light"
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/yanone_kaffeesatz"
-                    android:textColor="@color/green_light"
+                    android:textColor="@color/green_very_dark"
                     android:gravity="center"
                     android:text="Région"
                     android:textSize="16sp"
@@ -48,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/yanone_kaffeesatz"
-                    android:textColor="@color/green_light"
+                    android:textColor="@color/green_very_dark"
                     android:gravity="center"
                     android:text="Appellation"
                     android:textSize="16sp" />
@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="3dp"
                     android:fontFamily="@font/yanone_kaffeesatz"
-                    android:textColor="@color/green_light"
+                    android:textColor="@color/green_very_dark"
                     android:gravity="center"
                     android:text="Domaine"
                     android:textSize="16sp" />
@@ -71,7 +71,7 @@
                     android:layout_margin="5dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:background="@color/green_light" />
+                    android:background="@color/green_very_dark" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -100,7 +100,7 @@
                                 android:backgroundTint="@color/transparent"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/icone_menubis_millesime"
-                                android:tint="@color/green_light" />
+                                android:tint="@color/green_very_dark" />
 
                             <LinearLayout
                                 android:layout_width="fill_parent"
@@ -112,7 +112,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
                                     android:layout_weight="1"
-                                    android:textColor="@color/green_light"
+                                    android:textColor="@color/green_very_dark"
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
                                     android:text="Millésime"
@@ -124,7 +124,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
                                     android:layout_weight="1"
-                                    android:textColor="@color/green_light"
+                                    android:textColor="@color/green_very_dark"
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
                                     android:text="Millésime"
@@ -149,7 +149,7 @@
                                 android:backgroundTint="@color/transparent"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/icone_menubis_apogee"
-                                android:tint="@color/green_light" />
+                                android:tint="@color/green_very_dark" />
 
                             <LinearLayout
                                 android:layout_width="fill_parent"
@@ -163,7 +163,7 @@
                                     android:layout_weight="1"
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
-                                    android:textColor="@color/green_light"
+                                    android:textColor="@color/green_very_dark"
                                     android:text="Apogée"
                                     android:textSize="16sp" />
 
@@ -173,7 +173,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
                                     android:layout_weight="1"
-                                    android:textColor="@color/green_light"
+                                    android:textColor="@color/green_very_dark"
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
                                     android:text="Apogée"
@@ -196,7 +196,7 @@
                                 android:backgroundTint="@color/transparent"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/icone_menubis_quantite"
-                                android:tint="@color/green_light" />
+                                android:tint="@color/green_very_dark" />
 
                             <LinearLayout
                                 android:layout_width="fill_parent"
@@ -208,7 +208,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
                                     android:layout_weight="1"
-                                    android:textColor="@color/green_light"
+                                    android:textColor="@color/green_very_dark"
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
                                     android:text="Quantité"
@@ -220,7 +220,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
                                     android:layout_weight="1"
-                                    android:textColor="@color/green_light"
+                                    android:textColor="@color/green_very_dark"
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
                                     android:text="Quantité"
@@ -248,7 +248,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     app:cardBackgroundColor="@color/green_very_dark"
-                    app:cardCornerRadius="23dp"
+                    app:cardCornerRadius="8dp"
                     app:cardElevation="0dp">
 
                     <ToggleButton
@@ -266,7 +266,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     app:cardBackgroundColor="@color/green_very_dark"
-                    app:cardCornerRadius="23dp"
+                    app:cardCornerRadius="8dp"
                     app:cardElevation="0dp">
 
                     <ImageButton

@@ -206,7 +206,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_weight="1"
                         app:cardBackgroundColor="@color/green_very_dark"
-                        app:cardCornerRadius="22dp"
+                        app:cardCornerRadius="8dp"
                         app:cardElevation="0dp">
 
                         <ImageView
@@ -226,7 +226,7 @@
                         android:layout_marginRight="20dp"
                         android:layout_weight="1"
                         app:cardBackgroundColor="@color/green_very_dark"
-                        app:cardCornerRadius="22dp"
+                        app:cardCornerRadius="8dp"
                         app:cardElevation="0dp">
 
                         <TextView
@@ -248,7 +248,7 @@
                         android:layout_marginRight="20dp"
                         android:layout_weight="1"
                         app:cardBackgroundColor="@color/green_very_dark"
-                        app:cardCornerRadius="22dp"
+                        app:cardCornerRadius="8dp"
                         app:cardElevation="0dp">
 
                         <ImageView

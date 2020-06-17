@@ -20,7 +20,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="80dp"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@id/curvedBottomNavigationView"
             app:layout_constraintEnd_toEndOf="parent"
@@ -769,6 +769,7 @@
                 android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="Mes appréciations"
+                android:textSize="20dp"
                 android:textColor="@color/green_light" />
 
             <View
@@ -785,7 +786,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="90dp"
                 android:layout_marginRight="90dp"
-                android:layout_marginBottom="200dp"
+                android:layout_marginBottom="150dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -796,7 +797,7 @@
                     android:layout_height="60dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/green_very_dark"
-                    app:cardCornerRadius="30dp"
+                    app:cardCornerRadius="8dp"
                     app:cardElevation="0dp">
 
                     <ToggleButton
@@ -815,7 +816,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/green_very_dark"
-                    app:cardCornerRadius="30dp"
+                    app:cardCornerRadius="8dp"
                     app:cardElevation="0dp">
 
                     <TextView
@@ -836,7 +837,7 @@
                     android:layout_height="60dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/green_very_dark"
-                    app:cardCornerRadius="30dp"
+                    app:cardCornerRadius="8dp"
                     app:cardElevation="0dp">
 
                     <ToggleButton
