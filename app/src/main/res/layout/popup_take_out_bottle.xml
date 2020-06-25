@@ -55,6 +55,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/labelNumberBottle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -68,7 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="textStart"
-                    android:text="nb"
+                    android:text=""
                     android:textColor="@color/pink_light"
                     android:fontFamily="@font/yanone_kaffeesatz"
                     android:textSize="15dp" />

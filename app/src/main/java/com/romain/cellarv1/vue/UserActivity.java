@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
 import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;

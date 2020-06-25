@@ -202,6 +202,8 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                 TextView domain = (TextView) popupDelete.findViewById(R.id.domain);
                 TextView appellation = (TextView) popupDelete.findViewById(R.id.appellation);
                 TextView millesime = (TextView) popupDelete.findViewById(R.id.millesime);
+
+                TextView labelNumberBottle = (TextView) popupDelete.findViewById(R.id.labelNumberBottle);
                 TextView number = (TextView) popupDelete.findViewById(R.id.number);
 
 
@@ -254,11 +256,15 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                     nbRatePopup.setTextColor(mContext.getColor(R.color.green_apple));
                 }
 
-
-                // TODO NE MARCHE PAS QUAND ON ARRIVE A ZERO
-                // On retire 1 au nombre de bouteilles
+                // On retire 1 au nombre de bouteilles s'il en reste plus de zero, sinon on avertit
                 String bottleNumber = String.valueOf(wineBottle.getNumber() - 1);
-                number.setText(bottleNumber);
+                if(wineBottle.getNumber() < 1) {
+                    labelNumberBottle.setText("Et c'est la dernière !");
+                    number.setText("");
+                } else {
+                    labelNumberBottle.setText("Il vous en restera : ");
+                    number.setText(bottleNumber);
+                }
 
                 region.setText(wineBottle.getRegion());
                 domain.setText(wineBottle.getDomain());

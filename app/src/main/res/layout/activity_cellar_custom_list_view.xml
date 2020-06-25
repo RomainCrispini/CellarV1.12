@@ -10,7 +10,7 @@
         android:layout_height="140dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="20dp"
         app:cardBackgroundColor="@color/green_middle_light"
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp"
@@ -22,7 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="fill_horizontal"
-            android:layout_marginLeft="45dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="40dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -68,9 +69,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="5dp"
-                    android:layout_margin="5dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:background="@color/green_dark" />
 
                 <LinearLayout
@@ -84,12 +85,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="start"
                             android:layout_weight="1"
                             android:orientation="horizontal">
 
@@ -117,7 +121,7 @@
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
                                     android:text="Millésime"
-                                    android:textSize="16sp" />
+                                    android:textSize="15sp" />
 
                                 <TextView
                                     android:id="@+id/yearListView"
@@ -137,7 +141,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
@@ -168,7 +172,7 @@
                                     android:gravity="center"
                                     android:textColor="@color/green_very_dark"
                                     android:text="Apogée"
-                                    android:textSize="16sp" />
+                                    android:textSize="15sp" />
 
                                 <TextView
                                     android:id="@+id/apogeeListView"
@@ -188,7 +192,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:orientation="horizontal">
@@ -217,7 +221,7 @@
                                     android:fontFamily="@font/yanone_kaffeesatz"
                                     android:gravity="center"
                                     android:text="Quantité"
-                                    android:textSize="16sp" />
+                                    android:textSize="15sp" />
 
                                 <TextView
                                     android:id="@+id/numberListView"
@@ -239,52 +243,6 @@
                     </LinearLayout>
 
                 </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="55dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    app:cardBackgroundColor="@color/green_very_dark"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="0dp">
-
-                    <ToggleButton
-                        android:id="@+id/favorite"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center"
-                        android:background="@drawable/button_like_cardview" />
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="46dp"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    app:cardBackgroundColor="@color/green_very_dark"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="0dp">
-
-                    <ImageButton
-                        android:id="@+id/delete"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:backgroundTint="@color/transparent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/icone_out_cardview"
-                        android:tint="@color/green_middle_light" />
-                </androidx.cardview.widget.CardView>
 
             </LinearLayout>
 
@@ -365,5 +323,55 @@
             android:elevation="0dp"
             android:transitionName="imageTransition" />
     </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="46dp"
+        android:layout_height="match_parent"
+        android:layout_marginRight="5dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@id/cardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/cardView">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            app:cardBackgroundColor="@color/green_very_dark"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp">
+
+            <ToggleButton
+                android:id="@+id/favorite"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button_like_cardview" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="46dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            app:cardBackgroundColor="@color/green_very_dark"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp">
+
+            <ImageButton
+                android:id="@+id/delete"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/transparent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icone_out_cardview"
+                android:tint="@color/green_middle_light" />
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
