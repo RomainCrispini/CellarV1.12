@@ -1786,7 +1786,7 @@ public class AddActivity extends AppCompatActivity {
         if(countryOK == true && regionOK == true && millesimeOK == true && apogeeOK == true && domainOK == true && appellationOK == true && addressOK == true && numberOK == true && estimateOK == true) {
             btnAdd.setColorFilter(getResources().getColor(R.color.green_apple));
         }else {
-            btnAdd.setColorFilter(getResources().getColor(R.color.pink));
+            btnAdd.setColorFilter(getResources().getColor(R.color.green_third_light));
         }
 
 
