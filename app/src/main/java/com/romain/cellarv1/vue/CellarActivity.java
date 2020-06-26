@@ -400,7 +400,7 @@ public class CellarActivity extends AppCompatActivity {
     private void loadSortColorWineBottleInListView() {
 
         RecyclerView cellarRecyclerView = (RecyclerView)findViewById(R.id.cellarRecyclerView);
-        accesLocalCellar = new AccesLocalCellar(CellarActivity.this);
+        AccesLocalCellar accesLocalCellar = new AccesLocalCellar(CellarActivity.this);
         ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocalCellar.sortColorWineBottleList();
 
         MyAdapterCellarRecyclerView myAdapterCellarRecyclerView = new MyAdapterCellarRecyclerView(CellarActivity.this, wineBottleList);
@@ -411,7 +411,7 @@ public class CellarActivity extends AppCompatActivity {
     private void loadRecoverWineBottleInListView() {
 
         RecyclerView cellarRecyclerView = (RecyclerView)findViewById(R.id.cellarRecyclerView);
-        accesLocalCellar = new AccesLocalCellar(CellarActivity.this);
+        AccesLocalCellar accesLocalCellar = new AccesLocalCellar(CellarActivity.this);
         ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocalCellar.recoverWineBottleList();
 
         MyAdapterCellarRecyclerView myAdapterCellarRecyclerView = new MyAdapterCellarRecyclerView(CellarActivity.this, wineBottleList);
@@ -422,7 +422,7 @@ public class CellarActivity extends AppCompatActivity {
     private void loadSortYearWineBottleInListView() {
 
         RecyclerView cellarRecyclerView = (RecyclerView)findViewById(R.id.cellarRecyclerView);
-        accesLocalCellar = new AccesLocalCellar(CellarActivity.this);
+        AccesLocalCellar accesLocalCellar = new AccesLocalCellar(CellarActivity.this);
         ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocalCellar.sortYearWineBottleList();
 
         MyAdapterCellarRecyclerView myAdapterCellarRecyclerView = new MyAdapterCellarRecyclerView(CellarActivity.this, wineBottleList);
@@ -433,7 +433,7 @@ public class CellarActivity extends AppCompatActivity {
     private void loadSortApogeeWineBottleInListView() {
 
         RecyclerView cellarRecyclerView = (RecyclerView)findViewById(R.id.cellarRecyclerView);
-        accesLocalCellar = new AccesLocalCellar(CellarActivity.this);
+        AccesLocalCellar accesLocalCellar = new AccesLocalCellar(CellarActivity.this);
         ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocalCellar.sortApogeeWineBottleList();
 
         MyAdapterCellarRecyclerView myAdapterCellarRecyclerView = new MyAdapterCellarRecyclerView(CellarActivity.this, wineBottleList);

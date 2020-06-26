@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -26,6 +27,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -35,6 +37,7 @@ import androidx.core.content.ContextCompat;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.romain.cellarv1.R;
 import com.romain.cellarv1.modele.AccesLocalCellar;
+import com.romain.cellarv1.modele.WineBottle;
 import com.romain.cellarv1.outils.BlurBitmap;
 import com.romain.cellarv1.outils.CurvedBottomNavigationView;
 import com.romain.cellarv1.outils.ProgressBarAnimation;
@@ -1057,6 +1060,8 @@ public class BottleActivity extends AppCompatActivity {
                 TextView domain = (TextView) popupDelete.findViewById(R.id.domain);
                 TextView appellation = (TextView) popupDelete.findViewById(R.id.appellation);
                 TextView millesime = (TextView) popupDelete.findViewById(R.id.millesime);
+
+                TextView labelNumberBottle = (TextView) popupDelete.findViewById(R.id.labelNumberBottle);
                 TextView number = (TextView) popupDelete.findViewById(R.id.number);
 
                 // On gère la couleur de la note sur la popupDelete suivant sa valeur
@@ -1103,9 +1108,15 @@ public class BottleActivity extends AppCompatActivity {
                 appellation.setText(appellationBottle.getText());
                 millesime.setText(millesimeBottle.getText());
 
-                // Affichage du décompte du nombre de bouteilles restantes
-                Integer intNumber = Integer.parseInt(numberBottle.getText().toString()) - 1;
-                number.setText(intNumber.toString());
+                // On retire 1 au nombre de bouteilles s'il en reste plus de zero, sinon on avertit
+                final Integer intNumber = Integer.parseInt(numberBottle.getText().toString()) - 1;
+                if(intNumber < 1) {
+                    labelNumberBottle.setText("Et c'est la dernière !");
+                    number.setText("");
+                } else {
+                    labelNumberBottle.setText("Il vous en restera : ");
+                    number.setText(intNumber.toString());
+                }
 
                 popupDelete.show();
 
@@ -1113,12 +1124,22 @@ public class BottleActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
+                        // Conversion du nombre de bouteilles affiché dans la popup en Integer
+                        //TextView number = (TextView) popupDelete.findViewById(R.id.number);
+                        String strNumber = String.valueOf(numberBottle.getText());
+                        Integer numberOfBottle = Integer.parseInt(strNumber);
+
                         // Conversion de l'id à la récupération de l'intent
                         String strId = getIntent().getStringExtra("id");
-                        Integer intId = Integer.parseInt(strId);
+                        Integer valueId = Integer.parseInt(strId);
 
                         AccesLocalCellar accesLocalCellar = new AccesLocalCellar(BottleActivity.this);
-                        accesLocalCellar.takeOutBottle(intId);
+                        if(numberOfBottle > 1) {
+                            accesLocalCellar.takeOutOneBottle(valueId, numberOfBottle - 1);
+                        } else {
+                            accesLocalCellar.takeOutBottle(valueId);
+                        }
+
                         popupDelete.dismiss();
 
                         // Basculement vers CellarActivity à l'effacement d'une bouteille dans le BottleActivity

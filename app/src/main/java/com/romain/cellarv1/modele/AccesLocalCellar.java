@@ -150,7 +150,21 @@ public class AccesLocalCellar {
     }
 
     /**
-     * Méthode qui permet de sortir une bouteille suivant son id
+     * Méthode qui permet de sortir une bouteille (décrémenter) s'il en reste plus d'une
+     */
+    public void takeOutOneBottle(Integer id, Integer numberOfBottle) {
+        bd = accesBD.getWritableDatabase();
+        ContentValues args = new ContentValues();
+        args.put("number", numberOfBottle);
+        String where = "id = ?";
+        String[] whereArgs = new String[] {String.valueOf(id)};
+        bd.update("bottle", args, where, whereArgs);
+
+        bd.close();
+    }
+
+    /**
+     * Méthode qui permet d'effacer la référence s'il n'en reste qu'une
      */
     public void takeOutBottle(Integer id) {
         bd = accesBD.getWritableDatabase();
@@ -303,7 +317,6 @@ public class AccesLocalCellar {
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
             wineBottleList.add(this.cursorToWineBottle(cursor));
-            cursor.moveToNext();
         }
         cursor.close();
         bd.close();
@@ -323,7 +336,6 @@ public class AccesLocalCellar {
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
             wineBottleList.add(this.cursorToWineBottle(cursor));
-            cursor.moveToNext();
         }
         cursor.close();
         bd.close();
@@ -338,7 +350,6 @@ public class AccesLocalCellar {
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
             wineBottleList.add(this.cursorToWineBottle(cursor));
-            cursor.moveToNext();
         }
         cursor.close();
         bd.close();
@@ -353,7 +364,6 @@ public class AccesLocalCellar {
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
             wineBottleList.add(this.cursorToWineBottle(cursor));
-            cursor.moveToNext();
         }
         cursor.close();
         bd.close();
@@ -368,7 +378,6 @@ public class AccesLocalCellar {
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
             wineBottleList.add(this.cursorToWineBottle(cursor));
-            cursor.moveToNext();
         }
         cursor.close();
         bd.close();
@@ -383,7 +392,6 @@ public class AccesLocalCellar {
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
             wineBottleList.add(this.cursorToWineBottle(cursor));
-            cursor.moveToNext();
         }
         cursor.close();
         bd.close();
@@ -398,7 +406,6 @@ public class AccesLocalCellar {
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
             wineBottleList.add(this.cursorToWineBottle(cursor));
-            cursor.moveToNext();
         }
         cursor.close();
         bd.close();
@@ -413,7 +420,6 @@ public class AccesLocalCellar {
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
             wineBottleList.add(this.cursorToWineBottle(cursor));
-            cursor.moveToNext();
         }
         cursor.close();
         bd.close();
@@ -428,7 +434,6 @@ public class AccesLocalCellar {
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
             wineBottleList.add(this.cursorToWineBottle(cursor));
-            cursor.moveToNext();
         }
         cursor.close();
         bd.close();
@@ -443,7 +448,6 @@ public class AccesLocalCellar {
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
             wineBottleList.add(this.cursorToWineBottle(cursor));
-            cursor.moveToNext();
         }
         cursor.close();
         bd.close();
@@ -458,7 +462,6 @@ public class AccesLocalCellar {
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
             wineBottleList.add(this.cursorToWineBottle(cursor));
-            cursor.moveToNext();
         }
         cursor.close();
         bd.close();
@@ -473,7 +476,6 @@ public class AccesLocalCellar {
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
             wineBottleList.add(this.cursorToWineBottle(cursor));
-            cursor.moveToNext();
         }
         cursor.close();
         bd.close();
@@ -488,7 +490,6 @@ public class AccesLocalCellar {
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
             wineBottleList.add(this.cursorToWineBottle(cursor));
-            cursor.moveToNext();
         }
         cursor.close();
         bd.close();
@@ -503,7 +504,6 @@ public class AccesLocalCellar {
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
             wineBottleList.add(this.cursorToWineBottle(cursor));
-            cursor.moveToNext();
         }
         cursor.close();
         bd.close();
@@ -518,7 +518,6 @@ public class AccesLocalCellar {
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
             wineBottleList.add(this.cursorToWineBottle(cursor));
-            cursor.moveToNext();
         }
         cursor.close();
         bd.close();
@@ -566,4 +565,5 @@ public class AccesLocalCellar {
 
         return wineBottle;
     }
+
 }

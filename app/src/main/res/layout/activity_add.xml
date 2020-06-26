@@ -844,7 +844,7 @@
         android:id="@+id/menuBis"
         android:layout_width="match_parent"
         android:layout_height="110dp"
-        android:background="@color/green_very_dark"
+        android:background="@color/green_very2_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CellarV1</string>
+    <string name="app_name">Cellar</string>
 
     <string name="user_fragment">Hello USER fragment</string>
     <string name="cellar_fragment">Hello CELLAR fragment</string>

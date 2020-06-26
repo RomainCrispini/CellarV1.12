@@ -22,7 +22,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:background="@color/green_very_dark"
+        android:background="@color/green_very2_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +31,7 @@
         android:id="@+id/likeTabLayout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/green_very_dark"
+        android:background="@color/green_very2_dark"
         app:tabIndicatorColor="@color/green_middle_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +61,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="110dp"
-        android:background="@color/green_very_dark">
+        android:background="@color/green_very2_dark">
 
         <LinearLayout
             android:layout_width="match_parent"

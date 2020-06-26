@@ -78,7 +78,7 @@
         android:id="@+id/menuBis"
         android:layout_width="match_parent"
         android:layout_height="110dp"
-        android:background="@color/green_very_dark"
+        android:background="@color/green_very2_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -105,7 +105,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_gravity="center_vertical"
                     android:fontFamily="@font/yanone_kaffeesatz"
-                    android:text="Enregistrement"
+                    android:text="S'enregistrer"
                     android:textColor="@color/green_third_light"/>
 
                 <ImageButton

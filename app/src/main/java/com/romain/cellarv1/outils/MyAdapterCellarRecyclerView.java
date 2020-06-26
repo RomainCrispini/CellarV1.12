@@ -204,7 +204,7 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                 TextView millesime = (TextView) popupDelete.findViewById(R.id.millesime);
 
                 TextView labelNumberBottle = (TextView) popupDelete.findViewById(R.id.labelNumberBottle);
-                TextView number = (TextView) popupDelete.findViewById(R.id.number);
+                final TextView number = (TextView) popupDelete.findViewById(R.id.number);
 
 
                 popupDelete.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -258,7 +258,7 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
 
                 // On retire 1 au nombre de bouteilles s'il en reste plus de zero, sinon on avertit
                 String bottleNumber = String.valueOf(wineBottle.getNumber() - 1);
-                if(wineBottle.getNumber() < 1) {
+                if(wineBottle.getNumber() <= 1) {
                     labelNumberBottle.setText("Et c'est la dernière !");
                     number.setText("");
                 } else {
@@ -277,12 +277,21 @@ public class MyAdapterCellarRecyclerView extends RecyclerView.Adapter<MyAdapterC
                 btnAccept.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Integer valueId = wineBottle.getId();
-                        AccesLocalCellar accesLocalCellar = new AccesLocalCellar(mContext);
-                        accesLocalCellar.takeOutBottle(valueId);
-                        popupDelete.dismiss();
 
-                        removeCardViewAt(holder.getAdapterPosition());
+                        Integer valueId = wineBottle.getId();
+                        // On récupère le nombre de bouteilles restantes si on la supprime
+                        Integer numberOfBottle = wineBottle.getNumber() - 1;
+                        AccesLocalCellar accesLocalCellar = new AccesLocalCellar(mContext);
+
+                        if(numberOfBottle > 0) {
+                            accesLocalCellar.takeOutOneBottle(valueId, numberOfBottle);
+                            //notifyDataSetChanged();
+                        } else {
+                            accesLocalCellar.takeOutBottle(valueId);
+                            removeCardViewAt(holder.getAdapterPosition());
+                        }
+
+                        popupDelete.dismiss();
 
                         popupSuccessDelete.show();
                         // Permet de faire aparaitre le panneau 1 seconde sans intervention
