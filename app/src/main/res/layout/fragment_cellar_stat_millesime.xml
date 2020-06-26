@@ -44,8 +44,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:textColor="@color/orange"
-            android:textSize="16dp"
+            android:textColor="@color/pink"
+            android:textSize="20dp"
             android:text="Il manque quelques informations pour éditer des statistiques fiables !" />
 
         <com.github.mikephil.charting.charts.BarChart

@@ -3,15 +3,13 @@ package com.romain.cellarv1.vue;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
-
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
@@ -20,7 +18,6 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.romain.cellarv1.R;
 import com.romain.cellarv1.modele.AccesLocalCellar;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -191,6 +188,8 @@ public class CellarStatWineColorFragment extends Fragment {
         Legend legend = pieChartWineColor.getLegend();
         //legend.setTextColor(Color.parseColor("#8DB3C5"));
         legend.setTextColor(getResources().getColor(R.color.green_very_light));
+        legend.setTextSize(16f);
+        legend.setTypeface(ResourcesCompat.getFont(getContext(), R.font.yanone_kaffeesatz));
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
 
         PieDataSet dataSet = new PieDataSet(values, "");
