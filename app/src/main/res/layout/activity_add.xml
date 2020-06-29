@@ -91,12 +91,20 @@
                             app:cardCornerRadius="113dp"
                             app:cardElevation="0dp">
 
+                            <TextureView
+                                android:id="@+id/textureView"
+                                android:layout_width="226dp"
+                                android:layout_height="226dp"
+                                android:layout_gravity="center"
+                                android:elevation="0dp"/>
+
                             <ImageView
                                 android:id="@+id/scanImageView"
                                 android:layout_width="226dp"
                                 android:layout_height="226dp"
                                 android:layout_gravity="center"
                                 android:elevation="0dp" />
+
                         </androidx.cardview.widget.CardView>
 
                     </androidx.cardview.widget.CardView>
@@ -104,6 +112,26 @@
                 </RelativeLayout>
 
             </RelativeLayout>
+
+
+
+
+
+
+            <Button
+                android:id="@+id/btnCapture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="CLIC"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"

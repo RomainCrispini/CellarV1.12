@@ -189,7 +189,7 @@ public class CellarStatWineColorFragment extends Fragment {
         //legend.setTextColor(Color.parseColor("#8DB3C5"));
         legend.setTextColor(getResources().getColor(R.color.green_very_light));
         legend.setTextSize(16f);
-        legend.setTypeface(ResourcesCompat.getFont(getContext(), R.font.yanone_kaffeesatz));
+        //legend.setTypeface(ResourcesCompat.getFont(getContext(), R.font.yanone_kaffeesatz));
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
 
         PieDataSet dataSet = new PieDataSet(values, "");
