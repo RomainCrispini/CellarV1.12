@@ -37,7 +37,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:fontFamily="@font/yanone_kaffeesatz"
                     android:textColor="@color/green_very_dark"
                     android:gravity="center"
                     android:text="Région"

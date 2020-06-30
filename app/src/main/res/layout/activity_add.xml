@@ -105,6 +105,15 @@
                                 android:layout_gravity="center"
                                 android:elevation="0dp" />
 
+                            <ImageButton
+                                android:id="@+id/btnCancelPhoto"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_gravity="center|bottom"
+                                android:backgroundTint="@color/transparent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/icone_out_info_window" />
+
                         </androidx.cardview.widget.CardView>
 
                     </androidx.cardview.widget.CardView>

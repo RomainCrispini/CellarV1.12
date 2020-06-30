@@ -1,11 +1,13 @@
 package com.romain.cellarv1.vue;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -18,6 +20,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.SurfaceTexture;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.camera2.CameraAccessException;
@@ -30,6 +33,7 @@ import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.ImageReader;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.content.Intent;
 import android.os.Environment;
@@ -188,6 +192,7 @@ public class AddActivity extends AppCompatActivity {
 
 
     private Button btnCapture;
+    private ImageButton btnCancelPhoto;
     private TextureView textureView;
     private static final SparseArray ORIENTATIONS = new SparseArray();
 
@@ -347,9 +352,17 @@ public class AddActivity extends AppCompatActivity {
     }
 
     private void takePicture() {
-
         Bitmap bitmap = textureView.getBitmap();
         scanImageView.setImageBitmap(bitmap);
+        btnCancelPhoto.setAlpha(0.4f);
+        btnCancelPhoto.setVisibility(View.VISIBLE);
+        btnCancelPhoto.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scanImageView.setImageResource(0);
+                btnCancelPhoto.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -405,6 +418,7 @@ public class AddActivity extends AppCompatActivity {
      * Méthode qui initialise les liens avec les objets graphiques, et appelle toutes les méthodes
      */
     private void init() {
+
         CurvedBottomNavigationView curvedBottomNavigationView = findViewById(R.id.curvedBottomNavigationView);
         curvedBottomNavigationView.setOnNavigationItemSelectedListener(customBottomNavListener);
         txtCountry = (AutoCompleteTextView) findViewById(R.id.textCountry);
@@ -426,6 +440,10 @@ public class AddActivity extends AppCompatActivity {
 
         btnGallery = (ImageButton) findViewById(R.id.btnGallery);
         scanImageView = (ImageView) findViewById(R.id.scanImageView);
+
+        // On laisse le bouton btnCancelPhoto inopérant et invisible au chargement
+        btnCancelPhoto = (ImageButton) findViewById(R.id.btnCancelPhoto);
+        btnCancelPhoto.setVisibility(View.GONE);
 
         // PopupAdd & PopupSuccess
         popupAdd = new Dialog(AddActivity.this);
@@ -544,7 +562,6 @@ public class AddActivity extends AppCompatActivity {
         gestionWineColorSelector();
 
     }
-
 
     private void gestionImageVignoble() {
 

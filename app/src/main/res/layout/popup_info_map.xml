@@ -35,8 +35,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
-                android:textAlignment="center"
+                android:fontFamily="@font/yanone_kaffeesatz"
                 android:text="Visualisez sur cette carte l'emplacement de toutes vos bouteilles en remplissant votre cave !"
+                android:textAlignment="center"
                 android:textColor="@color/pink_light"
                 android:textSize="18dp" />
 

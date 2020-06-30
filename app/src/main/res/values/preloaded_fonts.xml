@@ -2,6 +2,5 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/yanone_kaffeesatz</item>
-        <item>@font/roboto</item>
     </array>
 </resources>
