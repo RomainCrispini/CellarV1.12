@@ -96,6 +96,7 @@ public class UserActivity extends AppCompatActivity {
         final AutoCompleteTextView autoCompleteTextView=findViewById(R.id.autocomplete);
         autoCompleteTextView.setAdapter(new PlaceAutoSuggestAdapter(UserActivity.this,android.R.layout.simple_list_item_1));
 
+        assert autocompleteSupportFragment != null;
         autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME));
 
         autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {

@@ -72,7 +72,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             app:cardBackgroundColor="@color/grey_light"
-                            app:cardCornerRadius="137dp"
+                            app:cardCornerRadius="140dp"
                             app:cardElevation="0dp">
 
                             <ImageView
@@ -88,7 +88,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             app:cardBackgroundColor="@color/green_very_dark"
-                            app:cardCornerRadius="140dp"
+                            app:cardCornerRadius="137dp"
                             app:cardElevation="0dp">
 
                             <TextureView

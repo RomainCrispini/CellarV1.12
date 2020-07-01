@@ -1219,7 +1219,7 @@ public class AddActivity extends AppCompatActivity {
 
     private String getPictureLarge() {
 
-        String pictureSmall = "";
+        String pictureLarge = "";
         Tools tools = new Tools();
 
         if (doesImageLabel()) {
@@ -1228,27 +1228,27 @@ public class AddActivity extends AppCompatActivity {
 
             Bitmap bitmap500 = tools.getResizedBitmap500px(bitmap);
 
-            // Enregistrement de bitmap1000 dans pictureLarge
+            // Enregistrement de bitmap500 dans pictureLarge
             ByteArrayOutputStream stream500 = new ByteArrayOutputStream();
             bitmap500.compress(Bitmap.CompressFormat.PNG, 0, stream500);
-            byte[] b1000 = stream500.toByteArray();
-            String image500 = Base64.encodeToString(b1000, Base64.DEFAULT);
-            pictureSmall = image500;
+            byte[] b500 = stream500.toByteArray();
+            String image500 = Base64.encodeToString(b500, Base64.DEFAULT);
+            pictureLarge = image500;
             try {
                 stream500.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else if (!doesImageLabel()) {
-            pictureSmall = "";
+            pictureLarge = "";
         }
 
-        return pictureSmall;
+        return pictureLarge;
     }
 
     private String getPictureSmall() {
 
-        String pictureLarge = "";
+        String pictureSmall = "";
         Tools tools = new Tools();
 
         if (doesImageLabel()) {
@@ -1263,17 +1263,17 @@ public class AddActivity extends AppCompatActivity {
             bitmap100.compress(Bitmap.CompressFormat.PNG, 0, stream100);
             byte[] b100 = stream100.toByteArray();
             String image100 = Base64.encodeToString(b100, Base64.DEFAULT);
-            pictureLarge = image100;
+            pictureSmall = image100;
             try {
                 stream100.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else if (!doesImageLabel()) {
-            pictureLarge = "";
+            pictureSmall = "";
         }
 
-        return pictureLarge;
+        return pictureSmall;
     }
 
         /*
@@ -1332,17 +1332,15 @@ public class AddActivity extends AppCompatActivity {
                 TextView appellation = (TextView) popupAdd.findViewById(R.id.appellation);
                 TextView millesime = (TextView) popupAdd.findViewById(R.id.millesime);
 
-                /*
+
                 // Récupération de l'étiquette
                 if (scanImageView.getDrawable() != null) {
-                    Bitmap bitmapEtiquette = ((BitmapDrawable) scanImageView.getDrawable()).getBitmap();
+                    //Bitmap bitmapEtiquette = ((BitmapDrawable) scanImageView.getDrawable()).getBitmap();
+                    Bitmap bitmapEtiquette = textureView.getBitmap();
                     imageBottle.setImageBitmap(bitmapEtiquette);
                 } else {
                 }
-                */
 
-                Bitmap bitmapEtiquette = textureView.getBitmap();
-                imageBottle.setImageBitmap(bitmapEtiquette);
 
                 // Récupération de la couleur
                 if (btnRed.getAlpha() == 1f) {

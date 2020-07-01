@@ -82,7 +82,7 @@ public class Tools {
     }
 
     /**
-     * Permet de redimensionner une image à 1000px de large
+     * Permet de redimensionner une image à 500px de large
      * @param bm
      * @return
      */
@@ -90,7 +90,7 @@ public class Tools {
 
         float aspectRatio = bm.getWidth() /
                 (float) bm.getHeight();
-        int width = 500;
+        int width = 300;
         int height = Math.round(width / aspectRatio);
 
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(bm, width, height, false);
