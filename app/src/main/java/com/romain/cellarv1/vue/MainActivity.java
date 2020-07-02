@@ -325,6 +325,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
+
     @Override
     public void onMapReady(final GoogleMap googleMap) {
 
@@ -354,7 +355,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapSettings.setZoomControlsEnabled(false);
         mapSettings.setMyLocationButtonEnabled(false);
 
-
         // Personnalisation de la map liée à res/raw/mapstyle_dark.json par défaut
         try {
             boolean success = googleMap.setMapStyle(
@@ -367,8 +367,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         } catch (Resources.NotFoundException e) {
             Log.e(TAG, "Can't find style. Error: ", e);
         }
-
-
 
         // Initialisation default position sur Nancy
         LatLng defaultPosition = new LatLng(48.687646, 6.181732); // Coordonnées LatLng de Nancy

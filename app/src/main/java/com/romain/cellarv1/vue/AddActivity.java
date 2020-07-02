@@ -1,14 +1,10 @@
 package com.romain.cellarv1.vue;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-import androidx.core.content.res.ResourcesCompat;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -20,7 +16,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.SurfaceTexture;
-import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.camera2.CameraAccessException;
@@ -33,10 +28,8 @@ import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.ImageReader;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.content.Intent;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.provider.MediaStore;
@@ -64,6 +57,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.romain.cellarv1.R;
@@ -75,11 +75,9 @@ import com.romain.cellarv1.outils.CurvedBottomNavigationView;
 import com.romain.cellarv1.outils.ProgressBarAnimation;
 import com.romain.cellarv1.outils.Tools;
 import com.romain.cellarv1.outils.Validation;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -89,7 +87,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
 import me.tankery.lib.circularseekbar.CircularSeekBar;
 
 
@@ -123,7 +120,8 @@ public class AddActivity extends AppCompatActivity {
 
     // Champs texte
     private AutoCompleteTextView txtCountry, txtRegion;
-    private EditText txtDomain, txtAppellation, txtAddress;
+    //private AutoCompleteTextView txtAddress;
+    private EditText txtDomain, txtAppellation;
     private EditText nbYear, nbApogee, nbNumber, nbEstimate;
     private TextView nbRate;
 
@@ -182,6 +180,8 @@ public class AddActivity extends AppCompatActivity {
 
     // Images des indicateurs de validation
     private ImageView imgValidCountry, imgValidRegion, imgValidDomain, imgValidAppellation, imgValidAddress;
+
+    private PlacesClient placesClient;
 
     // TextureView et gestion de l'appareil photo
     private ImageButton btnPhoto;
@@ -243,7 +243,7 @@ public class AddActivity extends AppCompatActivity {
         btnChamp = (ImageButton) findViewById(R.id.champWineButton);
         txtDomain = (EditText) findViewById(R.id.textDomain);
         txtAppellation = (EditText) findViewById(R.id.textAppellation);
-        txtAddress = (EditText) findViewById(R.id.textAddress);
+        //txtAddress = (AutoCompleteTextView) findViewById(R.id.textAddress);
         nbYear = (EditText) findViewById(R.id.nbYear);
         nbApogee = (EditText) findViewById(R.id.nbApogee);
         nbNumber = (EditText) findViewById(R.id.nbNumber);
@@ -374,6 +374,42 @@ public class AddActivity extends AppCompatActivity {
 
         gestionImageVignoble();
         gestionWineColorSelector();
+
+
+
+
+        String apikey = getResources().getString(R.string.map_key);
+
+        if(!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), apikey);
+        }
+
+        placesClient = Places.createClient(this);
+
+        final AutocompleteSupportFragment autocompleteSupportFragment =
+            (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.textAddress);
+
+        assert autocompleteSupportFragment != null;
+        autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME));
+
+        autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(@NonNull Place place) {
+                final LatLng latLng = place.getLatLng();
+
+                Toast.makeText(AddActivity.this, "lattitude : " + latLng.latitude + "longitude" + latLng.longitude, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(@NonNull Status status) {
+
+            }
+        });
+
+
+
+        //AutoCompleteTextView autoCompleteTextView=findViewById(R.id.textAddress);
+        //autoCompleteTextView.setAdapter(new PlaceAutoSuggestAdapter(AddActivity.this,android.R.layout.simple_list_item_1));
 
     }
 
@@ -1070,23 +1106,6 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
-        btnInfoCamera.setOnClickListener(new ImageButton.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO ACCES A L'APPAREIL PHOTO
-
-            }
-        });
-
-        btnInfoGallery.setOnClickListener(new ImageButton.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO ACCES A LA GALERIE IMAGES
-
-            }
-        });
-
-
     }
 
     // Au retour de la sélection d'une image (après appel de startactivityforresult)
@@ -1094,31 +1113,31 @@ public class AddActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        ImageView scanImageView = (ImageView) findViewById(R.id.scanImageView); // DOIT ETRE DECLAREE ICI !!!!!!!!!!!!!!!!!!!!!!
+        ImageView scanImageView = (ImageView) findViewById(R.id.scanImageView);
         // Vérification du bon code de retour et l'état du retour ok
-        switch (requestCode) {
-            case GALLERY_REQUEST_CODE: // Vérifie si une image est récupérée
-                // Accès à l'image à partir de data
-                Uri selectedImage = data.getData();
-                // Mémorisation du path précis
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                // Curseur d'accès au chemin de l'image
-                Cursor cursor = this.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                // Position sur la première ligne (normalement une seule)
-                cursor.moveToFirst();
-                // Récupération du chemin précis de l'image
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                String imgPath = cursor.getString(columnIndex);
-                cursor.close();
-                // Récupération de l'image
-                Bitmap imageGallery = BitmapFactory.decodeFile(imgPath);
-                // Redimentionner l'image, en fait, on ne le fait pas
-                imageGallery = changeSizeBitmap(imageGallery, 2f);
-                // Affichage de l'image
-                scanImageView.setImageBitmap(imageGallery);
-                break;
+        if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK && data != null) { // On vérifie si une image existe et est récupérée
+            // Accès à l'image à partir de data
+            Uri selectedImage = data.getData();
+            // Mémorisation du path précis
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            // Curseur d'accès au chemin de l'image
+            Cursor cursor = this.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+            // Position sur la première ligne (normalement une seule)
+            cursor.moveToFirst();
+            // Récupération du chemin précis de l'image
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String imgPath = cursor.getString(columnIndex);
+            cursor.close();
+            // Récupération de l'image
+            Bitmap imageGallery = BitmapFactory.decodeFile(imgPath);
+            // Redimentionner l'image, en fait, on ne le fait pas
+            imageGallery = changeSizeBitmap(imageGallery, 2f);
+            // Affichage de l'image
+            scanImageView.setImageBitmap(imageGallery);
+            // On fait apparaitre la possibilité d'effacer la photo
+            cancelPhoto();
+        } else {
         }
-        cancelPhoto();
 
     }
 
@@ -1464,7 +1483,7 @@ public class AddActivity extends AppCompatActivity {
                             region = txtRegion.getText().toString();
                             domain = txtDomain.getText().toString();
                             appellation = txtAppellation.getText().toString();
-                            address = txtAddress.getText().toString();
+                            //address = txtAddress.getText().toString();
                             year = Integer.parseInt(nbYear.getText().toString());
                             apogee = Integer.parseInt(nbApogee.getText().toString());
                             number = Integer.parseInt(nbNumber.getText().toString());
@@ -2027,8 +2046,6 @@ public class AddActivity extends AppCompatActivity {
                     return false;
                 }
             };
-
-
 
 
 }

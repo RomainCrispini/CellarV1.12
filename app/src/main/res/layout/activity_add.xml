@@ -598,8 +598,14 @@
                             android:textColor="@color/green_middle_light"
                             android:textSize="14dp" />
 
-                        <AutoCompleteTextView
+                        <fragment
                             android:id="@+id/textAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment" />
+
+                        <AutoCompleteTextView
+
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@null"

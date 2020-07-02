@@ -78,7 +78,7 @@ public class UserActivity extends AppCompatActivity {
 
         // TODO IL NE PEUT Y AVOIR QU'UN SEUL COMPTE ENREGISTRE
 
-        String apikey = getString(R.string.map_key);
+        String apikey = getResources().getString(R.string.map_key);
 
         if(!Places.isInitialized()) {
             Places.initialize(getApplicationContext(), apikey);
@@ -88,13 +88,6 @@ public class UserActivity extends AppCompatActivity {
 
         final AutocompleteSupportFragment autocompleteSupportFragment =
                 (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete2);
-
-
-
-
-
-        final AutoCompleteTextView autoCompleteTextView=findViewById(R.id.autocomplete);
-        autoCompleteTextView.setAdapter(new PlaceAutoSuggestAdapter(UserActivity.this,android.R.layout.simple_list_item_1));
 
         assert autocompleteSupportFragment != null;
         autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME));
@@ -112,6 +105,7 @@ public class UserActivity extends AppCompatActivity {
 
             }
         });
+
 
 
 
