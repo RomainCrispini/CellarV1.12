@@ -2,10 +2,6 @@ package com.romain.cellarv1.modele;
 
 import android.util.Log;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.romain.cellarv1.R;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,7 +13,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class PlaceApi extends AppCompatActivity {
+public class PlaceApi {
 
     // Fonction qui retourne une liste d'adresses quand un user cherche dans edittext
     public ArrayList<String> autoComplete(String input){
@@ -27,8 +23,7 @@ public class PlaceApi extends AppCompatActivity {
         try {
             StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/autocomplete/json?");
             sb.append("input=" + input);
-            String apikey = getResources().getString(R.string.map_key);
-            sb.append("&key=" + apikey);
+            sb.append("&key=AIzaSyCEYx891_Wz-8gDpnW12PtA3Sx76C2CViQ");
             URL url = new URL(sb.toString());
             connection = (HttpURLConnection)url.openConnection();
             InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream());
