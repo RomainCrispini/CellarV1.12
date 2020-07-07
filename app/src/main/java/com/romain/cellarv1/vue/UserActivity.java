@@ -78,6 +78,9 @@ public class UserActivity extends AppCompatActivity {
 
         // TODO IL NE PEUT Y AVOIR QU'UN SEUL COMPTE ENREGISTRE
 
+
+
+
         String apikey = getResources().getString(R.string.map_key);
 
         if(!Places.isInitialized()) {
@@ -95,9 +98,8 @@ public class UserActivity extends AppCompatActivity {
         autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
-                final LatLng latLng = place.getLatLng();
 
-                Toast.makeText(UserActivity.this, "lattitude : " + latLng.latitude + "longitude" + latLng.longitude, Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserActivity.this, "lattitude : " + place.getLatLng().latitude + "longitude" + place.getLatLng().longitude + "Adresse : " + place.getAddress(), Toast.LENGTH_SHORT).show();
             }
 
             @Override

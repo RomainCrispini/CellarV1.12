@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageButton;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -139,11 +141,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if(accesLocalCellar.doesDBExists() == true) {
             ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocalCellar.recoverWineBottleList();
             for(int i = 0; i < wineBottleList.size(); i++) {
-                if(wineBottleList.get(i).getLattitude() == null && wineBottleList.get(i).getLongitude() == null
-                && wineBottleList.get(i).getLattitude() == 0f && wineBottleList.get(i).getLongitude() == 0f) {
+                if(wineBottleList.get(i).getLatitude() == null && wineBottleList.get(i).getLongitude() == null
+                && wineBottleList.get(i).getLatitude() == 0f && wineBottleList.get(i).getLongitude() == 0f) {
 
-                } else if(wineBottleList.get(i).getLattitude() != null && wineBottleList.get(i).getLongitude() != null
-                && wineBottleList.get(i).getLattitude() != 0f && wineBottleList.get(i).getLongitude() != 0f) {
+                } else if(wineBottleList.get(i).getLatitude() != null && wineBottleList.get(i).getLongitude() != null
+                && wineBottleList.get(i).getLatitude() != 0f && wineBottleList.get(i).getLongitude() != 0f) {
                     popupInfoMap.dismiss();
                 }
             }
@@ -374,17 +376,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         googleMap.moveCamera(cameraPosition);
         googleMap.animateCamera(cameraPosition);
 
-
-
-
-
-
-
-
-
-
-
-
         // Nouvelles dimensions du marker
         int height = 100;
         int width = 100;
@@ -395,26 +386,69 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             ArrayList<WineBottle> wineBottleList = (ArrayList<WineBottle>) accesLocalCellar.recoverWineBottleList();
 
             for(int i = 0; i < wineBottleList.size(); i++) {
-                if(wineBottleList.get(i).getLattitude() != null && wineBottleList.get(i).getLongitude() != null
-                && wineBottleList.get(i).getLattitude() != 0f && wineBottleList.get(i).getLongitude() != 0f) {
+                if(wineBottleList.get(i).getLatitude() != null && wineBottleList.get(i).getLongitude() != null
+                && wineBottleList.get(i).getLatitude() != 0 && wineBottleList.get(i).getLongitude() != 0) {
+
+                    Tools tools = new Tools();
+
                     // Positions
                     String nomVin = wineBottleList.get(i).getDomain();
-                    Float latitude = wineBottleList.get(i).getLattitude();
-                    Float longitude = wineBottleList.get(i).getLongitude();
+                    Double latitude = wineBottleList.get(i).getLatitude();
+                    Double longitude = wineBottleList.get(i).getLongitude();
                     LatLng coordonnees = new LatLng(latitude, longitude);
 
-                    // Markers ronds
-                    Tools tools = new Tools();
-                    String etiquette = wineBottleList.get(i).getPictureSmall();
-                    byte[] decodedByte = Base64.decode(etiquette, 0);
-                    Bitmap etiquetteBitmap = BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
-                    Bitmap roundEtiquette = tools.getRoundBitmap(etiquetteBitmap);
-                    Bitmap smallMarker = Bitmap.createScaledBitmap(roundEtiquette, width, height, false);
-                    BitmapDescriptor smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker);
+                    // S'il n'a pas de photo, on utilise la couleur du vin
+                    if(wineBottleList.get(i).getPictureSmall().isEmpty()) {
 
-                    // Affichage des markers
-                    MarkerOptions markerOptions = new MarkerOptions().position(coordonnees).title(nomVin).icon(smallMarkerIcon);
-                    googleMap.addMarker(markerOptions);
+                        Bitmap etiquetteColor;
+
+                        switch(wineBottleList.get(i).getWineColor().trim()) {
+                            case "Rouge":
+                                etiquetteColor = BitmapFactory.decodeResource(getResources(), R.drawable.red_wine);
+                                break;
+                            case "Rose":
+                                etiquetteColor = BitmapFactory.decodeResource(getResources(), R.drawable.rose_wine);
+                                break;
+                            case "Blanc":
+                                etiquetteColor = BitmapFactory.decodeResource(getResources(), R.drawable.white_wine);
+                                break;
+                            case "Effervescent":
+                                etiquetteColor = BitmapFactory.decodeResource(getResources(), R.drawable.champ_wine);
+                                break;
+                            default:
+                                etiquetteColor = BitmapFactory.decodeResource(getResources(), R.drawable.red_wine);
+                        }
+
+
+                        // Markers ronds
+                        //etiquetteColor = BitmapFactory.decodeResource(getResources(), R.drawable.champ_wine_add);
+                        Bitmap roundEtiquette = tools.getRoundBitmap(etiquetteColor);
+                        // Dans ce cas, on change la dimension des markers
+                        Bitmap smallMarker = Bitmap.createScaledBitmap(roundEtiquette, 50, 50, false);
+                        BitmapDescriptor smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker);
+
+                        // Affichage des markers
+                        MarkerOptions markerOptions = new MarkerOptions().position(coordonnees).title(nomVin).icon(smallMarkerIcon);
+                        googleMap.addMarker(markerOptions);
+
+
+
+                    } else {
+
+                        // Markers ronds
+                        String etiquette = wineBottleList.get(i).getPictureSmall();
+                        byte[] decodedByte = Base64.decode(etiquette, 0);
+                        Bitmap etiquetteBitmap = BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
+                        Bitmap roundEtiquette = tools.getRoundBitmap(etiquetteBitmap);
+                        Bitmap smallMarker = Bitmap.createScaledBitmap(roundEtiquette, width, height, false);
+                        BitmapDescriptor smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker);
+
+                        // Affichage des markers
+                        MarkerOptions markerOptions = new MarkerOptions().position(coordonnees).title(nomVin).icon(smallMarkerIcon);
+                        googleMap.addMarker(markerOptions);
+
+                    }
+
                 } else {
                 }
             }
@@ -424,6 +458,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
 
+        /*
 
         Map<String, List<Double>> villes = new HashMap<>();
 
@@ -457,6 +492,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
 
+
+         */
 
 
 

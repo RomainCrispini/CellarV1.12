@@ -51,7 +51,7 @@ public class AccesLocalCellar {
         contentValues.put(accesBD.FIELD_RATE, wineBottle.getRate());
         contentValues.put(accesBD.FIELD_FAVORITE, wineBottle.getFavorite());
         contentValues.put(accesBD.FIELD_WISH, wineBottle.getWish());
-        contentValues.put(accesBD.FIELD_LATTITUDE, wineBottle.getLattitude());
+        contentValues.put(accesBD.FIELD_LATITUDE, wineBottle.getLatitude());
         contentValues.put(accesBD.FIELD_LONGITUDE, wineBottle.getLongitude());
         contentValues.put(accesBD.FIELD_TIMESTAMP, wineBottle.getTimeStamp());
         Long idFromInsert = bd.insert(accesBD.TABLE_BOTTLE, null, contentValues);
@@ -268,8 +268,8 @@ public class AccesLocalCellar {
             Integer rate = cursor.getInt(15);
             String favorite = cursor.getString(16);
             String wish = cursor.getString(17);
-            Float latitude = cursor.getFloat(18);
-            Float longitude = cursor.getFloat(19);
+            Double latitude = cursor.getDouble(18);
+            Double longitude = cursor.getDouble(19);
             String timestamp = cursor.getString(20);
             wineBottle = new WineBottle(id, country, region, winecolor, domain, appellation, address, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, latitude, longitude, timestamp);
             wineBottleList.add(wineBottle);
@@ -557,8 +557,8 @@ public class AccesLocalCellar {
         Integer rate = cursor.getInt(15);
         String favorite = cursor.getString(16);
         String wish = cursor.getString(17);
-        Float latitude = cursor.getFloat(18);
-        Float longitude = cursor.getFloat(19);
+        Double latitude = cursor.getDouble(18);
+        Double longitude = cursor.getDouble(19);
         String timestamp = cursor.getString(20);
         wineBottle = new WineBottle(id, country, region, winecolor, domain, appellation, address, year, apogee, number, estimate, picturelarge, picturesmall, imagelarge, imagesmall, rate, favorite, wish, latitude, longitude, timestamp);
         cursor.moveToNext();

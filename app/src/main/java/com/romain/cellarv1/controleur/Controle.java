@@ -43,7 +43,8 @@ public class Controle {
 
 
     /**
-     *  @param country
+     * @param id
+     * @param country
      * @param region
      * @param wineColor
      * @param domain
@@ -55,11 +56,18 @@ public class Controle {
      * @param estimate
      * @param pictureLarge
      * @param pictureSmall
+     * @param imageLarge
+     * @param imageSmall
+     * @param rate
      * @param favorite
      * @param wish
+     * @param latitude
+     * @param longitude
+     * @param timeStamp
+     * @param context
      */
-    public void createWineBottle(Integer id, String country, String region, String wineColor, String domain, String appellation, String address, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Integer rate, String favorite, String wish, Float lattitude, Float longitude, String timeStamp, Context context) {
-        wineBottle = new WineBottle(id, country, region, wineColor, domain, appellation, address, year, apogee, number, estimate, pictureLarge, pictureSmall, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp);
+    public void createWineBottle(Integer id, String country, String region, String wineColor, String domain, String appellation, String address, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Integer rate, String favorite, String wish, Double latitude, Double longitude, String timeStamp, Context context) {
+        wineBottle = new WineBottle(id, country, region, wineColor, domain, appellation, address, year, apogee, number, estimate, pictureLarge, pictureSmall, imageLarge, imageSmall, rate, favorite, wish, latitude, longitude, timeStamp);
         accesLocalCellar.add(wineBottle);
     }
 }

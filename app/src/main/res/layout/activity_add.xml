@@ -122,125 +122,92 @@
 
             </RelativeLayout>
 
-            <LinearLayout
+
+
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/imgValidCountry"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:tint="@color/pink"
-                    android:src="@drawable/icon_check" />
-
-                <androidx.cardview.widget.CardView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="10dp"
-                    app:cardBackgroundColor="@color/green_very_dark"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="0dp">
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
+                    <ImageView
+                        android:id="@+id/imgValidAddress"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:tint="@color/pink"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/icon_check" />
+
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="10dp"
+                        app:cardBackgroundColor="@color/green_very_dark"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="0dp">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="Pays"
-                            android:textColor="@color/green_middle_light"
-                            android:textSize="14dp" />
+                            android:orientation="vertical">
 
-                        <AutoCompleteTextView
-                            android:id="@+id/textCountry"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:drawableTint="@color/green_light"
-                            android:ems="10"
-                            android:fontFamily="@font/yanone_kaffeesatz"
-                            android:gravity="center"
-                            android:inputType="text|textNoSuggestions"
-                            android:maxLines="1"
-                            android:textColor="@color/green_light"
-                            android:textCursorDrawable="@color/green_light"
-                            android:textSize="18dp" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Adresse"
+                                android:textColor="@color/green_middle_light"
+                                android:textSize="14dp" />
 
-                    </LinearLayout>
+                            <AutoCompleteTextView
+                                android:id="@+id/textAddress"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:drawableTint="@color/green_light"
+                                android:ems="10"
+                                android:fontFamily="@font/yanone_kaffeesatz"
+                                android:gravity="center"
+                                android:inputType="text|textNoSuggestions"
+                                android:maxLines="1"
+                                android:textColor="@color/green_light"
+                                android:textCursorDrawable="@color/green_light"
+                                android:textSize="18dp" />
 
-                </androidx.cardview.widget.CardView>
+                        </LinearLayout>
 
-            </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
+                </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/imgValidRegion"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:tint="@color/pink"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/icon_check" />
-
-                <androidx.cardview.widget.CardView
+                <fragment
+                    android:id="@+id/autocompleteAddress"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="10dp"
-                    app:cardBackgroundColor="@color/green_very_dark"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="0dp">
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+            </RelativeLayout>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="Région"
-                            android:textColor="@color/green_middle_light"
-                            android:textSize="14dp" />
 
-                        <AutoCompleteTextView
-                            android:id="@+id/textRegion"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:drawableTint="@color/green_light"
-                            android:ems="10"
-                            android:fontFamily="@font/yanone_kaffeesatz"
-                            android:gravity="center"
-                            android:inputType="text|textNoSuggestions"
-                            android:maxLines="1"
-                            android:textColor="@color/green_light"
-                            android:textCursorDrawable="@color/green_light"
-                            android:textSize="18dp" />
 
-                    </LinearLayout>
 
-                </androidx.cardview.widget.CardView>
 
-            </LinearLayout>
+
+
+
+
+
 
             <LinearLayout
                 android:id="@+id/layoutWineColor"
@@ -449,66 +416,6 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/imgValidDomain"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:tint="@color/pink"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/icon_check" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="10dp"
-                    app:cardBackgroundColor="@color/green_very_dark"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="0dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="Domaine"
-                            android:textColor="@color/green_middle_light"
-                            android:textSize="14dp" />
-
-                        <EditText
-                            android:id="@+id/textDomain"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:drawableTint="@color/green_light"
-                            android:ems="10"
-                            android:fontFamily="@font/yanone_kaffeesatz"
-                            android:gravity="center"
-                            android:inputType="text|textNoSuggestions"
-                            android:maxLines="1"
-                            android:textColor="@color/green_light"
-                            android:textCursorDrawable="@color/green_light"
-                            android:textSize="18dp" />
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <ImageView
                     android:id="@+id/imgValidAppellation"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
@@ -569,7 +476,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/imgValidAddress"
+                    android:id="@+id/imgValidDomain"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:tint="@color/pink"
@@ -594,18 +501,132 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Adresse"
+                            android:text="Domaine"
                             android:textColor="@color/green_middle_light"
                             android:textSize="14dp" />
 
-                        <fragment
-                            android:id="@+id/textAddress"
+                        <EditText
+                            android:id="@+id/textDomain"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment" />
+                            android:background="@null"
+                            android:drawableTint="@color/green_light"
+                            android:ems="10"
+                            android:fontFamily="@font/yanone_kaffeesatz"
+                            android:gravity="center"
+                            android:inputType="text|textNoSuggestions"
+                            android:maxLines="1"
+                            android:textColor="@color/green_light"
+                            android:textCursorDrawable="@color/green_light"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imgValidCountry"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:tint="@color/pink"
+                    android:src="@drawable/icon_check" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    app:cardBackgroundColor="@color/green_very_dark"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Pays"
+                            android:textColor="@color/green_middle_light"
+                            android:textSize="14dp" />
 
                         <AutoCompleteTextView
+                            android:id="@+id/textCountry"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:drawableTint="@color/green_light"
+                            android:ems="10"
+                            android:fontFamily="@font/yanone_kaffeesatz"
+                            android:gravity="center"
+                            android:inputType="text|textNoSuggestions"
+                            android:maxLines="1"
+                            android:textColor="@color/green_light"
+                            android:textCursorDrawable="@color/green_light"
+                            android:textSize="18dp" />
 
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imgValidRegion"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:tint="@color/pink"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/icon_check" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    app:cardBackgroundColor="@color/green_very_dark"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Région"
+                            android:textColor="@color/green_middle_light"
+                            android:textSize="14dp" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/textRegion"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@null"

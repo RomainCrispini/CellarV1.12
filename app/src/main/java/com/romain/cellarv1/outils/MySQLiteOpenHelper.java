@@ -29,7 +29,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     public final String FIELD_RATE = "rate";
     public final String FIELD_FAVORITE = "favorite";
     public final String FIELD_WISH = "wish";
-    public final String FIELD_LATTITUDE = "lattitude";
+    public final String FIELD_LATITUDE = "latitude";
     public final String FIELD_LONGITUDE = "longitude";
     public final String FIELD_TIMESTAMP = "timestamp";
 
@@ -64,7 +64,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
             FIELD_RATE + " INTEGER," +
             FIELD_FAVORITE + " TEXT," +
             FIELD_WISH + " TEXT," +
-            FIELD_LATTITUDE + " REAL," +
+            FIELD_LATITUDE + " REAL," +
             FIELD_LONGITUDE + " REAL," +
             FIELD_TIMESTAMP + " TEXT);";
 

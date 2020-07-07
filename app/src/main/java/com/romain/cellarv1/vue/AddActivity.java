@@ -5,6 +5,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -26,6 +28,8 @@ import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.params.StreamConfigurationMap;
+import android.location.Address;
+import android.location.Geocoder;
 import android.media.ImageReader;
 import android.net.Uri;
 import android.os.Bundle;
@@ -37,6 +41,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Size;
 import android.util.SparseArray;
 import android.view.MenuItem;
@@ -60,6 +65,7 @@ import android.widget.ToggleButton;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AddressComponents;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
@@ -87,6 +93,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+
 import me.tankery.lib.circularseekbar.CircularSeekBar;
 
 
@@ -120,7 +128,7 @@ public class AddActivity extends AppCompatActivity {
 
     // Champs texte
     private AutoCompleteTextView txtCountry, txtRegion;
-    //private AutoCompleteTextView txtAddress;
+    private AutoCompleteTextView txtAddress;
     private EditText txtDomain, txtAppellation;
     private EditText nbYear, nbApogee, nbNumber, nbEstimate;
     private TextView nbRate;
@@ -201,11 +209,11 @@ public class AddActivity extends AppCompatActivity {
     Handler mBackgroundHandler;
     HandlerThread mBackgroundThread;
 
+    // Fragment AutoComplete
+    Fragment autocompleteFrag;
 
-
-
-
-
+    // On déclare une ArrayList qui va permettre de stocker LatLng de l'autocompleteAddress
+    private ArrayList<Double> latlngAddress = new ArrayList<>();
 
 
     @Override
@@ -243,7 +251,7 @@ public class AddActivity extends AppCompatActivity {
         btnChamp = (ImageButton) findViewById(R.id.champWineButton);
         txtDomain = (EditText) findViewById(R.id.textDomain);
         txtAppellation = (EditText) findViewById(R.id.textAppellation);
-        //txtAddress = (AutoCompleteTextView) findViewById(R.id.textAddress);
+        txtAddress = (AutoCompleteTextView) findViewById(R.id.textAddress);
         nbYear = (EditText) findViewById(R.id.nbYear);
         nbApogee = (EditText) findViewById(R.id.nbApogee);
         nbNumber = (EditText) findViewById(R.id.nbNumber);
@@ -375,8 +383,17 @@ public class AddActivity extends AppCompatActivity {
         gestionImageVignoble();
         gestionWineColorSelector();
 
+        autocompleteAddress();
 
 
+
+
+    }
+
+
+
+
+    private ArrayList<Double> autocompleteAddress() {
 
         String apikey = getResources().getString(R.string.map_key);
 
@@ -386,18 +403,35 @@ public class AddActivity extends AppCompatActivity {
 
         placesClient = Places.createClient(this);
 
+
+
+
         final AutocompleteSupportFragment autocompleteSupportFragment =
-            (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.textAddress);
+                (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocompleteAddress);
+
+        // On passe le fragment INVISIBLE mais CLIQUABLE
+        autocompleteSupportFragment.getView().setAlpha(0f);
 
         assert autocompleteSupportFragment != null;
-        autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME));
+        autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME, Place.Field.ADDRESS_COMPONENTS));
 
         autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
-                final LatLng latLng = place.getLatLng();
 
-                Toast.makeText(AddActivity.this, "lattitude : " + latLng.latitude + "longitude" + latLng.longitude, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(AddActivity.this, "lattitude : " + place.getLatLng().latitude + "longitude" + place.getLatLng().longitude, Toast.LENGTH_SHORT).show();
+
+                double latitude = place.getLatLng().latitude;
+                double longitude = place.getLatLng().longitude;
+                latlngAddress.add(latitude);
+                latlngAddress.add(longitude);
+
+                try {
+                    getPlaceInfo(place.getLatLng().latitude,place.getLatLng().longitude);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
 
             @Override
@@ -406,16 +440,34 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
-
-
-        //AutoCompleteTextView autoCompleteTextView=findViewById(R.id.textAddress);
-        //autoCompleteTextView.setAdapter(new PlaceAutoSuggestAdapter(AddActivity.this,android.R.layout.simple_list_item_1));
+        return latlngAddress;
 
     }
 
+    private void getPlaceInfo(double lat, double lon) throws IOException {
 
+        Geocoder mGeocoder = new Geocoder(AddActivity.this);
+        List<Address> addresses = mGeocoder.getFromLocation(lat, lon, 1);
 
+        if (addresses.get(0).getCountryName() != null) {
+            String country = addresses.get(0).getCountryName();
+            txtCountry.setText(country);
+            //Log.d("COUNTRY",country);
+        }
 
+        if (addresses.get(0).getAdminArea() != null) {
+            String region = addresses.get(0).getAdminArea();
+            txtRegion.setText(region);
+            //Log.d("REGION",region);
+        }
+
+        if (addresses.get(0).getAdminArea() != null) {
+            String address = addresses.get(0).getThoroughfare();
+            txtAddress.setText(address);
+            //Log.d("ADDRESS",address);
+        }
+
+    }
 
 
     @Override
@@ -1403,7 +1455,7 @@ public class AddActivity extends AppCompatActivity {
                 appellation.setText(txtAppellation.getText());
                 millesime.setText(nbYear.getText());
 
-                // Affichage
+                // Affichage de la popup
                 popupAdd.show();
 
 
@@ -1440,8 +1492,18 @@ public class AddActivity extends AppCompatActivity {
                         int rate;
                         String favorite = "0";
                         String wish = "0";
-                        Float lattitude = 0f;
-                        Float longitude = 0f;
+                        double latitude = 0;
+                        double longitude = 0;
+
+                        // Update des Latitude et Longitude SI elles ne sont pas nulles
+                        try {
+                            latitude = autocompleteAddress().get(0);
+                            longitude = autocompleteAddress().get(1);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            //Toast.makeText(AddActivity.this, "PROBLEME", Toast.LENGTH_SHORT).show();
+                        }
+
 
                         // Update de la date
                         Long timeStampLong = System.currentTimeMillis(); // Résultat en millisecondes
@@ -1483,7 +1545,7 @@ public class AddActivity extends AppCompatActivity {
                             region = txtRegion.getText().toString();
                             domain = txtDomain.getText().toString();
                             appellation = txtAppellation.getText().toString();
-                            //address = txtAddress.getText().toString();
+                            address = txtAddress.getText().toString();
                             year = Integer.parseInt(nbYear.getText().toString());
                             apogee = Integer.parseInt(nbApogee.getText().toString());
                             number = Integer.parseInt(nbNumber.getText().toString());
@@ -1496,7 +1558,7 @@ public class AddActivity extends AppCompatActivity {
                         String pictureLarge = getPictureLarge();
                         String pictureSmall = getPictureSmall();
 
-                        WineBottle wineBottle = new WineBottle(null, country, region, wineColor, domain, appellation, address, year, apogee, number, estimate, pictureLarge, pictureSmall, imageLarge, imageSmall, rate, favorite, wish, lattitude, longitude, timeStamp);
+                        WineBottle wineBottle = new WineBottle(null, country, region, wineColor, domain, appellation, address, year, apogee, number, estimate, pictureLarge, pictureSmall, imageLarge, imageSmall, rate, favorite, wish, latitude, longitude, timeStamp);
                         AccesLocalCellar accesLocalCellar = new AccesLocalCellar(AddActivity.this);
                         wineBottle.setId(accesLocalCellar.add(wineBottle));
 
@@ -1552,7 +1614,6 @@ public class AddActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //Toast.makeText(getApplicationContext(),countrylist.toString(),Toast.LENGTH_LONG).show();
     }
 
     private void recoverJsonCountries() {
@@ -1560,6 +1621,7 @@ public class AddActivity extends AppCompatActivity {
         AutoCompleteTextView textCountries = (AutoCompleteTextView) findViewById(R.id.textCountry);
         // On change la couleur de fond de la liste déroulante
         textCountries.setDropDownBackgroundDrawable(new ColorDrawable(AddActivity.this.getResources().getColor(R.color.green_very_dark)));
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom_autocomplete, countryList);
         textCountries.setAdapter(adapter);
     }

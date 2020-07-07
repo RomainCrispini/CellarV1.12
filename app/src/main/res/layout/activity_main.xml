@@ -25,7 +25,7 @@
         android:layout_margin="8dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:maxImageSize="40dp"
+        app:maxImageSize="35dp"
         android:layout_gravity="center"
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/green_ultra_dark"

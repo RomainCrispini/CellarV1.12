@@ -2,6 +2,7 @@ package com.romain.cellarv1.modele;
 
 import java.io.Serializable;
 import java.sql.Blob;
+import java.util.ArrayList;
 
 
 public class WineBottle implements Serializable {
@@ -25,19 +26,18 @@ public class WineBottle implements Serializable {
     private Integer rate;
     private String favorite;
     private String wish;
-    private Float latitude;
-    private Float longitude;
+    private Double latitude;
+    private Double longitude;
     private String timeStamp;
 
     // Constructeur entier
-    public WineBottle(Integer id, String country, String region, String wineColor, String domain, String appellation, String address, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Integer rate, String favorite, String wish, Float latitude, Float longitude, String timeStamp) {
+    public WineBottle(Integer id, String country, String region, String wineColor, String domain, String appellation, String address, Integer year, Integer apogee, Integer number, Integer estimate, String pictureLarge, String pictureSmall, byte[] imageLarge, byte[] imageSmall, Integer rate, String favorite, String wish, Double latitude, Double longitude, String timeStamp) {
 
         if (id != null ){
             this.id = id;
         } else {
             this.id = -1;
         }
-
         this.country = country;
         this.region = region;
         this.wineColor = wineColor;
@@ -213,19 +213,19 @@ public class WineBottle implements Serializable {
         this.wish = wish;
     }
 
-    public Float getLattitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLattitude(Float lattitude) {
+    public void setLatitude(Double lattitude) {
         this.latitude = lattitude;
     }
 
-    public Float getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Float longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
