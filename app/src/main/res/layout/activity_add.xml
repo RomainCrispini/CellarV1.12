@@ -197,8 +197,10 @@
                     android:layout_centerVertical="true"
                     android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"/>
 
-            </RelativeLayout>
 
+
+
+            </RelativeLayout>
 
 
 

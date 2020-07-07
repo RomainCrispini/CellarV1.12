@@ -91,8 +91,11 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import me.tankery.lib.circularseekbar.CircularSeekBar;
@@ -419,18 +422,60 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
 
-                //Toast.makeText(AddActivity.this, "lattitude : " + place.getLatLng().latitude + "longitude" + place.getLatLng().longitude, Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(AddActivity.this, "lattitude : " + place.getLatLng().latitude + "longitude" + place.getLatLng().longitude, Toast.LENGTH_SHORT).show();
+
 
                 double latitude = place.getLatLng().latitude;
                 double longitude = place.getLatLng().longitude;
                 latlngAddress.add(latitude);
                 latlngAddress.add(longitude);
 
+
+                // TODO PROBLEME !!!!!!!!!!!!!!
+                /*
                 try {
                     getPlaceInfo(place.getLatLng().latitude,place.getLatLng().longitude);
                 } catch (IOException e) {
+
+                   e.printStackTrace();
+                }
+
+
+*/
+
+                String address = place.getName();
+                txtAddress.setText(address);
+
+
+                Geocoder mGeocoder = new Geocoder(AddActivity.this, Locale.getDefault());
+                try {
+
+                    List<Address> addresses = null;
+                    addresses = mGeocoder.getFromLocation(latitude, longitude, 1);
+                    if (addresses.get(0).getCountryName() != null) {
+                        String country = addresses.get(0).getCountryName();
+                        txtCountry.setText(country);
+                        String region = addresses.get(0).getAdminArea();
+                        txtRegion.setText(region);
+
+                    }
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             }
 
@@ -444,6 +489,7 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
+    /*
     private void getPlaceInfo(double lat, double lon) throws IOException {
 
         Geocoder mGeocoder = new Geocoder(AddActivity.this);
@@ -468,6 +514,8 @@ public class AddActivity extends AppCompatActivity {
         }
 
     }
+
+     */
 
 
     @Override

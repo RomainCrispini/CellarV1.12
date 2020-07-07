@@ -403,9 +403,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         Bitmap etiquetteColor;
 
                         switch(wineBottleList.get(i).getWineColor().trim()) {
-                            case "Rouge":
-                                etiquetteColor = BitmapFactory.decodeResource(getResources(), R.drawable.red_wine);
-                                break;
+
                             case "Rose":
                                 etiquetteColor = BitmapFactory.decodeResource(getResources(), R.drawable.rose_wine);
                                 break;
